@@ -6,10 +6,10 @@ package org.understandinguncertainty.UKPDS.validators
 	import mx.validators.DateValidator;
 	import mx.validators.ValidationResult;
 	
-	public class DateOfBirthValidator extends DateValidator
+	public class DateOfDiagnosisValidator extends DateValidator
 	{
 		
-		public function DateOfBirthValidator()
+		public function DateOfDiagnosisValidator()
 		{
 			super();
 		}
@@ -26,23 +26,22 @@ package org.understandinguncertainty.UKPDS.validators
 			var dd:int = parseInt(value.day);
 			
 			var now:Date = new Date();
-			if((yyyy > now.fullYear - 30)
+			if((yyyy > now.fullYear)
 				|| (yyyy == now.fullYear && ( mm > now.month
 					|| mm == now.month && dd > now.date))) {
 				
-				// Date is in the future
 				results.push(new ValidationResult(
 					true, "year", "futureDate",
-					"too young to model risk"));
+					"Diagnosis in the future!"));
 				return results;
 			}
 			
 			if( yyyy + 84 < now.fullYear)  {
 				
-				// Patient is too old
+				// Diagnosis improbably far in the past
 				results.push(new ValidationResult(
 					true, "year", "tooOld",
-					"too old to model risk"));
+					"Diagnosis over 84 years ago"));
 				return results;
 			}
 			return results;

@@ -19,26 +19,29 @@ package org.understandinguncertainty.UKPDS.view
 	import mx.managers.ToolTipManager;
 	import mx.validators.NumberValidator;
 	import mx.validators.Validator;
+	import mx.validators.DateValidator;
+	import org.understandinguncertainty.UKPDS.validators.DateOfBirthValidator;
+	import org.understandinguncertainty.UKPDS.validators.DateOfDiagnosisValidator;
 	
 	import org.robotlegs.mvcs.Mediator;
 	import org.understandinguncertainty.UKPDS.model.AppState;
 	import org.understandinguncertainty.UKPDS.model.ICardioModel;
 	import org.understandinguncertainty.UKPDS.model.UserModel;
+	import org.understandinguncertainty.personal.PersonalisationFileStore;
+	import org.understandinguncertainty.personal.VariableList;
 	import org.understandinguncertainty.personal.signals.NextScreenSignal;
 	import org.understandinguncertainty.personal.signals.ProfileCommitSignal;
 	import org.understandinguncertainty.personal.signals.ProfileLoadSignal;
 	import org.understandinguncertainty.personal.signals.ProfileSaveSignal;
 	import org.understandinguncertainty.personal.signals.ProfileValidSignal;
-	import org.understandinguncertainty.personal.PersonalisationFileStore;
-	import org.understandinguncertainty.personal.VariableList;
 	
 	import spark.components.NumericStepper;
 	
-	public class QProfileMediator extends Mediator
+	public class UKPDSProfileMediator extends Mediator
 	{
 		
 		[Inject]
-		public var profile:QProfile;
+		public var profile:UKPDSProfile;
 		
 		[Inject]
 		public var profileValidSignal:ProfileValidSignal;
@@ -141,6 +144,10 @@ package org.understandinguncertainty.UKPDS.view
 			profile.mmStep.addEventListener(Event.CHANGE, validate);
 			profile.yyyyStep.addEventListener(Event.CHANGE, validate);
 			
+			profile.diagnosisDdStep.addEventListener(Event.CHANGE, validate);
+			profile.diagnosisMmStep.addEventListener(Event.CHANGE, validate);
+			profile.diagnosisYyyyStep.addEventListener(Event.CHANGE, validate);
+			
 			profile.height_mStep.addEventListener(Event.CHANGE, validate);
 			profile.weight_kgStep.addEventListener(Event.CHANGE, validate);
 			
@@ -149,6 +156,7 @@ package org.understandinguncertainty.UKPDS.view
 			profile.totalCholesterolStep.addEventListener(Event.CHANGE, validate);
 			profile.hdlCholesterolStep.addEventListener(Event.CHANGE, validate);
 			profile.systolicBloodPressureInputStep.addEventListener(Event.CHANGE, validate);
+			profile.hba1cStepper.addEventListener(Event.CHANGE, validate);
 			
 			profile.cholUnits.addEventListener(Event.CHANGE, changedUnits);
 			
@@ -171,6 +179,10 @@ package org.understandinguncertainty.UKPDS.view
 			profile.mmStep.removeEventListener(Event.CHANGE, validate);
 			profile.yyyyStep.removeEventListener(Event.CHANGE, validate);
 			
+			profile.diagnosisDdStep.removeEventListener(Event.CHANGE, validate);
+			profile.diagnosisMmStep.removeEventListener(Event.CHANGE, validate);
+			profile.diagnosisYyyyStep.removeEventListener(Event.CHANGE, validate);
+			
 			profile.height_mStep.removeEventListener(Event.CHANGE, validate);
 			profile.weight_kgStep.removeEventListener(Event.CHANGE, validate);
 			
@@ -179,6 +191,7 @@ package org.understandinguncertainty.UKPDS.view
 			profile.totalCholesterolStep.removeEventListener(Event.CHANGE, validate);
 			profile.hdlCholesterolStep.removeEventListener(Event.CHANGE, validate);
 			profile.systolicBloodPressureInputStep.removeEventListener(Event.CHANGE, validate);
+			profile.hba1cStepper.removeEventListener(Event.CHANGE, validate);
 			
 			profile.cholUnits.removeEventListener(Event.CHANGE, changedUnits);
 			
@@ -376,14 +389,16 @@ package org.understandinguncertainty.UKPDS.view
 //			e1 = (profile.totalCholesterolStep.cholRatio < 1);
 //			e2 = (profile.totalCholesterolStep.cholRatio > 12);
 			
-			var e3:Boolean = (profile.dateValidator.validate().results != null)
+			var e3:Boolean = (profile.dateValidator.validate().results != null);
 			var e4:Boolean = (profile.sbpValidator.validate().results != null);
 			var e5:Boolean = (profile.heightValidator.validate().results != null);
 			var e6:Boolean = (profile.weightValidator.validate().results != null);
+			var e7:Boolean = (profile.hba1cValidator.validate().results != null);
+			var e8:Boolean = (profile.diagnosisDateValidator.validate().results != null);
 //			var e7:Boolean = (profile.hadCVDValidator.validate().results != null);
 //			var e8:Boolean = (profile.termsValidator.validate().results != null);
 
-			if(e1 || e2 || e3 || e4 || e5 || e6) {
+			if(e1 || e2 || e3 || e4 || e5 || e6 || e7 || e8) {
 				isValid = false;
 				profile.nextButton.enabled = false;
 				profileValidSignal.dispatch(false);

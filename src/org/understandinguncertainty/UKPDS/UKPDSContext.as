@@ -11,24 +11,10 @@ package org.understandinguncertainty.UKPDS
 	import org.robotlegs.mvcs.SignalContext;
 	import org.understandinguncertainty.UKPDS.controller.SetupInterventionProfile;
 	import org.understandinguncertainty.UKPDS.model.AppState;
+	import org.understandinguncertainty.UKPDS.model.FraminghamRunModel;
 	import org.understandinguncertainty.UKPDS.model.ICardioModel;
-	import org.understandinguncertainty.UKPDS.model.QRunModel;
-	import org.understandinguncertainty.UKPDS.model.RunModel;
+	import org.understandinguncertainty.UKPDS.model.UKPDSRunModel;
 	import org.understandinguncertainty.UKPDS.model.UserModel;
-	import org.understandinguncertainty.personal.signals.ClearInterventionsSignal;
-	import org.understandinguncertainty.personal.signals.InterventionEditedSignal;
-	import org.understandinguncertainty.personal.signals.ModelUpdatedSignal;
-	import org.understandinguncertainty.personal.signals.NextScreenSignal;
-	import org.understandinguncertainty.personal.signals.NumbersAvailableSignal;
-	import org.understandinguncertainty.personal.signals.ProfileCommitSignal;
-	import org.understandinguncertainty.personal.signals.ProfileLoadSignal;
-	import org.understandinguncertainty.personal.signals.ProfileSaveSignal;
-	import org.understandinguncertainty.personal.signals.ProfileValidSignal;
-	import org.understandinguncertainty.personal.signals.ReleaseScreenSignal;
-	import org.understandinguncertainty.personal.signals.ScreenChangedSignal;
-	import org.understandinguncertainty.personal.signals.ScreensNamedSignal;
-	import org.understandinguncertainty.personal.signals.ShowDifferencesChangedSignal;
-	import org.understandinguncertainty.personal.signals.UpdateModelSignal;
 	import org.understandinguncertainty.UKPDS.view.AgeSettings;
 	import org.understandinguncertainty.UKPDS.view.AgeSettingsMediator;
 	import org.understandinguncertainty.UKPDS.view.BadBalance;
@@ -59,12 +45,26 @@ package org.understandinguncertainty.UKPDS
 	import org.understandinguncertainty.UKPDS.view.OutcomesMediator;
 	import org.understandinguncertainty.UKPDS.view.Profile;
 	import org.understandinguncertainty.UKPDS.view.ProfileMediator;
-	import org.understandinguncertainty.UKPDS.view.QProfile;
-	import org.understandinguncertainty.UKPDS.view.QProfileMediator;
+	import org.understandinguncertainty.UKPDS.view.UKPDSProfile;
+	import org.understandinguncertainty.UKPDS.view.UKPDSProfileMediator;
 	import org.understandinguncertainty.UKPDS.view.RiskByAge;
 	import org.understandinguncertainty.UKPDS.view.RiskByAgeMediator;
 	import org.understandinguncertainty.UKPDS.view.ScreenSelector;
 	import org.understandinguncertainty.UKPDS.view.ScreenSelectorMediator;
+	import org.understandinguncertainty.personal.signals.ClearInterventionsSignal;
+	import org.understandinguncertainty.personal.signals.InterventionEditedSignal;
+	import org.understandinguncertainty.personal.signals.ModelUpdatedSignal;
+	import org.understandinguncertainty.personal.signals.NextScreenSignal;
+	import org.understandinguncertainty.personal.signals.NumbersAvailableSignal;
+	import org.understandinguncertainty.personal.signals.ProfileCommitSignal;
+	import org.understandinguncertainty.personal.signals.ProfileLoadSignal;
+	import org.understandinguncertainty.personal.signals.ProfileSaveSignal;
+	import org.understandinguncertainty.personal.signals.ProfileValidSignal;
+	import org.understandinguncertainty.personal.signals.ReleaseScreenSignal;
+	import org.understandinguncertainty.personal.signals.ScreenChangedSignal;
+	import org.understandinguncertainty.personal.signals.ScreensNamedSignal;
+	import org.understandinguncertainty.personal.signals.ShowDifferencesChangedSignal;
+	import org.understandinguncertainty.personal.signals.UpdateModelSignal;
 	
 	public class UKPDSContext extends SignalContext
 	{
@@ -90,9 +90,10 @@ package org.understandinguncertainty.UKPDS
 			injector.mapValue(UserModel, interventionProfile, "interventionProfile");	
 			
 
-			// RunModel uses Framingham
-			// injector.mapSingletonOf(ICardioModel, RunModel); 
-			injector.mapSingletonOf(ICardioModel, QRunModel);
+			// Inject the risk model
+			injector.mapSingletonOf(ICardioModel, UKPDSRunModel); 
+			//injector.mapSingletonOf(ICardioModel, FraminghamRunModel); 
+			//injector.mapSingletonOf(ICardioModel, QRunModel);
 			
 			// Signals
 			injector.mapSingleton(ProfileValidSignal);
@@ -116,9 +117,7 @@ package org.understandinguncertainty.UKPDS
 			mediatorMap.mapView(MainPanel, MainPanelMediator);
 			mediatorMap.mapView(ScreenSelector, ScreenSelectorMediator);
 			
-			// Profile and ProfileMediator adopt a FRamingham profile
-			//mediatorMap.mapView(Profile, ProfileMediator);
-			mediatorMap.mapView(QProfile, QProfileMediator);
+			mediatorMap.mapView(UKPDSProfile, UKPDSProfileMediator);
 			
 			mediatorMap.mapView(InterventionsPanel, InterventionsPanelMediator);
 			mediatorMap.mapView(HeartAge, HeartAgeMediator);

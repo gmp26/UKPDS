@@ -44,7 +44,7 @@ Copyright University of Cambridge. All rights reserved
 <!--			
 			<view:Profile includeIn="profile"  />
 -->		
-			<view:QProfile includeIn="profile"  />
+			<view:UKPDSProfile includeIn="profile"  />
 			
 			<view:HeartAge includeIn="heartAge" />
 			

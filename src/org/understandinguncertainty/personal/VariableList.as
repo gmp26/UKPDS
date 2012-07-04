@@ -84,13 +84,20 @@ package org.understandinguncertainty.personal
 			var today:Date = new Date();
 			var fortyYearsAgo:Date = today;
 			fortyYearsAgo.fullYear -= 40;
+			var tenYearsAgo:Date = new Date();
+			tenYearsAgo.fullYear -= 10;
 			dateOfBirth = new DateOfBirth("dateOfBirth", fortyYearsAgo);
+			dateOfDiagnosis = new DateOfBirth("dateOfDiagnosis", tenYearsAgo);
 			
 			// inject dependencies that may exist between different variables
 			yearOfBirth.dateOfBirth = dateOfBirth;
 			dateOfBirth.yearOfBirth = yearOfBirth;
 			age.yearOfBirth = yearOfBirth;
 			age.dateOfBirth = dateOfBirth;
+			
+			// TODO: this is probably wrong 
+			dateOfDiagnosis.yearOfBirth = yearOfBirth;
+			
 		}
 
 		public function toString():String

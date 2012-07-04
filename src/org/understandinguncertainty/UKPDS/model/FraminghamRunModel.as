@@ -9,14 +9,30 @@ package org.understandinguncertainty.UKPDS.model
 	import org.understandinguncertainty.UKPDS.model.vo.BetasVO;
 	import org.understandinguncertainty.UKPDS.model.vo.CalculatedParams;
 	import org.understandinguncertainty.UKPDS.model.vo.ColourNumbersVO;
+	import org.understandinguncertainty.personal.VariableList;
 	import org.understandinguncertainty.personal.signals.ModelUpdatedSignal;
 	import org.understandinguncertainty.personal.signals.UpdateModelSignal;
-	import org.understandinguncertainty.personal.VariableList;
 	import org.understandinguncertainty.personal.types.BooleanPersonalVariable;
 
 	[ResourceBundle("UKPDS")]
-	public class RunModel extends AbstractRunModel implements ICardioModel
+	public class FraminghamRunModel extends AbstractRunModel implements ICardioModel
 	{	
+		private var _showDifferences:Boolean = false;
+		
+		/**
+		 * @param b sets whether to show differences in the UI
+		 */
+		public function set showDifferences(b:Boolean):void {
+			this._showDifferences = b;
+		}
+		
+		/**
+		 * @returns whether to show differences in the UI
+		 */
+		public function get showDifferences():Boolean {
+			return _showDifferences;
+		}
+		
 		private var _maleParams:MaleParameters;
 		private function get maleParameters():MaleParameters
 		{
@@ -36,6 +52,9 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public function commitProperties():void {
 
+
+			_peakf = 0;
+			
 			if(userProfile.age == 0)
 				return;
 			appState.minimumAge = userProfile.age;
@@ -104,32 +123,6 @@ package org.understandinguncertainty.UKPDS.model
 				a = calculatedParams.a;
 				a_gp = calculatedParams.genPop_a;
 				
-				//re smokers and non-cardiac mortality.  
-				//we should really adjust the baseline up or down according to smoking status, 
-				//and then adjust back again for people who stop smoking.
-
-				//So, based on the profile, we should multiply the population non-cardiac mortality
-				//	by 'p.smoke > 1' for smokers, 
-				//	and p.notsmoke < 1 for non-smokers.  
-				
-				//Then if someone gives up, their non-cardiac hazard should be multiplied 
-				//	by p.quit < 1.
-
-				//As a start, could we use the hazard multipliers from the EPIC study that we have
-				//for smoking (yes/no) that adjust the population hazard?  That paper shows 
-				//hazard ratio of 1.77 and 1.54 for cancers and non-cancer-or-cvd causes. 
-				//Let's say 1.65.  
-				
-				//So p.smoke/p.notsmoke=1.65. 
-				//Smoking rates are around 20%, so I think that 
-				//	0.2*p.smoke + 0.8*p.notsmoke = 1. 
-				
-				//Combining these gives p.smoke = 1.46, p.notsmoke = 0.88.  This seems very reasonable.
-
-				//p.smoke = 1.46
-				//p.notsmoke=  0.88
-				//p.quit = 0.65 (from Doll and Hill and Danish study)
-
 				var b0:Number = framinghamParams.b[i];
 				b = nonSmoker ? (quitSmoker ? 0.65*1.46*b0 : 0.88*b0) : 1.46*b0;
 				if(i == userProfile.age)
@@ -201,6 +194,8 @@ package org.understandinguncertainty.UKPDS.model
 					f_gp:		f_gp
 				});
 				
+				_peakf = Math.max(_peakf, f);
+				_peakf = Math.max(_peakf, f_int);
 				peakYellowNeg = Math.max(f_int + yellow, peakYellowNeg);
  			}
 
@@ -272,6 +267,15 @@ package org.understandinguncertainty.UKPDS.model
 			//trace("fram age: "+i+" a: "+lhr);
 			
 			return new CalculatedParams(p.a * Math.exp(lhr), p.a*Math.exp(lhr_int), h, p.a*Math.exp(ageBetaX-p.xbar.age*p.beta.age));
+		}
+		
+		private var _peakf:Number;
+		/**
+		 * @return peak cardiovascular risk
+		 */   
+		public function get peakf():Number 
+		{
+			return _peakf;	
 		}
 	}
 }

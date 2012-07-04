@@ -1,0 +1,31 @@
+<personalData>
+  <totalCholesterol_mmol_L>5.500001</totalCholesterol_mmol_L>
+  <relativeHadCVD>false</relativeHadCVD>
+  <lipidRatio>5.11</lipidRatio>
+  <townsendGroup>2</townsendGroup>
+  <hdlCholesterol_mmol_L>1.2000009999999999</hdlCholesterol_mmol_L>
+  <yearOfBirth>1972</yearOfBirth>
+  <smoker>false</smoker>
+  <nonSmoker>true</nonSmoker>
+  <height_m>1.7</height_m>
+  <smokerGroup>0</smokerGroup>
+  <chronicRenalDisease>false</chronicRenalDisease>
+  <weight_kg>65</weight_kg>
+  <rheumatoidArthritis>false</rheumatoidArthritis>
+  <age>40</age>
+  <SBPTreated>false</SBPTreated>
+  <active>true</active>
+  <dateOfBirth>4/7/1972</dateOfBirth>
+  <diabetic>false</diabetic>
+  <gender>male</gender>
+  <atrialFibrillation>false</atrialFibrillation>
+  <townsend>0</townsend>
+  <postCode/>
+  <fiveaday>true</fiveaday>
+  <moderateAlcohol>true</moderateAlcohol>
+  <quitSmoker>false</quitSmoker>
+  <hba1c>6.72</hba1c>
+  <dateOfDiagnosis>4/7/2012</dateOfDiagnosis>
+  <ethnicGroup>5</ethnicGroup>
+  <systolicBloodPressure>136</systolicBloodPressure>
+</personalData>

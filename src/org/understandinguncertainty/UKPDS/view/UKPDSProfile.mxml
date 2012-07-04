@@ -80,6 +80,11 @@ Copyright University of Cambridge. All rights reserved
 						  yearSource="{yyyyStep}" yearProperty="value"
 						  monthSource="{mmStep}" monthProperty="value" 
 						  daySource="{ddStep}" dayProperty="value" required="true" />
+		<validators:DateOfDiagnosisValidator id="diagnosisDateValidator"
+										 yearSource="{diagnosisYyyyStep}" yearProperty="value"
+										 monthSource="{diagnosisMmStep}" monthProperty="value" 
+										 daySource="{diagnosisDdStep}" dayProperty="value" required="true" />
+
 		<ns:NumberValidator id="heightValidator" 
 							minValue="20" maxValue="40"
 							exceedsMaxError = "{bmiTooBig}"
@@ -100,6 +105,7 @@ Copyright University of Cambridge. All rights reserved
 		<validators:CholRatioValidator id="hdlCholValidator" source="{hdlCholesterolStep}" property="cholRatio"
 							required="true" 
 							/>
+		<ns:NumberValidator id="hba1cValidator" domain="real" minValue="0" maxValue="20" required="true" source="{hba1cStepper}" property="value"/>	
 		<ns:NumberValidator id="sbpValidator" domain="real" minValue="70" maxValue="210" required="true" source="{systolicBloodPressureInputStep}" property="value"/>	
 							
 		<!-- UKPDS removed
@@ -143,22 +149,38 @@ Copyright University of Cambridge. All rights reserved
 					
 -->					<s:HGroup width="100%" verticalAlign="bottom" horizontalAlign="right"  toolTip="{tipPlaceHolder}">
 						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.dob')" fontWeight="normal" />
-						<!--<s:TextInput id="dd" editable="true" text="" width="20"  />-->
 						<s:VGroup horizontalAlign="center" gap="2">
 							<s:Label text="Day" fontSize="10" color="#AAAAAA"/>
 							<s:NumericStepper id="ddStep" width="40" minimum="1" maximum="31" value="1"/>
 						</s:VGroup>
-						<!--<s:TextInput id="mm" editable="true" text="" width="20" />-->
 						<s:VGroup horizontalAlign="center" gap="2">
 							<s:Label text="Month" fontSize="10" color="#AAAAAA"/>
 							<s:NumericStepper id="mmStep" width="40" minimum="1" maximum="12" value="1"/>
 						</s:VGroup>
-						<!--<s:TextInput id="yyyy" editable="true" text="" width="60"  />-->
 						<s:VGroup horizontalAlign="center" gap="2">
 							<s:Label text="Year" fontSize="10" color="#AAAAAA"/>
 							<s:NumericStepper id="yyyyStep" width="53" minimum="1926" maximum="2050" value="1"/>
 						</s:VGroup>
 					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="bottom" horizontalAlign="right"  toolTip="{tipPlaceHolder}">
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.dodiagnosis')" fontWeight="normal" />
+						<s:VGroup horizontalAlign="center" gap="2">
+							<s:Label text="Day" fontSize="10" color="#AAAAAA"/>
+							<s:NumericStepper id="diagnosisDdStep" width="40" minimum="1" maximum="31" value="1"/>
+						</s:VGroup>
+						<!--<s:TextInput id="mm" editable="true" text="" width="20" />-->
+						<s:VGroup horizontalAlign="center" gap="2">
+							<s:Label text="Month" fontSize="10" color="#AAAAAA"/>
+							<s:NumericStepper id="diagnosisMmStep" width="40" minimum="1" maximum="12" value="1"/>
+						</s:VGroup>
+						<!--<s:TextInput id="yyyy" editable="true" text="" width="60"  />-->
+						<s:VGroup horizontalAlign="center" gap="2">
+							<s:Label text="Year" fontSize="10" color="#AAAAAA"/>
+							<s:NumericStepper id="diagnosisYyyyStep" width="53" minimum="1928" maximum="2050" value="2000"/>
+						</s:VGroup>
+					</s:HGroup>
+
 					
 					<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>
@@ -250,19 +272,6 @@ Copyright University of Cambridge. All rights reserved
 						<ns:ComboBox id="smokerGroup" width="160" selectedIndex="0" rowCount="5"/>
 					</s:HGroup>
 					
-					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
-						<s:Group width="100%"/>
-						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.HbA1c')" fontWeight="normal"/>
-						<s:NumericStepper id="hba1cStepper" 
-										  minimum="0" maximum="20" 
-										  width="50" 
-										  stepSize="0.1"
-										  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"
-										  />
-						<s:Label text="(%)"/>
-						
-					</s:HGroup>
-					
 					<s:HGroup width="100%" verticalAlign="middle">
 						
 						<s:VGroup width = "100%" >
@@ -292,6 +301,19 @@ Copyright University of Cambridge. All rights reserved
 					</s:HGroup>
 					
 					<s:Label id="nonHDLField" paddingLeft="30"/>
+					
+					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.HbA1c')" fontWeight="normal"/>
+						<s:NumericStepper id="hba1cStepper" 
+										  minimum="0" maximum="20" 
+										  width="70" 
+										  stepSize="0.1"
+										  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"
+										  />
+						<s:Label text="(%)"/>
+						
+					</s:HGroup>
 					
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>
