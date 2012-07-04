@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="JBS3Risk.mxml" projectUUID="430d5e69-21f6-4927-8897-2ad0e0396936" version="6">
-  <compiler additionalCompilerArguments="-locale en_US -use-network=false -keep-as3-metadata+=Inject -keep-as3-metadata+=PostConstruct" autoRSLOrdering="true" copyDependentFiles="true" flexSDK="Flex 4.1 (build 16076)" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+<actionScriptProperties analytics="false" mainApplicationPath="UKPDS.mxml" projectUUID="3bbd0fed-f091-42b0-be1d-0468125d3438" version="6">
+  <compiler additionalCompilerArguments="-locale en_US -use-network=false -keep-as3-metadata+=Inject -keep-as3-metadata+=PostConstruct" autoRSLOrdering="true" copyDependentFiles="true" flexSDK="Flex 4.1 (build 16076)" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
       <compilerSourcePathEntry kind="1" linkType="1" path="locale/{locale}"/>
     </compilerSourcePath>
-    <libraryPath defaultLinkType="1">
+    <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
         <excludedEntries>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flex.swc" useDefaultLinkType="false"/>
@@ -15,9 +15,8 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="JBS3Risk.mxml"/>
+    <application path="UKPDS.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
 </actionScriptProperties>
-

@@ -11,6 +11,7 @@ package org.understandinguncertainty.personal
 	import org.understandinguncertainty.personal.interfaces.IPersonalVariable;
 	import org.understandinguncertainty.personal.types.AgePersonalVariable;
 	import org.understandinguncertainty.personal.types.BooleanPersonalVariable;
+	import org.understandinguncertainty.personal.types.DDMMYYYY_PersonalVariable;
 	import org.understandinguncertainty.personal.types.NumberPersonalVariable;
 	import org.understandinguncertainty.personal.types.StringPersonalVariable;
 	import org.understandinguncertainty.personal.variables.*;
@@ -25,30 +26,48 @@ package org.understandinguncertainty.personal
 	 */
 	public class VariableList {
 		
-		public var age:AgePersonalVariable = new AgePersonalVariable("age", 0);
-		public var active:BooleanPersonalVariable = new BooleanPersonalVariable("active", true);
-		public var fiveaday:BooleanPersonalVariable = new BooleanPersonalVariable("fiveaday", true);
+		/* following are used in UKPDS */		
+		public const intercept_CHD:Number = 0.0112;
+		public const intercept_Stroke:Number = 0.00186;
+		
+		public var dateOfBirth:DateOfBirth; // = new DateOfBirth("dateOfBirth", new Date((new Date()).time - 40*365.25*24*60*60000));
+		public var age:AgePersonalVariable = new AgePersonalVariable("age", 55);
 		public var gender:StringPersonalVariable = new StringPersonalVariable("gender", "male");
+		public var afroCarib:BooleanPersonalVariable = new BooleanPersonalVariable("afroCarib", false);
+
+		public var yearOfBirth:YearOfBirth = new YearOfBirth("yearOfBirth", new Date().fullYear);
+		
+		public var dateOfDiagnosis:DateOfBirth = new DateOfBirth("dateOfDiagnosis", new Date());
+		public var hba1c:NumberPersonalVariable = new NumberPersonalVariable("hba1c", 6.72);
+		public var systolicBloodPressure:NumberPersonalVariable = new NumberPersonalVariable("systolicBloodPressure", 135.5);
+		public var lipidRatio:NumberPersonalVariable = new NumberPersonalVariable("lipidRatio", 5.11);
+		public var atrialFibrillation:BooleanPersonalVariable = new BooleanPersonalVariable("atrialFibrillation", false);
+		public var totalCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("totalCholesterol_mmol_L", 5.5);
+		public var hdlCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("hdlCholesterol_mmol_L", 1.16);
+
+		public var smoker:BooleanPersonalVariable = new BooleanPersonalVariable("smoker", false);
+		public var weight_kg:NumberPersonalVariable = new NumberPersonalVariable("weight_kg", 65);
+		public var active:BooleanPersonalVariable = new BooleanPersonalVariable("active", true);
+		public function get diabeticT():Number {return dateOfDiagnosis.getAge();}
+		
+		/* UKPDS interventions (changes) */
+		public function get ldlCholesterol_mmol_L():Number {
+			var t:Number = Number(totalCholesterol_mmol_L.value);
+			var h:Number = Number(hdlCholesterol_mmol_L.value);
+			return (t-h)/1.24 // see Sweeting 2012 section 2.3 ;
+		}
+		
+		/* following are unused in UKPDS */
+		public var fiveaday:BooleanPersonalVariable = new BooleanPersonalVariable("fiveaday", true);
 		public var moderateAlcohol:BooleanPersonalVariable = new BooleanPersonalVariable("moderateAlcohol", true);
 		public var smokerGroup:NumberPersonalVariable = new NumberPersonalVariable("smokerGroup", true);
 		public var nonSmoker:BooleanPersonalVariable = new BooleanPersonalVariable("nonSmoker", true);
-		public var quitSmoker:BooleanPersonalVariable = new BooleanPersonalVariable("quitSmoker", false);
-		
-		public var dateOfBirth:DateOfBirth; // = new DateOfBirth("dateOfBirth", new Date((new Date()).time - 40*365.25*24*60*60000));
-
-		public var yearOfBirth:YearOfBirth = new YearOfBirth("yearOfBirth", new Date().fullYear);
-		public var totalCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("totalCholesterol_mmol_L", 5.5);
-		public var hdlCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("hdlCholesterol_mmol_L", 1.16);
-		public var systolicBloodPressure:NumberPersonalVariable = new NumberPersonalVariable("systolicBloodPressure", 130);
-		
-		
+		public var quitSmoker:BooleanPersonalVariable = new BooleanPersonalVariable("quitSmoker", false);		
 		public var height_m:NumberPersonalVariable = new NumberPersonalVariable("height_m", 1.7);
-		public var weight_kg:NumberPersonalVariable = new NumberPersonalVariable("weight_kg", 65);
 		public var SBPTreated:BooleanPersonalVariable = new BooleanPersonalVariable("SBPTreated", false);
 		public var diabetic:BooleanPersonalVariable = new BooleanPersonalVariable("diabetic", false);
 		
 		public var chronicRenalDisease:BooleanPersonalVariable = new BooleanPersonalVariable("chronicRenalDisease", false);
-		public var atrialFibrillation:BooleanPersonalVariable = new BooleanPersonalVariable("atrialFibrillation", false);
 		public var rheumatoidArthritis:BooleanPersonalVariable = new BooleanPersonalVariable("rheumatoidArthritis", false);
 		public var relativeHadCVD:BooleanPersonalVariable = new BooleanPersonalVariable("relativeHadCVD", false);
 		public var ethnicGroup:NumberPersonalVariable = new NumberPersonalVariable("ethnicGroup", 0);
@@ -80,7 +99,6 @@ package org.understandinguncertainty.personal
 			s += " tc:" + (totalCholesterol_mmol_L.value as Number);
 			s += " hdl:" + (hdlCholesterol_mmol_L.value as Number);
 			s += " sbp:" + (systolicBloodPressure.value as Number) + "\n";
-			s += " sbpt:" + (SBPTreated.value as Boolean);
 			s += " diab:" + (diabetic.value as Boolean);
 			s += " smok:" + !(nonSmoker.value as Boolean);
 			s += " qsmk:" + (quitSmoker.value as Boolean);
