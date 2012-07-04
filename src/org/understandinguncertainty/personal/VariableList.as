@@ -1,8 +1,5 @@
 /*
-This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
-It is ©2012 University of Cambridge.
-It is released under version 3 of the GNU General Public License
-Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+Copyright University of Cambridge. All rights reserved
 */
 package org.understandinguncertainty.personal
 {
@@ -33,7 +30,11 @@ package org.understandinguncertainty.personal
 		public var dateOfBirth:DateOfBirth; // = new DateOfBirth("dateOfBirth", new Date((new Date()).time - 40*365.25*24*60*60000));
 		public var age:AgePersonalVariable = new AgePersonalVariable("age", 55);
 		public var gender:StringPersonalVariable = new StringPersonalVariable("gender", "male");
-		public var afroCarib:BooleanPersonalVariable = new BooleanPersonalVariable("afroCarib", false);
+
+		public function get afroCaribbean():Boolean {
+			return Number(ethnicGroup.value) == 5; // magic number: selects "Black Caribbean" 
+			// see profile.dataProvider.ethnicGroup initialisation
+		}
 
 		public var yearOfBirth:YearOfBirth = new YearOfBirth("yearOfBirth", new Date().fullYear);
 		

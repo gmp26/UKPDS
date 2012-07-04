@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
-It is ©2012 University of Cambridge.
-It is released under version 3 of the GNU General Public License
-Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+Copyright University of Cambridge. All rights reserved
 -->
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
@@ -41,7 +38,7 @@ Source code, including a copy of the license is available at https://github.com/
 		<s:RadioButtonGroup id="gender" />
 		
 		<!-- These declarations can be moved into the form if they are needed -->
-		<s:CheckBox id="moderateAlcohol"  visible="false" label="@Resource(bundle='JBS', key='profile.check.alcohol')"/>
+		<s:CheckBox id="moderateAlcohol"  visible="false" label="@Resource(bundle='UKPDS', key='profile.check.alcohol')"/>
 		
 		<fx:String id="tipPlaceHolder"/>
 		
@@ -66,14 +63,14 @@ Source code, including a copy of the license is available at https://github.com/
 
 		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20">
 			
-			<s:Label text="@Resource(bundle='JBS', key='sideBar1.profile')" fontSize="18"/>
+			<s:Label text="@Resource(bundle='UKPDS', key='sideBar1.profile')" fontSize="18"/>
 			
 			<s:HGroup gap="20" >
 				
 				<s:VGroup horizontalAlign="left" height="100%">
 					
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
-						<s:Label text="@Resource(bundle='JBS', key='profile.entry.dob')" fontWeight="normal" />
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.dob')" fontWeight="normal" />
 						<s:TextInput id="dd" editable="true" text="" width="20"  />
 						<s:TextInput id="mm" editable="true" text="" width="20" />
 						<s:TextInput id="yyyy" editable="true" text="" width="60"  />
@@ -81,9 +78,9 @@ Source code, including a copy of the license is available at https://github.com/
 					
 					<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>
-						<s:Label text="@Resource(bundle='JBS', key='profile.entry.gender')" fontWeight="normal" />
-						<s:RadioButton label="@Resource(bundle='JBS', key='male')" groupName="gender" value="male" selected="true" />
-						<s:RadioButton label="@Resource(bundle='JBS', key='female')" groupName="gender" value="female" />
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.gender')" fontWeight="normal" />
+						<s:RadioButton label="@Resource(bundle='UKPDS', key='male')" groupName="gender" value="male" selected="true" />
+						<s:RadioButton label="@Resource(bundle='UKPDS', key='female')" groupName="gender" value="female" />
 					</s:HGroup>
 					
 					<s:Group height="8"/>
@@ -94,14 +91,14 @@ Source code, including a copy of the license is available at https://github.com/
 											
 					<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>   
-						<s:Label text="@Resource(bundle='JBS', key='profile.entry.totalChol')" fontWeight="normal"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.totalChol')" fontWeight="normal"/>
 						<s:TextInput id="totalCholesterolInput" editable="true" text="" width="40" />
 						<ns:ComboBox id="totalCholUnits" width="70" selectedIndex="0" labelField="unit" />
 					</s:HGroup>
 					
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>
-						<s:Label text="@Resource(bundle='JBS', key='profile.entry.HDLChol')" fontWeight="normal"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.HDLChol')" fontWeight="normal"/>
 						<s:TextInput id="hdlCholesterolInput" editable="true" text="" width="40"  />
 						<ns:ComboBox id="hdlCholUnits" width="70" selectedIndex="0" labelField="unit" />
 					</s:HGroup>
@@ -110,48 +107,48 @@ Source code, including a copy of the license is available at https://github.com/
 					
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>
-						<s:Label text="@Resource(bundle='JBS', key='profile.entry.SBP')" fontWeight="normal"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.SBP')" fontWeight="normal"/>
 						<s:TextInput id="systolicBloodPressureInput" editable="true" text="" width="40" />
-						<s:Label text="@Resource(bundle='JBS', key='units.mm_Hg')"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='units.mm_Hg')"/>
 					</s:HGroup>
 					
 					<s:HGroup width="100%" verticalAlign="bottom">
 						<s:Group width="100%"/>
-						<s:Label text="@Resource(bundle='JBS', key='profile.check.SBPTreatment')" fontWeight="normal"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.check.SBPTreatment')" fontWeight="normal"/>
 						<s:CheckBox id="SBPTreated"/>
 					</s:HGroup>
 					
 					<s:HGroup width="100%" verticalAlign="bottom">
 						<s:Group width="100%"/>
-						<s:Label text="@Resource(bundle='JBS', key='profile.check.diabetes')" fontWeight="normal"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.check.diabetes')" fontWeight="normal"/>
 						<s:CheckBox id="diabetic"/>
 					</s:HGroup>
 					
 					<s:HGroup width="100%" verticalAlign="bottom">
 						<s:Group width="100%"/>
-						<s:Label text="@Resource(bundle='JBS', key='profile.check.smoker')" fontWeight="normal"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.check.smoker')" fontWeight="normal"/>
 						<s:CheckBox id="smoker" change="if(smoker.selected) quitSmoker.selected=false"/>
 					</s:HGroup>
 					
 					<s:HGroup width="100%" verticalAlign="bottom">
 						<s:Group width="100%"/>
-						<s:Label text="@Resource(bundle='JBS', key='profile.check.quitSmoker')" fontWeight="normal" alpha="{smoker.selected ? 0.5 : 1}"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.check.quitSmoker')" fontWeight="normal" alpha="{smoker.selected ? 0.5 : 1}"/>
 						<s:CheckBox id="quitSmoker" enabled="{!smoker.selected}"/>
 					</s:HGroup>
 					
 					<s:HGroup width="100%" verticalAlign="bottom">
 						<s:Group width="100%"/>
-						<s:Label text="@Resource(bundle='JBS', key='profile.check.active')" fontWeight="normal"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.check.active')" fontWeight="normal"/>
 						<s:CheckBox id="active"/>
 					</s:HGroup>
 					
 					<s:Group height="8"/>
 					
 					<s:HGroup id="controlBar" width="100%">
-						<s:Button id="saveButton" label="@Resource(bundle='JBS', key='Save')" />
-						<s:Button id="loadButton" label="@Resource(bundle='JBS', key='Load')" />			
+						<s:Button id="saveButton" label="@Resource(bundle='UKPDS', key='Save')" />
+						<s:Button id="loadButton" label="@Resource(bundle='UKPDS', key='Load')" />			
 						<s:Group width="100%" />
-						<s:Button label="@Resource(bundle='JBS', key='Next')" id="nextButton" />
+						<s:Button label="@Resource(bundle='UKPDS', key='Next')" id="nextButton" />
 					</s:HGroup>
 					
 				</s:VGroup>

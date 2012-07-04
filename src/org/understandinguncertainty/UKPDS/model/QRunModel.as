@@ -23,7 +23,7 @@ package org.understandinguncertainty.UKPDS.model
 	import org.understandinguncertainty.personal.VariableList;
 	import org.understandinguncertainty.personal.types.BooleanPersonalVariable;
 
-	[ResourceBundle("JBS")]
+	[ResourceBundle("UKPDS")]
 	public class QRunModel extends AbstractRunModel implements ICardioModel
 	{	
 		private var _showDifferences:Boolean = false;

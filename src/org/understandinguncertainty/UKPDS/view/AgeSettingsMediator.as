@@ -1,3 +1,6 @@
+/*
+Copyright University of Cambridge. All rights reserved
+*/
 package org.understandinguncertainty.UKPDS.view
 {
 	import flash.events.Event;

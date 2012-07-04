@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
-It is ©2012 University of Cambridge.
-It is released under version 3 of the GNU General Public License
-Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+Copyright University of Cambridge. All rights reserved
 -->
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			  xmlns:s="library://ns.adobe.com/flex/spark" 
@@ -31,10 +28,10 @@ Source code, including a copy of the license is available at https://github.com/
 		<s:SolidColorStroke id="noStroke" color="0" alpha="0"/>
 		<s:SolidColorStroke id="gainStroke" color="0xffffff" alpha="0.5"/>
 		
-		<fx:String id="ttAge">@Resource(bundle='JBS',key='chart.tooltip.Age')</fx:String>
-		<fx:String id="ttCVRisk">@Resource(bundle='JBS',key='chart.tooltip.cvRisk')</fx:String>
-		<fx:String id="ttCVBetter">@Resource(bundle='JBS',key='chart.tooltip.cvBetter')</fx:String>
-		<fx:String id="ttAll">@Resource(bundle='JBS',key='chart.tooltip.all')</fx:String>
+		<fx:String id="ttAge">@Resource(bundle='UKPDS',key='chart.tooltip.Age')</fx:String>
+		<fx:String id="ttCVRisk">@Resource(bundle='UKPDS',key='chart.tooltip.cvRisk')</fx:String>
+		<fx:String id="ttCVBetter">@Resource(bundle='UKPDS',key='chart.tooltip.cvBetter')</fx:String>
+		<fx:String id="ttAll">@Resource(bundle='UKPDS',key='chart.tooltip.all')</fx:String>
 
 		<s:Group id="gainLabel" visible="false">
 			<s:Rect width="100%" height="100%" radiusX="7" fill="{gainFill}" stroke="{gainStroke}"/>
@@ -68,7 +65,7 @@ Source code, including a copy of the license is available at https://github.com/
 	
 	
 	<s:VGroup horizontalAlign="center" paddingTop="10">
-		<s:Label fontSize="18" text="@Resource(bundle='JBS',key='chartNeg.title')"/> 
+		<s:Label fontSize="18" text="@Resource(bundle='UKPDS',key='chartNeg.title')"/> 
 		<s:Group id="chartGroup" width="520" height="330">
 			<s:VGroup width="100%" height="100%" gap="1">
 					
@@ -78,11 +75,11 @@ Source code, including a copy of the license is available at https://github.com/
 					<s:VGroup>
 						<s:HGroup width="100%" verticalAlign="middle">
 							<s:Rect width="10" height="15" fill="{green}" stroke="{legendStroke}"/>
-							<s:Label text="@Resource(bundle='JBS',key='chartNeg.f_int')"/>
+							<s:Label text="@Resource(bundle='UKPDS',key='chartNeg.f_int')"/>
 						</s:HGroup>
 						<s:HGroup width="100%" verticalAlign="middle">
 							<s:Rect width="10" height="15" fill="{badFill}" stroke="{legendStroke}"/>
-							<s:Label text="@Resource(bundle='JBS',key='chartNeg.f')"/>
+							<s:Label text="@Resource(bundle='UKPDS',key='chartNeg.f')"/>
 						</s:HGroup>
 					</s:VGroup>
 				
@@ -109,14 +106,14 @@ Source code, including a copy of the license is available at https://github.com/
 						
 						<ns:horizontalAxis>
 							<ns:LinearAxis id="ageAxis" 
-										   displayName="@Resource(bundle='JBS',key='chartNeg.xaxis')" 
+										   displayName="@Resource(bundle='UKPDS',key='chartNeg.xaxis')" 
 										   maximum="95"/>
 						</ns:horizontalAxis>
 						
 						<ns:verticalAxis>
 							<ns:LinearAxis id="chanceAxis"
-										   displayName="@Resource(bundle='JBS',key='chart.yaxis')" 
-										   title="@Resource(bundle='JBS',key='chart.yaxis')"
+										   displayName="@Resource(bundle='UKPDS',key='chart.yaxis')" 
+										   title="@Resource(bundle='UKPDS',key='chart.yaxis')"
 										   minimum = "0"
 										   maximum = "100"
 										   maximumLabelPrecision="0">
@@ -132,7 +129,7 @@ Source code, including a copy of the license is available at https://github.com/
 				</s:Group>
 
 				<s:HGroup width="100%" horizontalAlign="center">
-					<s:Label text="@Resource(bundle='JBS',key='chartNeg.xaxis')" />
+					<s:Label text="@Resource(bundle='UKPDS',key='chartNeg.xaxis')" />
 				</s:HGroup>
 			</s:VGroup>
 				

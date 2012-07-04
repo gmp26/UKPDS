@@ -47,14 +47,14 @@
 		
 		<components:InterventionStepper
 			id="sbp" 
-			label="@Resource(bundle='JBS', key='sideBar2.SBP')" 
+			label="@Resource(bundle='UKPDS', key='sideBar2.SBP')" 
 			width="100%"
 			height="50"
 			/>
 		
 		<components:TotalInterventionStepper 
 			id="totalCholesterol" 
-			label="@Resource(bundle='JBS', key='sideBar2.totalCholesterol')"
+			label="@Resource(bundle='UKPDS', key='sideBar2.totalCholesterol')"
 			hdlChol="{hdlCholesterol.value}"
 			width="100%"
 			height="50"
@@ -63,7 +63,7 @@
 		<components:HDLInterventionStepper
 			id="hdlCholesterol"
 			totalChol="{totalCholesterol.value}"
-			label="@Resource(bundle='JBS', key='sideBar2.hdlCholesterol')"
+			label="@Resource(bundle='UKPDS', key='sideBar2.hdlCholesterol')"
 			width="100%"
 			height="50"
 			/>

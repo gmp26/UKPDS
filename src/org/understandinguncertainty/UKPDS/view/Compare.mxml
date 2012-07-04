@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
-It is ©2012 University of Cambridge.
-It is released under version 3 of the GNU General Public License
-Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+Copyright University of Cambridge. All rights reserved
 -->
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
@@ -20,11 +17,11 @@ Source code, including a copy of the license is available at https://github.com/
 		<s:SolidColor id="genpop" color="0xAAAAAA" />
 		<s:SolidColorStroke id="stroke" color="0" alpha="0.8"/>
 		
-		<fx:String id="title1">@Resource(bundle='JBS',key='compare.title1')</fx:String>
-		<fx:String id="title2">@Resource(bundle='JBS',key='compare.title2')</fx:String>
-		<fx:String id="title3">@Resource(bundle='JBS',key='compare.title3')</fx:String>
-		<fx:String id="displayName1">@Resource(bundle='JBS',key='compare.displayName1')</fx:String>
-		<fx:String id="displayName2">@Resource(bundle='JBS',key='compare.displayName2')</fx:String>
+		<fx:String id="title1">@Resource(bundle='UKPDS',key='compare.title1')</fx:String>
+		<fx:String id="title2">@Resource(bundle='UKPDS',key='compare.title2')</fx:String>
+		<fx:String id="title3">@Resource(bundle='UKPDS',key='compare.title3')</fx:String>
+		<fx:String id="displayName1">@Resource(bundle='UKPDS',key='compare.displayName1')</fx:String>
+		<fx:String id="displayName2">@Resource(bundle='UKPDS',key='compare.displayName2')</fx:String>
 	</fx:Declarations>
 	
 	

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-	This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
-	It is ©2012 University of Cambridge.
-	It is released under version 3 of the GNU General Public License
-	Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+Copyright University of Cambridge. All rights reserved
 -->
 <s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
@@ -26,21 +23,14 @@
 				<s:TextFlow>
 					<s:p id="p1">
 						COPYRIGHT and LICENSING<s:br/>
-						The JBS3 Cardiovascular Risk Assessment was created by the <s:a id="uuLink" href="http://understandinguncertainty.org">Understanding Uncertainty team</s:a> of the University of Cambridge, 
-						working with the <s:a id="BCSLink" href="http://www.bcs.com">British Cardiovascular Society</s:a>. 
-						The current version was released in 2012 and is copyright the University of Cambridge. 
-						It is released under <s:a href="http://www.gnu.org/licenses/gpl.html">version 3 of the GNU General Public License</s:a>. The source code, containing a copy of this license is 
-						<s:a href="https://github.com/BritCardSoc/JBS3Risk">published on GitHub</s:a>.
+						Copyright University of Cambridge 2012
+						
+						All rights reserved till further notice.
 					</s:p>
 					<s:br/>
 					<s:p>
 						RISK MODEL<s:br/>
-						The tool contains a risk model derived from the open source code distribution of the <s:a href="http://qrisk.org/lifetime/index.php">
-						QRISK® cardiovascular lifetime risk calculator</s:a>, and uses a verbatim copy of the associated data tables 
-						<s:a href="Q65_derivation_cvd_time_40_0.csv">[0]</s:a> and 
-						<s:a href="Q65_derivation_cvd_time_40_0.csv">[1]</s:a>.
-						Further details of the implementation used in this calculator, 
-						including details of the interventions model are <s:a href="https://github.com/BritCardSoc/JBS3Risk">in the pubs directory on GitHub</s:a>.
+						UKPDS [ref: Sweeting, M 2012]
 					</s:p>
 					<s:br/>
 					<s:p>

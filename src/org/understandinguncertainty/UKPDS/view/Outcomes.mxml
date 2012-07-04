@@ -14,7 +14,7 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->		
 	</fx:Declarations>		
 <!--	<s:VGroup horizontalAlign="center">
-		<s:Label fontSize="18" text="@Resource(bundle='JBS',key='chart.title')"/> 
+		<s:Label fontSize="18" text="@Resource(bundle='UKPDS',key='chart.title')"/> 
 		<s:Group id="chartGroup" width="500" height="350">
 -->	
 	<s:HGroup id="smileyPanel" gap="0" width="520" height="360" verticalAlign="middle">
@@ -22,7 +22,7 @@
 		<s:VGroup  gap="20" width="100%" horizontalAlign="center">
 			<s:HGroup gap="5">
 				<s:Label id="targetIntervalLabel"  fontSize="18"/>
-				<s:Label text="@Resource(bundle='JBS',key='icons.title')" fontSize="18"/>
+				<s:Label text="@Resource(bundle='UKPDS',key='icons.title')" fontSize="18"/>
 				<s:Label id="ageLabel" fontSize="18"/>
 			</s:HGroup>
 			<s:HGroup gap="20" >

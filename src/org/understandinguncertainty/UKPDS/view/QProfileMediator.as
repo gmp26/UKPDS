@@ -1,8 +1,5 @@
 /*
-This file forms part of the JBS3Risk Cardiovascular Assessment Tool.
-It is ©2012 University of Cambridge.
-It is released under version 3 of the GNU General Public License
-Source code, including a copy of the license is available at https://github.com/BritCardSoc/JBS3Risk
+Copyright University of Cambridge. All rights reserved
 */
 package org.understandinguncertainty.UKPDS.view
 {
@@ -97,6 +94,7 @@ package org.understandinguncertainty.UKPDS.view
 				]);
 			
 			// Townsend quintile selection
+			/*
 			profile.townsendGroup.dataProvider = new ArrayCollection([
 				"1: Affluent",
 				"2: ",
@@ -104,6 +102,7 @@ package org.understandinguncertainty.UKPDS.view
 				"4: ",
 				"5: Least affluent",
 				]);
+			*/
 			
 			profile.smokerGroup.dataProvider = new ArrayCollection([
 				"No",
@@ -134,9 +133,9 @@ package org.understandinguncertainty.UKPDS.view
 			profileLoadSignal.add(loadPersonalDetails);
 			profileSaveSignal.add(savePersonalDetails);
 			
-			profile.cvdAlready.addEventListener(Event.CHANGE, validate);
-			profile.termsCheckbox.addEventListener(Event.CHANGE, validate);
-			profile.termsButton.addEventListener(MouseEvent.CLICK, visitTerms);
+			//profile.cvdAlready.addEventListener(Event.CHANGE, validate);
+			//profile.termsCheckbox.addEventListener(Event.CHANGE, validate);
+			//.termsButton.addEventListener(MouseEvent.CLICK, visitTerms);
 			
 			profile.ddStep.addEventListener(Event.CHANGE, validate);
 			profile.mmStep.addEventListener(Event.CHANGE, validate);
@@ -145,7 +144,7 @@ package org.understandinguncertainty.UKPDS.view
 			profile.height_mStep.addEventListener(Event.CHANGE, validate);
 			profile.weight_kgStep.addEventListener(Event.CHANGE, validate);
 			
-			profile.townsendGroup.addEventListener(Event.CHANGE, showTownsendImage);
+			//profile.townsendGroup.addEventListener(Event.CHANGE, showTownsendImage);
 			
 			profile.totalCholesterolStep.addEventListener(Event.CHANGE, validate);
 			profile.hdlCholesterolStep.addEventListener(Event.CHANGE, validate);
@@ -164,9 +163,9 @@ package org.understandinguncertainty.UKPDS.view
 			profileLoadSignal.remove(loadPersonalDetails);
 			profileSaveSignal.remove(savePersonalDetails);
 
-			profile.cvdAlready.removeEventListener(Event.CHANGE, validate);
-			profile.termsCheckbox.removeEventListener(Event.CHANGE, validate);
-			profile.termsButton.removeEventListener(MouseEvent.CLICK, visitTerms);
+			//profile.cvdAlready.removeEventListener(Event.CHANGE, validate);
+			//profile.termsCheckbox.removeEventListener(Event.CHANGE, validate);
+			//profile.termsButton.removeEventListener(MouseEvent.CLICK, visitTerms);
 
 			profile.ddStep.removeEventListener(Event.CHANGE, validate);
 			profile.mmStep.removeEventListener(Event.CHANGE, validate);
@@ -175,7 +174,7 @@ package org.understandinguncertainty.UKPDS.view
 			profile.height_mStep.removeEventListener(Event.CHANGE, validate);
 			profile.weight_kgStep.removeEventListener(Event.CHANGE, validate);
 			
-			profile.townsendGroup.removeEventListener(Event.CHANGE, showTownsendImage);
+			//profile.townsendGroup.removeEventListener(Event.CHANGE, showTownsendImage);
 
 			profile.totalCholesterolStep.removeEventListener(Event.CHANGE, validate);
 			profile.hdlCholesterolStep.removeEventListener(Event.CHANGE, validate);
@@ -236,14 +235,14 @@ package org.understandinguncertainty.UKPDS.view
 			profile.ethnicGroup.selectedIndex = Number(pvars.ethnicGroup);
 			profile.height_mStep.value = pvars.height_m.value;
 			profile.weight_kgStep.value = pvars.weight_kg.value;
-			profile.townsendGroup.selectedIndex = Number(pvars.townsendGroup);
-			profile.fh.selected = pvars.relativeHadCVD.value;
-			profile.crd.selected = pvars.chronicRenalDisease.value;
+			//profile.townsendGroup.selectedIndex = Number(pvars.townsendGroup);
+			//profile.fh.selected = pvars.relativeHadCVD.value;
+			//profile.crd.selected = pvars.chronicRenalDisease.value;
 			profile.af.selected = pvars.atrialFibrillation.value;
-			profile.ra.selected = pvars.rheumatoidArthritis.value;
+			//profile.ra.selected = pvars.rheumatoidArthritis.value;
 			profile.smokerGroup.selectedIndex = Number(pvars.smokerGroup);
 			
-			profile.diabetic.selected = pvars.diabetic.value;
+			//profile.diabetic.selected = pvars.diabetic.value;
 			
 			hdlCholesterol_mmol_L = Number(pvars.hdlCholesterol_mmol_L);
 			totalCholesterol_mmol_L = Number(pvars.totalCholesterol_mmol_L);
@@ -252,7 +251,7 @@ package org.understandinguncertainty.UKPDS.view
 			profile.nonHDLField.text = "NonHDL Cholesterol: " + nonHDL.toPrecision(3);
 			
 			profile.systolicBloodPressure = Number(pvars.systolicBloodPressure);
-			profile.SBPTreated.selected = pvars.SBPTreated.value;
+			//profile.SBPTreated.selected = pvars.SBPTreated.value;
 						
 			validate();
 			
@@ -272,18 +271,18 @@ package org.understandinguncertainty.UKPDS.view
 			pvars.ethnicGroup.value = profile.ethnicGroup.selectedIndex;
 			pvars.height_m.value = profile.height_mStep.value;
 			pvars.weight_kg.value = profile.weight_kgStep.value;
-			pvars.townsendGroup.value = profile.townsendGroup.selectedIndex;
-			pvars.relativeHadCVD.value = profile.fh.selected;
-			pvars.chronicRenalDisease.value = profile.crd.selected;
+			//pvars.townsendGroup.value = profile.townsendGroup.selectedIndex;
+			//pvars.relativeHadCVD.value = profile.fh.selected;
+			//pvars.chronicRenalDisease.value = profile.crd.selected;
 			pvars.atrialFibrillation.value = profile.af.selected;
-			pvars.rheumatoidArthritis.value = profile.ra.selected;
+			//pvars.rheumatoidArthritis.value = profile.ra.selected;
 			pvars.smokerGroup.value = profile.smokerGroup.selectedIndex;
 			
-			pvars.diabetic.value = profile.diabetic.selected
+			//pvars.diabetic.value = profile.diabetic.selected
 			pvars.hdlCholesterol_mmol_L.value = hdlCholesterol_mmol_L;
 			pvars.totalCholesterol_mmol_L.value = totalCholesterol_mmol_L;
 			pvars.systolicBloodPressure.value = profile.systolicBloodPressure;
-			pvars.SBPTreated.value = profile.SBPTreated.selected;
+			//pvars.SBPTreated.value = profile.SBPTreated.selected;
 			
 			userProfile.isValid = false;
 		}
@@ -381,10 +380,10 @@ package org.understandinguncertainty.UKPDS.view
 			var e4:Boolean = (profile.sbpValidator.validate().results != null);
 			var e5:Boolean = (profile.heightValidator.validate().results != null);
 			var e6:Boolean = (profile.weightValidator.validate().results != null);
-			var e7:Boolean = (profile.hadCVDValidator.validate().results != null);
-			var e8:Boolean = (profile.termsValidator.validate().results != null);
+//			var e7:Boolean = (profile.hadCVDValidator.validate().results != null);
+//			var e8:Boolean = (profile.termsValidator.validate().results != null);
 
-			if(e1 || e2 || e3 || e4 || e5 || e6 || e7 || e8) {
+			if(e1 || e2 || e3 || e4 || e5 || e6) {
 				isValid = false;
 				profile.nextButton.enabled = false;
 				profileValidSignal.dispatch(false);
@@ -577,10 +576,11 @@ package org.understandinguncertainty.UKPDS.view
 			var kg:Number = Number(profile.weight_kgStep.value);
 			return kg/(m*m);
 		}
-		
+		/*
 		private function showTownsendImage(event:Event):void {
 			var band:int = 5-profile.townsendGroup.selectedIndex;
 			profile.townsendBand.source = "assets/townsend/band"+band+".jpg";
 		}
+		*/
 	}
 }
