@@ -27,7 +27,7 @@ package org.understandinguncertainty.personal
 		public const intercept_CHD:Number = 0.0112;
 		public const intercept_Stroke:Number = 0.00186;
 		
-		public var dateOfBirth:DateOfBirth; // = new DateOfBirth("dateOfBirth", new Date((new Date()).time - 40*365.25*24*60*60000));
+		public var dateOfBirth:DateOfBirth; 
 		public var age:AgePersonalVariable = new AgePersonalVariable("age", 55);
 		public var gender:StringPersonalVariable = new StringPersonalVariable("gender", "male");
 
@@ -38,7 +38,7 @@ package org.understandinguncertainty.personal
 
 		public var yearOfBirth:YearOfBirth = new YearOfBirth("yearOfBirth", new Date().fullYear);
 		
-		public var dateOfDiagnosis:DateOfBirth = new DateOfBirth("dateOfDiagnosis", new Date());
+		public var dateOfDiagnosis:DateOfDiagnosis = new DateOfDiagnosis("dateOfDiagnosis", new Date());
 		public var hba1c:NumberPersonalVariable = new NumberPersonalVariable("hba1c", 6.72);
 		public var systolicBloodPressure:NumberPersonalVariable = new NumberPersonalVariable("systolicBloodPressure", 135.5);
 		public var lipidRatio:NumberPersonalVariable = new NumberPersonalVariable("lipidRatio", 5.11);
@@ -49,7 +49,7 @@ package org.understandinguncertainty.personal
 		public var smoker:BooleanPersonalVariable = new BooleanPersonalVariable("smoker", false);
 		public var weight_kg:NumberPersonalVariable = new NumberPersonalVariable("weight_kg", 65);
 		public var active:BooleanPersonalVariable = new BooleanPersonalVariable("active", true);
-		public function get diabeticT():Number {return dateOfDiagnosis.getAge();}
+		public function get diabeticT():Number {return dateOfDiagnosis.getDuration();}
 		
 		/* UKPDS interventions (changes) */
 		public function get ldlCholesterol_mmol_L():Number {
@@ -87,16 +87,13 @@ package org.understandinguncertainty.personal
 			var tenYearsAgo:Date = new Date();
 			tenYearsAgo.fullYear -= 10;
 			dateOfBirth = new DateOfBirth("dateOfBirth", fortyYearsAgo);
-			dateOfDiagnosis = new DateOfBirth("dateOfDiagnosis", tenYearsAgo);
+			dateOfDiagnosis = new DateOfDiagnosis("dateOfDiagnosis", tenYearsAgo);
 			
 			// inject dependencies that may exist between different variables
 			yearOfBirth.dateOfBirth = dateOfBirth;
 			dateOfBirth.yearOfBirth = yearOfBirth;
 			age.yearOfBirth = yearOfBirth;
 			age.dateOfBirth = dateOfBirth;
-			
-			// TODO: this is probably wrong 
-			dateOfDiagnosis.yearOfBirth = yearOfBirth;
 			
 		}
 

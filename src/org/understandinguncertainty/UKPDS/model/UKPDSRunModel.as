@@ -33,21 +33,10 @@ package org.understandinguncertainty.UKPDS.model
 			return _showDifferences;
 		}
 		
-		private var _maleParams:MaleParameters;
-		private function get maleParameters():MaleParameters
+		private var _params:UKPDSParameters;
+		private function get parameters():UKPDSParameters
 		{
-			return _maleParams || new MaleParameters();
-		}
-		
-		private var _femaleParams:FemaleParameters;
-		private function get femaleParameters():FemaleParameters
-		{
-			return _femaleParams || new FemaleParameters();
-		}
-		
-		private function get framinghamParams():FraminghamParameters
-		{
-			return (userProfile.gender == "male") ? maleParameters : femaleParameters;
+			return _params || new UKPDSParameters();
 		}
 		
 		public function commitProperties():void {
@@ -207,9 +196,8 @@ package org.understandinguncertainty.UKPDS.model
 		private function calculateOneYear(i:int):CalculatedParams
 		{
 			
-			var p:FraminghamParameters = framinghamParams;
-			var beta:BetasVO = framinghamParams.beta;
-			var q:BetasVO = framinghamParams.q;
+			var p:UKPDSParameters = parameters;
+
 			var profile:VariableList = userProfile.variableList;
 			var profile_int:VariableList = interventionProfile.variableList;
 
