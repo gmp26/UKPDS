@@ -84,6 +84,10 @@ package org.understandinguncertainty.UKPDS.model
 		
 		// chd intervention hazard
 		public function chd_int(
+			q1:Number, // input result of chd_q1 calculation above
+			
+			
+								
 		
 	}
 }
