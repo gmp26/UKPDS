@@ -45,15 +45,15 @@ package org.understandinguncertainty.UKPDS.model
 		}
 		
 		public function get isFemale():Boolean {
-			return variableList.gender.toString() == "female";
+			return variableList.gender.toString() != "male";
 		}
 		
-		public function get b_gender():int
+		public function get gender():int
 		{
 			return variableList.gender.toString() == "male" ? 1 : 0;
 		}
 		
-		public function get b_AF():int
+		public function get atrialFibrilation():int
 		{
 			return boolInt(variableList.atrialFibrillation.value);
 		}
@@ -63,9 +63,9 @@ package org.understandinguncertainty.UKPDS.model
 			return variableList.bmi;
 		}
 		
-		public function get ethRisk():int
+		public function get afroCarib():Boolean
 		{
-			return Number(variableList.ethnicGroup.value) + 1;
+			return Number(variableList.ethnicGroup.value) + 1 == ;
 		}
 		
 		public function get rati():Number

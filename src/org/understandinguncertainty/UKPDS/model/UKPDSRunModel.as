@@ -6,9 +6,9 @@ package org.understandinguncertainty.UKPDS.model
 	import mx.collections.ArrayCollection;
 	import mx.resources.IResourceManager;
 	
-	import org.understandinguncertainty.UKPDS.model.vo.ParamsVO;
 	import org.understandinguncertainty.UKPDS.model.vo.CalculatedParams;
 	import org.understandinguncertainty.UKPDS.model.vo.ColourNumbersVO;
+	import org.understandinguncertainty.UKPDS.model.vo.ParamsVO;
 	import org.understandinguncertainty.personal.VariableList;
 	import org.understandinguncertainty.personal.signals.ModelUpdatedSignal;
 	import org.understandinguncertainty.personal.signals.UpdateModelSignal;
@@ -99,7 +99,10 @@ package org.understandinguncertainty.UKPDS.model
 			
 			peakYellowNeg = 20;
 			
-			for(var i:int=userProfile.age; i <= appState.maximumAge; i++) {
+			for(var quarter:int=Math.round(4*userProfile.age); quarter <= 4*appState.maximumAge; quarter++) {
+				
+				var age = quarter*4;
+				var t = userProfile.
 				
 				var calculatedParams:CalculatedParams = calculateOneYear(i);
 				
