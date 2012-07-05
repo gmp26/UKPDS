@@ -23,27 +23,16 @@ package org.understandinguncertainty.personal.variables
 			super.value = v;
 		}
 		
-		public function getDuration():int {
+		private const msInYear:Number = 1000*60*60*24*365.25;
+
+		public function getDuration():Number {
 			var date:Date = value;
 			if(date == null) return -1;
 			var now:Date = new Date();
 
-			var yearDiff:int = now.getFullYear() - date.getFullYear();
-			var monthDiff:int = now.getMonth() - date.getMonth();
-
-			if(monthDiff > 0)
-				return yearDiff;
-			
-			if(monthDiff < 0)
-				return yearDiff-1;
-			
-			var dayDiff:int = now.date - date.date;
-			if(dayDiff >= 0)
-				return yearDiff;
-			else
-				return yearDiff - 1;
-
+			var elapsedMilliSecs:Number = now.time - date.time;
+			return elapsedMilliSecs/msInYear;
 		}
-
+			
 	}
 }

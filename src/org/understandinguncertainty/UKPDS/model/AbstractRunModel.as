@@ -22,9 +22,6 @@ package org.understandinguncertainty.UKPDS.model
 		[Inject(name="userProfile")]
 		public var userProfile:UserModel;
 		
-		[Inject(name="interventionProfile")]
-		public var interventionProfile:UserModel;
-		
 		[Inject]
 		public var modelUpdatedSignal:ModelUpdatedSignal;
 		

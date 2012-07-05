@@ -6,7 +6,7 @@ package org.understandinguncertainty.UKPDS.model
 	import mx.collections.ArrayCollection;
 	import mx.resources.IResourceManager;
 	
-	import org.understandinguncertainty.UKPDS.model.vo.BetasVO;
+	import org.understandinguncertainty.UKPDS.model.vo.ParamsVO;
 	import org.understandinguncertainty.UKPDS.model.vo.CalculatedParams;
 	import org.understandinguncertainty.UKPDS.model.vo.ColourNumbersVO;
 	import org.understandinguncertainty.personal.VariableList;
@@ -31,12 +31,6 @@ package org.understandinguncertainty.UKPDS.model
 		 */
 		public function get showDifferences():Boolean {
 			return _showDifferences;
-		}
-		
-		private var _params:UKPDSParameters;
-		private function get parameters():UKPDSParameters
-		{
-			return _params || new UKPDSParameters();
 		}
 		
 		public function commitProperties():void {
@@ -196,65 +190,11 @@ package org.understandinguncertainty.UKPDS.model
 		private function calculateOneYear(i:int):CalculatedParams
 		{
 			
-			var p:UKPDSParameters = parameters;
-
+			var p:UKPDSParameters = new UKPDSParameters();
 			var profile:VariableList = userProfile.variableList;
-			var profile_int:VariableList = interventionProfile.variableList;
-
-			var ageBetaX:Number = Math.log(i) * beta.age;
 			
-			var tCBetaX:Number = Math.log(appState.mmolConvert*(profile.totalCholesterol_mmol_L.value as Number)) * beta.totalCholesterol_mmol_L;
-			var tCBetaX_1:Number = Math.log(appState.mmolConvert*(profile_int.totalCholesterol_mmol_L.value as Number)) * beta.totalCholesterol_mmol_L;
-			var tCBetaX_int:Number = (1-q.totalCholesterol_mmol_L)*tCBetaX + q.totalCholesterol_mmol_L*tCBetaX_1;
-			
-			var hdlBetaX:Number = Math.log(appState.mmolConvert*(profile.hdlCholesterol_mmol_L.value as Number)) * beta.hdlCholesterol_mmol_L;
-			var hdlBetaX_1:Number = Math.log(appState.mmolConvert*(profile_int.hdlCholesterol_mmol_L.value as Number)) * beta.hdlCholesterol_mmol_L;
-			var hdlBetaX_int:Number = (1-q.hdlCholesterol_mmol_L)*hdlBetaX + q.hdlCholesterol_mmol_L*hdlBetaX_1;
-
-			// Note that the SBP may change AND/OR it may be treated during the intervention, so we calculate the effect before
-			// and after taking both of these into account. Then we interpolate.
-			var SBPTreated:Boolean = (profile.SBPTreated.value as Boolean);
-			var sbpBetaX:Number = Math.log(profile.systolicBloodPressure.value as Number);
-			if(SBPTreated)
-				sbpBetaX *= beta.SBPTreated;
-			else
-				sbpBetaX *= beta.systolicBloodPressure;
-
-			SBPTreated = (profile_int.SBPTreated.value as Boolean);
-			var sbpBetaX_int:Number = Math.log(profile_int.systolicBloodPressure.value as Number);
-			if(SBPTreated)
-				sbpBetaX_int *= beta.SBPTreated;
-			else
-				sbpBetaX_int *= beta.systolicBloodPressure;
-			
-			// Now interpolate
-			var smokerBetaX:Number = (profile.nonSmoker.value as Boolean) ? 0 : beta.smoker;
-			var smokerBetaX_int:Number;
-			if(profile_int.nonSmoker.value as Boolean) {
-				smokerBetaX_int = (1 - q.smoker)*smokerBetaX;
-			}
-			else {
-				smokerBetaX_int = (1 - q.smoker)*smokerBetaX + q.smoker*beta.smoker;
-			}
-			
-			var diabeticBetaX:Number = (profile.diabetic.value as Boolean) ? beta.diabetic : 0;
-			var diabeticBetaX_int:Number = (1 - q.diabetic)*diabeticBetaX
-				+ ((profile_int.diabetic.value as Boolean) ? (q.diabetic * beta.diabetic) : 0);
-			
-			var sumBetaX:Number = ageBetaX + tCBetaX + hdlBetaX + sbpBetaX + smokerBetaX + diabeticBetaX;
-			var sumBetaX_int:Number = ageBetaX + tCBetaX_int + hdlBetaX_int + sbpBetaX_int + smokerBetaX_int + diabeticBetaX_int;
-			
-			var lhr:Number = sumBetaX - p.averageHazard;
-			var lhr_int:Number = sumBetaX_int - p.averageHazard;
-
-			// heartAge
-			var h:Number
-			if(i == userProfile.age)
-				h = Math.exp(lhr/beta.age + p.xbar.age);
-
-			//trace("fram age: "+i+" a: "+lhr);
-			
-			return new CalculatedParams(p.a * Math.exp(lhr), p.a*Math.exp(lhr_int), h, p.a*Math.exp(ageBetaX-p.xbar.age*p.beta.age));
+			var H;
+			return H;
 		}
 		
 		private var _peakf:Number;

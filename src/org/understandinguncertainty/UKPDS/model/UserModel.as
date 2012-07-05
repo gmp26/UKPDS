@@ -36,6 +36,18 @@ package org.understandinguncertainty.UKPDS.model
 			return dob;
 		}
 		
+		public function get diabetesDuration():Number {
+			var t = variableList.dateOfDiagnosis.getDuration();
+		}
+		
+		public function get isMale():Boolean {
+			return variableList.gender.toString() == "male";
+		}
+		
+		public function get isFemale():Boolean {
+			return variableList.gender.toString() == "female";
+		}
+		
 		public function get b_gender():int
 		{
 			return variableList.gender.toString() == "male" ? 1 : 0;
@@ -44,26 +56,6 @@ package org.understandinguncertainty.UKPDS.model
 		public function get b_AF():int
 		{
 			return boolInt(variableList.atrialFibrillation.value);
-		}
-		
-		public function get b_ra():int
-		{
-			return boolInt(variableList.rheumatoidArthritis.value);	
-		}
-		
-		public function get b_renal():int
-		{
-			return boolInt(variableList.chronicRenalDisease.value);
-		}
-
-		public function get b_treatedhyp():int
-		{
-			return boolInt(variableList.SBPTreated.value);
-		}
-		
-		public function get b_type2():int
-		{
-			return boolInt(variableList.diabetic.value);
 		}
 		
 		public function get bmi():Number
@@ -76,11 +68,6 @@ package org.understandinguncertainty.UKPDS.model
 			return Number(variableList.ethnicGroup.value) + 1;
 		}
 		
-		public function get fh_cvd():int
-		{
-			return boolInt(variableList.relativeHadCVD.value);	
-		}
-
 		public function get rati():Number
 		{
 			var total:Number = Number(variableList.totalCholesterol_mmol_L.value);
