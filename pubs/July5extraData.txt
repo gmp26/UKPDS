@@ -1,0 +1,18 @@
+Post meeting template
+=====================
+
+From EM:
+HbA1c: minimum 5%, maximum 11%
+Systolic BP: minimum 100, maximum 220
+Body mass index: minimum 15, maximum 45
+Physical activity: Minutes of moderate physical activity per week: minimum = 0, maximum = 420.
+Total cholesterol: minimum = 3 mmol/ l, maximum = 10.
+
+From MS:
+HbA1c (%) 	men: 6.6	women: 6.9
+SBP (mmHg) 	men: 133	women: 139
+Lipid Ratio (Total/HDL)
+			men: 5.2	women: 5.1
+Atrial Fibrilation
+ 			men: 0.007	women: 0.005
+
