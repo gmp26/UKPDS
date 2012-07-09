@@ -37,7 +37,7 @@ package org.understandinguncertainty.UKPDS.model
 		}
 		
 		public function get diabetesDuration():Number {
-			var t = variableList.dateOfDiagnosis.getDuration();
+			return variableList.dateOfDiagnosis.getDuration();
 		}
 		
 		public function get isMale():Boolean {
@@ -46,11 +46,6 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public function get isFemale():Boolean {
 			return variableList.gender.toString() != "male";
-		}
-		
-		public function get gender():int
-		{
-			return variableList.gender.toString() == "male" ? 1 : 0;
 		}
 		
 		public function get atrialFibrilation():int
@@ -65,7 +60,8 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public function get afroCarib():Boolean
 		{
-			return Number(variableList.ethnicGroup.value) + 1 == ;
+			// TODO: tie this in
+			return Number(variableList.ethnicGroup.value) == 6;
 		}
 		
 		public function get rati():Number

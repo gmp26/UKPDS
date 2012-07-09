@@ -13,13 +13,7 @@ package org.understandinguncertainty.UKPDS.model.vo
 		
 		public var blue:Number;
 		public var blue_int:Number;
-		
-/*		public var yellow:int;
-		public var greenCrossed:int;
-		public var blue:int;
-		public var moreBlue:int;
-		public var red:int;
-*/			
+				
 		public function ColourNumbersVO()
 		{
 		}

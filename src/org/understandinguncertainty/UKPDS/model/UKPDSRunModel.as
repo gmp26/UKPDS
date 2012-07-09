@@ -35,15 +35,16 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public function commitProperties():void {
 
-
+			for(var i:int=0; i < ethnicGroups.length; i++) {
+				trace("eg["+i+"]="+ethnicGroups[i]);
+			} 
+			
 			_peakf = 0;
 			
 			if(userProfile.age == 0)
 				return;
 			appState.minimumAge = userProfile.age;
 
-			var series:Array= [];
-			var series_star:Array= [];
 			var series_deanfield:Array = [];
 
 			var a:Number;
@@ -69,9 +70,6 @@ package org.understandinguncertainty.UKPDS.model
 			var profile:VariableList = userProfile.variableList;
 			var nonSmoker:Boolean = profile.nonSmoker.value as Boolean;
 			var quitSmoker:Boolean = profile.quitSmoker.value as Boolean;
-			var profile_int:VariableList = interventionProfile.variableList;
-			var nonSmoker_int:Boolean = profile_int.nonSmoker.value as Boolean;
-			var quitSmoker_int:Boolean = profile_int.quitSmoker.value as Boolean;
 
 			sum_e = 0;
 			sum_e_int = 0;
@@ -101,106 +99,28 @@ package org.understandinguncertainty.UKPDS.model
 			
 			for(var quarter:int=Math.round(4*userProfile.age); quarter <= 4*appState.maximumAge; quarter++) {
 				
-				var age = quarter*4;
-				var t = userProfile.
+				var age:Number = quarter*4;
+				var t:Number = userProfile.diabetesDuration;
 				
-				var calculatedParams:CalculatedParams = calculateOneYear(i);
-				
-				a = calculatedParams.a;
-				a_gp = calculatedParams.genPop_a;
-				
-				var b0:Number = framinghamParams.b[i];
-				b = nonSmoker ? (quitSmoker ? 0.65*1.46*b0 : 0.88*b0) : 1.46*b0;
-				if(i == userProfile.age)
-					heartAge = calculatedParams.h;
-				if(i < appState.interventionAge) {
-					b_int = b;
-					a_int = a;
-				}
-				else {
-					a_int = calculatedParams.a_int;					
-					b_int = nonSmoker_int ? (quitSmoker_int ? 0.65*1.46*b0 : 0.88*b0) : 1.46*b0;
-				}
-								
-				c = e*b;
-				c_int = e_int*b_int;
-				c_gp = e_gp*b;
-				
-				d = e*a;
-				d_int = e_int*a_int;
-				d_gp = e_gp*a_gp;
-				
-				e -= (c+d);
-				e_int -= (c_int+d_int);
-				e_gp -= (c_gp + d_gp);
-				sum_e_int += e_int;
-				sum_e += e;
-				
-				f += d;
-				f_int += d_int;
-				f_gp += d_gp;
-				
-				m += c;
-				m_int += c_int;
-				m_gp += c_gp;
-													
-				// outlook yellow
-				var yellow:Number = f+m - (m_int+f_int);
-				
-				// cope with rare occasions when m+f > 100
-				var greenUnclamped:Number = 100 - Math.max(m + f, m_int + f_int);
-				if(greenUnclamped < 0)
-					yellow = Math.min(0, yellow + greenUnclamped);
-				yellow = Math.max(0,yellow);
-				
-				var green:Number = Math.min(100, Math.max(0, greenUnclamped));
-				var red:Number = f_int;
-								
-				series_deanfield.push({
-					age:		i+1,
-					
-					// for Outlook (+ve)
-					green:		green,
-					yellow:		green + yellow,		
-					red:		green + yellow + red,					
-
-					// for Outlook (-ve)
-					redNeg:	    f_int,					// f_int == f until interventions are entered
-					yellowNeg: 	f_int + yellow,			// yellow is sitting on top of f_int
-					blueNeg:	m_int + f_int + yellow, // no longer used
-
-					yellowOnly: yellow,
-					redOnly:	red,
-					
-					// for Outcomes
-					fdash:		f, 
-					fdash_int:	f_int,
-					mdash:		m,
-					mdash_int:	m_int,
-					f_gp:		f_gp
-				});
-				
-				_peakf = Math.max(_peakf, f);
-				_peakf = Math.max(_peakf, f_int);
-				peakYellowNeg = Math.max(f_int + yellow, peakYellowNeg);
- 			}
-
+				var calculatedParams:CalculatedParams = calculateOneYear(quarter);
+			}
 			_resultSet = new ArrayCollection(series_deanfield);
 			
 			modelUpdatedSignal.dispatch();
 		}		
 		
-		private function calculateOneYear(i:int):CalculatedParams
+		private function calculateOneYear(quarter:int):CalculatedParams
 		{
 			
 			var p:UKPDSParameters = new UKPDSParameters();
 			var profile:VariableList = userProfile.variableList;
 			
-			var H;
+			var H:CalculatedParams;
 			return H;
 		}
 		
 		private var _peakf:Number;
+		
 		/**
 		 * @return peak cardiovascular risk
 		 */   

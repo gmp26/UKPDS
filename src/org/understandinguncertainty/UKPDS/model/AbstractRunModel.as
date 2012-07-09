@@ -7,9 +7,9 @@ package org.understandinguncertainty.UKPDS.model
 	import mx.resources.IResourceManager;
 	
 	import org.understandinguncertainty.UKPDS.model.vo.ColourNumbersVO;
+	import org.understandinguncertainty.personal.VariableList;
 	import org.understandinguncertainty.personal.signals.ModelUpdatedSignal;
 	import org.understandinguncertainty.personal.signals.UpdateModelSignal;
-	import org.understandinguncertainty.personal.VariableList;
 	import org.understandinguncertainty.personal.types.BooleanPersonalVariable;
 
 	[ResourceBundle("UKPDS")]
@@ -117,6 +117,21 @@ package org.understandinguncertainty.UKPDS.model
 			colourNumbers.blue_int = m_int;
 			return colourNumbers;		
 
-		}	
+		}
+		
+		/* Read only accessor for ethnic groups defined in locale/UKPDS.properties */
+		private var _ethnicGroups:Vector.<String>;		
+		public function get ethnicGroups():Vector.<String> {
+			if(_ethnicGroups == null) {
+				var keyPrefix:String = "ethnicity.";
+				_ethnicGroups = new Vector.<String>();
+				var g:String;
+				for(var i:int=0; (g = resourceManager.getString("UKPDS", keyPrefix+i)) != null; i++) {
+					_ethnicGroups[i] = g;
+				}
+			}
+			return _ethnicGroups;
+		}
+		
 	}
 }

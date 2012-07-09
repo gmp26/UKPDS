@@ -16,12 +16,12 @@ Copyright University of Cambridge. All rights reserved
 			import mx.controls.ToolTip;
 			import mx.core.IUIComponent;
 			import mx.managers.ToolTipManager;
-			import mx.resources.IResourceManager;
+//			import mx.resources.IResourceManager;
 			
 			import org.understandinguncertainty.UKPDS.components.skins.ErrorSkin;	
 			
-			[Inject]
-			public var resources:IResourceManager;
+//			[Inject]
+//			public var resources:IResourceManager;
 			
 			public function get systolicBloodPressure():Number
 			{
