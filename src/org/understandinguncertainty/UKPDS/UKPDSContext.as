@@ -83,18 +83,20 @@ package org.understandinguncertainty.UKPDS
 			// Model
 			injector.mapSingleton(AppState);
 			
-			var userProfile:UserModel = new UserModel();
-			injector.mapValue(UserModel, userProfile, "userProfile");
+//			var userProfile:UserModel = new UserModel();
+//			injector.mapValue(UserModel, userProfile, "userProfile");
 			
-			var interventionProfile:UserModel = new UserModel();
-			injector.mapValue(UserModel, interventionProfile, "interventionProfile");	
+//			var interventionProfile:UserModel = new UserModel();
+//			injector.mapValue(UserModel, interventionProfile, "interventionProfile");	
 			
+			injector.mapSingleton(UserModel);
 
 			// Inject the risk model
 			injector.mapSingletonOf(ICardioModel, UKPDSRunModel); 
 			//injector.mapSingletonOf(ICardioModel, FraminghamRunModel); 
 			//injector.mapSingletonOf(ICardioModel, QRunModel);
 			
+
 			// Signals
 			injector.mapSingleton(ProfileValidSignal);
 			injector.mapSingleton(ProfileLoadSignal);

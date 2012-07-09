@@ -49,7 +49,7 @@ package org.understandinguncertainty.UKPDS.view
 		[Inject]
 		public var nextScreenSignal:NextScreenSignal;
 		
-		[Inject(name="userProfile")]
+		[Inject]
 		public var userProfile:UserModel;		
 		
 		[Inject]

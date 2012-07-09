@@ -16,12 +16,8 @@ Copyright University of Cambridge. All rights reserved
 			import mx.controls.ToolTip;
 			import mx.core.IUIComponent;
 			import mx.managers.ToolTipManager;
-//			import mx.resources.IResourceManager;
 			
 			import org.understandinguncertainty.UKPDS.components.skins.ErrorSkin;	
-			
-//			[Inject]
-//			public var resources:IResourceManager;
 			
 			public function get systolicBloodPressure():Number
 			{
@@ -105,28 +101,12 @@ Copyright University of Cambridge. All rights reserved
 		<validators:CholRatioValidator id="hdlCholValidator" source="{hdlCholesterolStep}" property="cholRatio"
 							required="true" 
 							/>
-		<ns:NumberValidator id="hba1cValidator" domain="real" minValue="0" maxValue="20" required="true" source="{hba1cStepper}" property="value"/>	
+		
+		<ns:NumberValidator id="hba1cValidator" domain="real" minValue="4" maxValue="6" required="true" source="{hba1cStepper}" property="value"/>	
 		<ns:NumberValidator id="sbpValidator" domain="real" minValue="70" maxValue="210" required="true" source="{systolicBloodPressureInputStep}" property="value"/>	
 							
-		<!-- UKPDS removed
-		<ns:NumberValidator id="hadCVDValidator" 
-							minValue="1" maxValue="1" 
-							lowerThanMinError = "If you already have heart disease this calculator is not appropriate, but what matters is sticking to your treatment."
-							required="true" 
-							source="{cvdAlready}"
-							property="hadCVD" />
-
-		<ns:NumberValidator id="termsValidator" 
-							minValue="1" maxValue="1" 
-							lowerThanMinError="Please confirm you have read our terms and conditions"
-							required="true" 
-							source="{termsCheckbox}" 
-							property="hadCVD" />
-		-->
 	</fx:Declarations>
 		
-<!--	<s:Group width="440" height="450" >
--->
 	<s:Group>
 		<s:filters>
 			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
@@ -141,13 +121,7 @@ Copyright University of Cambridge. All rights reserved
 				
 				<s:VGroup horizontalAlign="left" height="100%">
 					
-<!--				<s:HGroup width="100%" verticalAlign="bottom">
-						<s:Group width="100%"/>
-						<s:Label text="Have you ever suffered from Cardiovascular Disease?" fontWeight="normal"/>
-						<components:HadCVDCheck id="cvdAlready"  errorSkin="{ErrorSkin}"/>
-					</s:HGroup>
-					
--->					<s:HGroup width="100%" verticalAlign="bottom" horizontalAlign="right"  toolTip="{tipPlaceHolder}">
+					<s:HGroup width="100%" verticalAlign="bottom" horizontalAlign="right"  toolTip="{tipPlaceHolder}">
 						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.dob')" fontWeight="normal" />
 						<s:VGroup horizontalAlign="center" gap="2">
 							<s:Label text="Day" fontSize="10" color="#AAAAAA"/>

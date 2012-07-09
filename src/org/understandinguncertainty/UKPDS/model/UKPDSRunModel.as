@@ -17,6 +17,11 @@ package org.understandinguncertainty.UKPDS.model
 	[ResourceBundle("UKPDS")]
 	public class UKPDSRunModel extends AbstractRunModel implements ICardioModel
 	{	
+
+		/* following are used in UKPDS */		
+		public const intercept_CHD:Number = 0.0112;
+		public const intercept_Stroke:Number = 0.00186;		
+
 		private var _showDifferences:Boolean = false;
 		
 		/**
@@ -35,8 +40,8 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public function commitProperties():void {
 
-			for(var i:int=0; i < ethnicGroups.length; i++) {
-				trace("eg["+i+"]="+ethnicGroups[i]);
+			for(var i:int=0; i < userProfile.ethnicGroups.length; i++) {
+				trace("eg["+i+"]="+userProfile.ethnicGroups[i]);
 			} 
 			
 			_peakf = 0;
@@ -68,8 +73,8 @@ package org.understandinguncertainty.UKPDS.model
 			var m_int:Number = 0;
 			var m_gp:Number = 0;
 			var profile:VariableList = userProfile.variableList;
-			var nonSmoker:Boolean = profile.nonSmoker.value as Boolean;
-			var quitSmoker:Boolean = profile.quitSmoker.value as Boolean;
+			var nonSmoker:Boolean = profile.smokerAtDiagnosis.value as Boolean;
+//			var quitSmoker:Boolean = profile.quitSmoker.value as Boolean;
 
 			sum_e = 0;
 			sum_e_int = 0;

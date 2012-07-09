@@ -23,7 +23,7 @@ package org.understandinguncertainty.UKPDS.view
 		[Inject]
 		public var appState:AppState;
 		
-		[Inject(name="userProfile")]
+		[Inject]
 		public var userProfile:UserModel;
 		
 		[Inject]

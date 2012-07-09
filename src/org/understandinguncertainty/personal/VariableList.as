@@ -6,7 +6,6 @@ package org.understandinguncertainty.personal
 	import flash.utils.describeType;
 	
 	import org.understandinguncertainty.personal.interfaces.IPersonalVariable;
-	import org.understandinguncertainty.personal.types.AgePersonalVariable;
 	import org.understandinguncertainty.personal.types.BooleanPersonalVariable;
 	import org.understandinguncertainty.personal.types.DDMMYYYY_PersonalVariable;
 	import org.understandinguncertainty.personal.types.NumberPersonalVariable;
@@ -23,20 +22,15 @@ package org.understandinguncertainty.personal
 	 */
 	public class VariableList {
 		
-		/* following are used in UKPDS */		
-		public const intercept_CHD:Number = 0.0112;
-		public const intercept_Stroke:Number = 0.00186;
-		
 		public var dateOfBirth:DateOfBirth; 
-		public var age:AgePersonalVariable = new AgePersonalVariable("age", 55);
+//		public var age:AgePersonalVariable = new AgePersonalVariable("age", 55);
 		public var gender:StringPersonalVariable = new StringPersonalVariable("gender", "male");
 
-		public function get afroCaribbean():Boolean {
+/*		public function get afroCaribbean():Boolean {
 			return Number(ethnicGroup.value) == 5; // magic number: selects "Black Caribbean" 
 			// see profile.dataProvider.ethnicGroup initialisation
 		}
-
-		public var yearOfBirth:YearOfBirth = new YearOfBirth("yearOfBirth", new Date().fullYear);
+*/
 		
 		public var dateOfDiagnosis:DateOfDiagnosis = new DateOfDiagnosis("dateOfDiagnosis", new Date());
 		public var hba1c:NumberPersonalVariable = new NumberPersonalVariable("hba1c", 6.72);
@@ -45,38 +39,30 @@ package org.understandinguncertainty.personal
 		public var atrialFibrillation:BooleanPersonalVariable = new BooleanPersonalVariable("atrialFibrillation", false);
 		public var totalCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("totalCholesterol_mmol_L", 5.5);
 		public var hdlCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("hdlCholesterol_mmol_L", 1.16);
-
-		public var smoker:BooleanPersonalVariable = new BooleanPersonalVariable("smoker", false);
+		public var ethnicGroup:NumberPersonalVariable = new NumberPersonalVariable("ethnicGroup", 0);
+		public var smokerAtDiagnosis:BooleanPersonalVariable = new BooleanPersonalVariable("smokerAtDiagnosis", false);
 		public var weight_kg:NumberPersonalVariable = new NumberPersonalVariable("weight_kg", 65);
-		public var active:BooleanPersonalVariable = new BooleanPersonalVariable("active", true);
-		public function get diabeticT():Number {return dateOfDiagnosis.getDuration();}
-		
-		/* UKPDS interventions (changes) */
-		public function get ldlCholesterol_mmol_L():Number {
-			var t:Number = Number(totalCholesterol_mmol_L.value);
-			var h:Number = Number(hdlCholesterol_mmol_L.value);
-			return (t-h)/1.24 // see Sweeting 2012 section 2.3 ;
-		}
+		public var height_m:NumberPersonalVariable = new NumberPersonalVariable("height_m", 1.7);
+		public var minsActivityPerWeek:NumberPersonalVariable = new NumberPersonalVariable("minsActivityPerWeek", 200);
 		
 		/* following are unused in UKPDS */
+		/*
 		public var fiveaday:BooleanPersonalVariable = new BooleanPersonalVariable("fiveaday", true);
 		public var moderateAlcohol:BooleanPersonalVariable = new BooleanPersonalVariable("moderateAlcohol", true);
 		public var smokerGroup:NumberPersonalVariable = new NumberPersonalVariable("smokerGroup", true);
 		public var nonSmoker:BooleanPersonalVariable = new BooleanPersonalVariable("nonSmoker", true);
 		public var quitSmoker:BooleanPersonalVariable = new BooleanPersonalVariable("quitSmoker", false);		
-		public var height_m:NumberPersonalVariable = new NumberPersonalVariable("height_m", 1.7);
 		public var SBPTreated:BooleanPersonalVariable = new BooleanPersonalVariable("SBPTreated", false);
 		public var diabetic:BooleanPersonalVariable = new BooleanPersonalVariable("diabetic", false);
 		
 		public var chronicRenalDisease:BooleanPersonalVariable = new BooleanPersonalVariable("chronicRenalDisease", false);
 		public var rheumatoidArthritis:BooleanPersonalVariable = new BooleanPersonalVariable("rheumatoidArthritis", false);
 		public var relativeHadCVD:BooleanPersonalVariable = new BooleanPersonalVariable("relativeHadCVD", false);
-		public var ethnicGroup:NumberPersonalVariable = new NumberPersonalVariable("ethnicGroup", 0);
 		public var postCode:StringPersonalVariable = new StringPersonalVariable("postCode", "");
 		
 		public var townsend:NumberPersonalVariable = new NumberPersonalVariable("townsend", 0);
 		public var townsendGroup:NumberPersonalVariable = new NumberPersonalVariable("townsendGroup", 2);
-		
+		*/
 				
 		function VariableList() {
 			
@@ -88,26 +74,18 @@ package org.understandinguncertainty.personal
 			tenYearsAgo.fullYear -= 10;
 			dateOfBirth = new DateOfBirth("dateOfBirth", fortyYearsAgo);
 			dateOfDiagnosis = new DateOfDiagnosis("dateOfDiagnosis", tenYearsAgo);
-			
-			// inject dependencies that may exist between different variables
-			yearOfBirth.dateOfBirth = dateOfBirth;
-			dateOfBirth.yearOfBirth = yearOfBirth;
-			age.yearOfBirth = yearOfBirth;
-			age.dateOfBirth = dateOfBirth;
-			
 		}
 
 		public function toString():String
 		{
-			var s:String = "age:" + (age.value as int);
+			var s:String = "age:" + (dateOfBirth.getAge());
+			s +=" T:" + (dateOfDiagnosis.getDuration());
 			s += " sex:" + (gender.value as String);
 			s += " tc:" + (totalCholesterol_mmol_L.value as Number);
 			s += " hdl:" + (hdlCholesterol_mmol_L.value as Number);
 			s += " sbp:" + (systolicBloodPressure.value as Number) + "\n";
-			s += " diab:" + (diabetic.value as Boolean);
-			s += " smok:" + !(nonSmoker.value as Boolean);
-			s += " qsmk:" + (quitSmoker.value as Boolean);
-			s += " actv:" + (active.value as Boolean);
+			s += " smok:" + (smokerAtDiagnosis.value as Boolean);
+			s += " ethnicGroup:" + (ethnicGroup.value as Number);
 			return s;
 		}
 		
@@ -116,53 +94,6 @@ package org.understandinguncertainty.personal
 			return this[name] as IPersonalVariable;
 		}
 		
-		/* Some derived variables */
-		public function get cholRatio():Number
-		{
-			var t:Number = Number(totalCholesterol_mmol_L.value);
-			var h:Number = Number(hdlCholesterol_mmol_L.value);
-			return t/h;
-		}
-		
-		// WARNING: only use this for interventions - it should not persist
-		public function set cholRatio(ratio:Number):void
-		{
-			totalCholesterol_mmol_L.value = ratio*Number(hdlCholesterol_mmol_L.value);
-		}
-		
-		public function get bmi():Number
-		{
-			var w:Number = Number(weight_kg.value);
-			var h:Number = Number(height_m.value);
-			//trace("bmi ="+(w/(h*h)), " w =", w, " h =", h);
-			return w/(h*h);
-		}
-
-		public function get feet():Number
-		{
-			return Math.floor(Number(height_m.value) * 3.2808399 + 1/24);
-		}
-		
-		public function get inches():Number
-		{
-			return Math.round((Number(height_m.value) * 3.2808399 + 1/24 - feet)*12);
-		}
-		
-		public function get stones():Number
-		{
-			return Math.floor(Number(weight_kg.value) * 0.157473044 + 1/28);			
-		}
-		
-		public function get pounds():Number
-		{
-			return Math.round((Number(weight_kg.value) * 0.157473044 + 1/28 - stones)*14);						
-		}
-		
-		public function get lbs():Number
-		{
-			return Math.round(Number(weight_kg.value) * 2.20462262);
-		}
-
 		
 		/**
 		 * If this works well, use it in lieu of clone() so we don't get clone errors when we add or delete variables.

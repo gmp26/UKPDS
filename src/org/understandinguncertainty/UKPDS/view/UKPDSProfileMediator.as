@@ -58,23 +58,17 @@ package org.understandinguncertainty.UKPDS.view
 		[Inject]
 		public var nextScreenSignal:NextScreenSignal;
 		
-		[Inject(name="userProfile")]
-		public var userProfile:UserModel;		
+		[Inject]
+		public var userProfile:UserModel;
+		
+		public var inter:UserModel;
 		
 		[Inject]
 		public var runModel:ICardioModel;
 		
 		[Inject]
 		public var appState:AppState;
-		
-		//[Inject(name="userProfile")]
-		//public var user:UserModel;
-		
-		[Inject(name="interventionProfile")]
-		public var inter:UserModel;
-		
-//		[Inject]
-//		public var clearInterventionsSignal:ClearInterventionsSignal;
+
 		
 		private var ps:PersonalisationFileStore;
 		
@@ -253,7 +247,8 @@ package org.understandinguncertainty.UKPDS.view
 			//profile.crd.selected = pvars.chronicRenalDisease.value;
 			profile.af.selected = pvars.atrialFibrillation.value;
 			//profile.ra.selected = pvars.rheumatoidArthritis.value;
-			profile.smokerGroup.selectedIndex = Number(pvars.smokerGroup);
+			
+			profile.smokerGroup.selectedIndex = Number(pvars.smokerAtDiagnosis.value);
 			
 			//profile.diabetic.selected = pvars.diabetic.value;
 			
@@ -289,7 +284,7 @@ package org.understandinguncertainty.UKPDS.view
 			//pvars.chronicRenalDisease.value = profile.crd.selected;
 			pvars.atrialFibrillation.value = profile.af.selected;
 			//pvars.rheumatoidArthritis.value = profile.ra.selected;
-			pvars.smokerGroup.value = profile.smokerGroup.selectedIndex;
+			pvars.smokerAtDiagnosis.value = profile.smokerGroup.selectedIndex;
 			
 			//pvars.diabetic.value = profile.diabetic.selected
 			pvars.hdlCholesterol_mmol_L.value = hdlCholesterol_mmol_L;
@@ -309,7 +304,6 @@ package org.understandinguncertainty.UKPDS.view
 			// Set the user profile variableList BEFORE cloning it into the interventions profile
 			setPersonalDetails();			
 			inter.variableList = userProfile.variableList.clone();			
-			//clearInterventionsSignal.dispatch();
 			
 		}
 		
@@ -591,11 +585,6 @@ package org.understandinguncertainty.UKPDS.view
 			var kg:Number = Number(profile.weight_kgStep.value);
 			return kg/(m*m);
 		}
-		/*
-		private function showTownsendImage(event:Event):void {
-			var band:int = 5-profile.townsendGroup.selectedIndex;
-			profile.townsendBand.source = "assets/townsend/band"+band+".jpg";
-		}
-		*/
+
 	}
 }

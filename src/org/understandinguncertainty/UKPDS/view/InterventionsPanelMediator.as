@@ -25,11 +25,10 @@ package org.understandinguncertainty.UKPDS.view
 		[Inject]
 		public var interventionsPanel:InterventionsPanel;
 		
-		[Inject(name="userProfile")]
+		[Inject]
 		public var userProfile:UserModel;
 		
-		[Inject(name="interventionProfile")]
-		public var interventionProfile:UserModel;
+//		public var interventionProfile:UserModel;
 		
 		[Inject]
 		public var runModel:ICardioModel;
@@ -47,11 +46,10 @@ package org.understandinguncertainty.UKPDS.view
 		
 		override public function onRegister() : void
 		{
-			var inter:VariableList = interventionProfile.variableList;
 			
 			// Set stepper limits
-			interventionsPanel.sbp.minimum = QParametersVO.lowerLimits().sbp;
-			interventionsPanel.sbp.maximum = QParametersVO.upperLimits().sbp;
+			interventionsPanel.sbp.minimum = 100;
+			interventionsPanel.sbp.maximum = 220;
 
 			interventionsPanel.totalCholesterol.minimum = 0.0000001;
 			interventionsPanel.totalCholesterol.maximum = 20;
@@ -71,11 +69,8 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.resetButton.addEventListener(MouseEvent.CLICK, resetAll);
 			
 			interventionsPanel.futureSmokingCategory.dataProvider = new ArrayCollection([
-				"No",
-				"I quit",
-				"less than 10/day",
-				"less than 20/day",
-				"20+/day"
+				"Non Smoker",
+				"Smoker"
 			]);
 			interventionsPanel.futureSmokingCategory.addEventListener(Event.CHANGE, futureSmokingChanged);
 
@@ -106,7 +101,7 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.totalCholesterol.original = interventionsPanel.totalCholesterol.value = user.totalCholesterol_mmol_L.value;
 			interventionsPanel.hdlCholesterol.original = interventionsPanel.hdlCholesterol.value = user.hdlCholesterol_mmol_L.value;
 			
-			interventionsPanel.futureSmokingCategory.selectedIndex = user.smokerGroup.value as Number;
+// TODO			interventionsPanel.futureSmokingCategory.selectedIndex = user.smokerAtDiagnosis.value as Number;
 			
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (user.totalCholesterol_mmol_L.value - user.hdlCholesterol_mmol_L.value).toPrecision(2);
 			
@@ -123,7 +118,7 @@ package org.understandinguncertainty.UKPDS.view
 			inter.systolicBloodPressure.value = interventionsPanel.sbp.value;
 			inter.totalCholesterol_mmol_L.value = interventionsPanel.totalCholesterol.value;
 			inter.hdlCholesterol_mmol_L.value = interventionsPanel.hdlCholesterol.value;
-			inter.smokerGroup.value = interventionsPanel.futureSmokingCategory.selectedIndex;
+// TODO			inter.smokerGroup.value = interventionsPanel.futureSmokingCategory.selectedIndex;
 			
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (inter.totalCholesterol_mmol_L.value - inter.hdlCholesterol_mmol_L.value).toPrecision(2);
 			
@@ -141,7 +136,7 @@ package org.understandinguncertainty.UKPDS.view
 			if(oldSmokerCategory == 0 && newSmokerCategory == 1)
 				newSmokerCategory = 0;
 			interventionsPanel.futureSmokingCategory.selectedIndex = newSmokerCategory;
-			inter.smokerGroup.value = newSmokerCategory;			
+//TODO			inter.smokerGroup.value = newSmokerCategory;			
 
 			runModel.commitProperties();
 		}

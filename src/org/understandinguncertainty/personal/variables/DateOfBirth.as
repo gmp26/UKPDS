@@ -8,9 +8,7 @@ package org.understandinguncertainty.personal.variables
 	
 	public class DateOfBirth extends DDMMYYYY_PersonalVariable implements IPersonalVariable
 	{
-		
-		public var yearOfBirth:YearOfBirth;
-		
+				
 		function DateOfBirth(instanceName:String, date:Date) {
 			super(instanceName, date);
 		}
@@ -23,7 +21,6 @@ package org.understandinguncertainty.personal.variables
 		}
 		override public function set value(v:*):void {
 			super.value = v;
-			yearOfBirth.value = v.fullYear;
 		}
 		
 		public function getAge():int {

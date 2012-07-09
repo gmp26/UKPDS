@@ -1,0 +1,15 @@
+<personalData>
+  <ethnicGroup>0</ethnicGroup>
+  <systolicBloodPressure>136</systolicBloodPressure>
+  <atrialFibrillation>false</atrialFibrillation>
+  <dateOfDiagnosis>9/7/2002</dateOfDiagnosis>
+  <smokerAtDiagnosis>false</smokerAtDiagnosis>
+  <hba1c>6.72</hba1c>
+  <hdlCholesterol_mmol_L>1.2000009999999999</hdlCholesterol_mmol_L>
+  <gender>male</gender>
+  <totalCholesterol_mmol_L>5.500001</totalCholesterol_mmol_L>
+  <lipidRatio>5.11</lipidRatio>
+  <dateOfBirth>9/7/1972</dateOfBirth>
+  <height_m>1.7</height_m>
+  <weight_kg>65</weight_kg>
+</personalData>

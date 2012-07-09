@@ -46,6 +46,13 @@
 		</s:VGroup>
 		
 		<components:InterventionStepper
+			id="hba1c" 
+			label="@Resource(bundle='UKPDS', key='sideBar2.hba1c')" 
+			width="100%"
+			height="50"
+			/>
+		
+		<components:InterventionStepper
 			id="sbp" 
 			label="@Resource(bundle='UKPDS', key='sideBar2.SBP')" 
 			width="100%"

@@ -9,12 +9,9 @@ package org.understandinguncertainty.UKPDS.controller
 	public class SetupInterventionProfile
 	{
 
-		[Inject(name="userProfile")]
+		[Inject]
 		public var user:UserModel;
 	
-		[Inject(name="interventionProfile")]
-		public var inter:UserModel;
-		
 		[Inject]
 		public var clearInterventionsSignal:ClearInterventionsSignal;
 		

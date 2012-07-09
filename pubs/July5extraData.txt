@@ -16,3 +16,7 @@ Lipid Ratio (Total/HDL)
 Atrial Fibrilation
  			men: 0.007	women: 0.005
 
+
+Thanks for the notes. The easiest question to answer is the HbA1c conversion:
+IFCC-HbA1c (mmol/mol) = [DCCT-HbA1c (%) - 2.15] x 10.929
+Non diabetic reference range HbA1c: 4%-6% (20-42 mmol/mol)

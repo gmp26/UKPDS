@@ -25,6 +25,7 @@ package org.understandinguncertainty.UKPDS.model.vo
 		public var int_lose_weight:Number;
 		public var int_become_active:Number;
 		public var int_ace_arb:Number;
-		public var int_sbp:Number;		
+		public var int_sbp:Number;	
+		
 	}
 }

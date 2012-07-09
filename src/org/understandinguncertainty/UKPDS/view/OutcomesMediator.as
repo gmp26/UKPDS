@@ -24,7 +24,7 @@ package org.understandinguncertainty.UKPDS.view
 		[Inject]
 		public var runModel:ICardioModel;
 		
-		[Inject(name="userProfile")]
+		[Inject]
 		public var userProfile:UserModel;
 		
 		[Inject]
