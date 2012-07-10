@@ -30,32 +30,138 @@ package org.understandinguncertainty.UKPDS.model
 		}
 		
 		public var hba1c_int:Number;
-		public var smoker_int:Boolean;
 		public var sbp_int:Number;
 		public var totalCholesterol_int:Number;
 		public var hdlCholesterol_int:Number;
+		public var smoker_int:Boolean;
 		public var weight_kg_int:Number;
 		public var minsActivityPerWeek_int:Number;
 		
-		public function get ldl():Number {
-			return (totalCholesterol - hdlCholesterol)/1.24;
+		// reset interventions to zero - i.e. no change from Profile values
+		public function resetInterventions():void {
+			hba1c_int = Number(variableList.hba1c.value);
+			sbp_int = Number(variableList.systolicBloodPressure.value);
+			totalCholesterol_int = Number(variableList.totalCholesterol_mmol_L.value);
+			hdlCholesterol_int = Number(variableList.hdlCholesterol_mmol_L.value);
+			smoker_int = Boolean(variableList.smokerAtDiagnosis.value);
+			weight_kg_int = Number(variableList.weight_kg.value);
+			minsActivityPerWeek_int = Number(variableList.minsActivityPerWeek.value);
+		} 
+		
+		public function get chdHazardForInterventions():Number {
+			
+			var ratio:Number = 1;
+
+			// HbA1c
+			var r:Number = Math.pow(0.845,100*(hba1c - hba1c_int)/hba1c);
+			ratio *= r;
+
+			// LDL
+			r = Math.pow(0.79, 
+				calc_ldl(totalCholesterol, hdlCholesterol) - calc_ldl(totalCholesterol_int, hdlCholesterol_int));
+			ratio *= r;
+			
+			// Smoking
+			if(smokerAtDiagnosis != smoker_int) {
+				if(isMale) {
+					r = smoker_int ? 1/0.52 : 0.52;
+				}
+				else {
+					r = smoker_int ? 1/0.48 : 0.48;
+				}
+				ratio *= r;
+			}
+			
+			// Weight Loss
+			var before:Number = calc_bmi(weight_kg, height_m);
+			var after:Number = calc_bmi(weight_kg_int, height_m);
+			r = isMale ? 
+				boundaryHazard(before, after, 30.4, 0.776) :
+				boundaryHazard(before, after, 32.6, 0.776);
+			ratio *= r;
+			
+			// Activity
+			r = boundaryHazard(minsActivityPerWeek, minsActivityPerWeek_int, 240, 1/0.57);
+			ratio *= r;
+			
+			return ratio;
+		}
+
+		public function get strokeHazardForInterventions():Number {
+			
+			var ratio:Number = 1;
+
+			// sbp
+			var r:Number = Math.pow(0.56, (sbp - sbp_int)/10);
+			ratio *= r;
+
+			// LDL
+			r = Math.pow(0.79, 
+				calc_ldl(totalCholesterol, hdlCholesterol) - calc_ldl(totalCholesterol_int, hdlCholesterol_int));
+			ratio *= r;
+			
+			// Smoking
+			if(smokerAtDiagnosis != smoker_int) {
+				if(isMale) {
+					r = smoker_int ? 1/0.52 : 0.52;
+				}
+				else {
+					r = smoker_int ? 1/0.48 : 0.48;
+				}
+				ratio *= r;
+			}
+			
+			// Weight Loss
+			var before:Number = calc_bmi(weight_kg, height_m);
+			var after:Number = calc_bmi(weight_kg_int, height_m);
+			r = isMale ? 
+				boundaryHazard(before, after, 30.4, 0.776) :
+				boundaryHazard(before, after, 32.6, 0.776);
+			ratio *= r;
+			
+			// Activity
+			r = boundaryHazard(minsActivityPerWeek, minsActivityPerWeek_int, 240, 1/0.57);
+			ratio *= r;
+			
+			return ratio;
+		}
+		
+		public function get nonCVDHazardForInterventions():Number {
+			
+			var r:Number = 1;
+
+			// Smoking
+			if(smokerAtDiagnosis != smoker_int) {
+				if(isMale) {
+					r = smoker_int ? 1/0.53 : 0.53;
+				}
+				else {
+					r = smoker_int ? 1/0.66 : 0.66;
+				}
+			}
+						
+			return r;
+		}
+		
+		
+
+		private function boundaryHazard(before:Number, after:Number, threshold:Number, droppingRatio:Number):Number {
+			if (before >= threshold && after < threshold) {
+				return droppingRatio;
+			}
+			else if (before <= threshold && after > threshold) {
+				return 1/droppingRatio;
+			}
+			return 1;
+		}
+		
+		public function calc_ldl(total:Number, hdl:Number):Number {
+			return (total - hdl)/1.24;
 		}
 		
 		public function get active():Boolean {
 			return minsActivityPerWeek_int >= 240;
 		}
-		
-		public function get weightLoss():Boolean {
-			var old_bmi:Number = calc_bmi(weight_kg, height_m);
-			var new_bmi:Number = calc_bmi(weight_kg_int, height_m);
-			if(isMale) {
-				return old_bmi > 30.4 && new_bmi < 30.4;
-			}
-			else {
-				return old_bmi > 32.6 
-			}
-		}
-		
 		
 		// User Variables
 		public function get age():int 
@@ -92,25 +198,26 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public function get bmi():Number
 		{
-			return variableList.bmi;
+			return calc_bmi(variableList.weight_kg.value, variableList.height_m.value);
 		}
 		
 		public function get afroCarib():Boolean
 		{
-			// TODO: tie this in
-			return Number(variableList.ethnicGroup.value) == 6;
+			// See locale/en_US/UKPDS.properties ethnicity.x
+			return Number(variableList.ethnicGroup.value) == 6;  // Black Caribbean
 		}
 		
-		public function get rati():Number
-		{
-			var total:Number = Number(variableList.totalCholesterol_mmol_L.value);
-			var hdl:Number = Number(variableList.hdlCholesterol_mmol_L.value);
-			return total/hdl;
+		public function get hba1c():Number {
+			return variableList.hba1c.value;
 		}
 		
 		public function get sbp():Number
 		{
 			return Number(variableList.systolicBloodPressure.value);	
+		}
+		
+		public function get smokerAtDiagnosis():Boolean {
+			return Number(variableList.smokerAtDiagnosis.value) == 1;
 		}
 		
 		public function get smoke_cat():int
@@ -127,6 +234,10 @@ package org.understandinguncertainty.UKPDS.model
 		public function get hdlCholesterol():Number
 		{
 			return Number(variableList.hdlCholesterol_mmol_L.value);	
+		}
+		
+		public function get minsActivityPerWeek():Number {
+			return variableList.minsActivityPerWeek.value;
 		}
 		
 		public function boolInt(b:Boolean):int
@@ -166,6 +277,10 @@ package org.understandinguncertainty.UKPDS.model
 			return total/hdl;
 		}
 		
+		public static function calc_ldl(total:Number, hdl:Number):Number {
+			return (total - hdl)/1.24;
+		}
+		
 		public static function calc_bmi(weight:Number, height:Number):Number
 		{
 			return weight/(height*height);
@@ -203,6 +318,5 @@ package org.understandinguncertainty.UKPDS.model
 		public function DCCT_hba1c_to_percent(DCCT:Number):Number {
 			return DCCT/10.929 + 2.15;
 		}
-
 	}
 }
