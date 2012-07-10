@@ -280,7 +280,7 @@ Copyright University of Cambridge. All rights reserved
 						<s:Group width="100%"/>
 						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.HbA1c')" fontWeight="normal"/>
 						<s:NumericStepper id="hba1cStepper" 
-										  minimum="0" maximum="20" 
+										  minimum="4" maximum="6" value="5" 
 										  width="70" 
 										  stepSize="0.1"
 										  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"

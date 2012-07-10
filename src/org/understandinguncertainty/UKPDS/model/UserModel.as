@@ -201,6 +201,11 @@ package org.understandinguncertainty.UKPDS.model
 			return calc_bmi(variableList.weight_kg.value, variableList.height_m.value);
 		}
 		
+		public function get bmi_int():Number
+		{
+			return calc_bmi(weight_kg_int, variableList.height_m.value);
+		}
+		
 		public function get afroCarib():Boolean
 		{
 			// See locale/en_US/UKPDS.properties ethnicity.x

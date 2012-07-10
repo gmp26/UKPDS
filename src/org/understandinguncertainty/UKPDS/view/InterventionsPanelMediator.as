@@ -27,9 +27,7 @@ package org.understandinguncertainty.UKPDS.view
 		
 		[Inject]
 		public var userProfile:UserModel;
-		
-//		public var interventionProfile:UserModel;
-		
+				
 		[Inject]
 		public var runModel:ICardioModel;
 		
@@ -77,7 +75,8 @@ package org.understandinguncertainty.UKPDS.view
 			
 			interventionsPanel.conversionFactor = appState.mmol ? 1 : appState.mmolConvert;
 			
-			setInterventions(interventionProfile.variableList);
+			
+			setInterventions();
 		}
 		
 		override public function onRemove():void
@@ -94,18 +93,15 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.resetButton.removeEventListener(MouseEvent.CLICK, resetAll);
 		}
 		
-		private function setInterventions(user:VariableList):void
+		private function setInterventions():void
 		{	
-			interventionsPanel.sbp.original = interventionsPanel.sbp.value = user.systolicBloodPressure.value as Number;
+			interventionsPanel.sbp.original = interventionsPanel.sbp.value = userProfile.sbp_int;
+			interventionsPanel.totalCholesterol.original = interventionsPanel.totalCholesterol.value = userProfile.totalCholesterol_int;
+			interventionsPanel.hdlCholesterol.original = interventionsPanel.hdlCholesterol.value = userProfile.hdlCholesterol_int;		
+			interventionsPanel.futureSmokingCategory.selectedIndex = userProfile.smoker_int ? 1 : 0;
 			
-			interventionsPanel.totalCholesterol.original = interventionsPanel.totalCholesterol.value = user.totalCholesterol_mmol_L.value;
-			interventionsPanel.hdlCholesterol.original = interventionsPanel.hdlCholesterol.value = user.hdlCholesterol_mmol_L.value;
-			
-// TODO			interventionsPanel.futureSmokingCategory.selectedIndex = user.smokerAtDiagnosis.value as Number;
-			
-			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (user.totalCholesterol_mmol_L.value - user.hdlCholesterol_mmol_L.value).toPrecision(2);
-			
-			interventionsPanel.bmiField.text = "BMI: " + user.bmi.toPrecision(3);
+			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
+			interventionsPanel.bmiField.text = "BMI: " + userProfile.bmi_int.toPrecision(3);
 				
 			runModel.commitProperties();
 		}
@@ -113,63 +109,48 @@ package org.understandinguncertainty.UKPDS.view
 		private function stepperChanged(event:Event):void
 		{
 			var conversion:Number = appState.mmol ? 1 : 1/appState.mmolConvert;
-			var inter:VariableList = interventionProfile.variableList;
 			
-			inter.systolicBloodPressure.value = interventionsPanel.sbp.value;
-			inter.totalCholesterol_mmol_L.value = interventionsPanel.totalCholesterol.value;
-			inter.hdlCholesterol_mmol_L.value = interventionsPanel.hdlCholesterol.value;
-// TODO			inter.smokerGroup.value = interventionsPanel.futureSmokingCategory.selectedIndex;
+			userProfile.sbp_int = interventionsPanel.sbp.value;
+			userProfile.totalCholesterol_int = interventionsPanel.totalCholesterol.value;
+			userProfile.hdlCholesterol_int = interventionsPanel.hdlCholesterol.value;
+			userProfile.smoker_int = interventionsPanel.futureSmokingCategory.selectedIndex == 1;
 			
-			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (inter.totalCholesterol_mmol_L.value - inter.hdlCholesterol_mmol_L.value).toPrecision(2);
+			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
 			
 			runModel.commitProperties();
 		}
 		
 		private function futureSmokingChanged(event:Event):void 
 		{
-			var inter:VariableList = interventionProfile.variableList;
 
-			var newSmokerCategory:int = interventionsPanel.futureSmokingCategory.selectedIndex;
-			var oldSmokerCategory:int = userProfile.smoke_cat;
-			if(oldSmokerCategory > 0 && newSmokerCategory == 0)
-				newSmokerCategory = 1;
-			if(oldSmokerCategory == 0 && newSmokerCategory == 1)
-				newSmokerCategory = 0;
-			interventionsPanel.futureSmokingCategory.selectedIndex = newSmokerCategory;
-//TODO			inter.smokerGroup.value = newSmokerCategory;			
+			userProfile.smoker_int = interventionsPanel.futureSmokingCategory.selectedIndex == 1;
 
 			runModel.commitProperties();
 		}
 		
 		private function resetAll(event:MouseEvent):void
 		{
-			interventionProfile.variableList = userProfile.variableList.clone();
-			setInterventions(userProfile.variableList);
+			userProfile.resetInterventions();
 		}
 		
 		private function resetSBP(event:MouseEvent):void
 		{
-			var user:VariableList = userProfile.variableList;
-			interventionProfile.variableList.systolicBloodPressure.value = user.systolicBloodPressure.value;
-			interventionsPanel.sbp.value = user.systolicBloodPressure.value as Number;
-
+			
+			interventionsPanel.sbp.value = userProfile.sbp_int = userProfile.sbp;
 			runModel.commitProperties();
 		}
 		
 		private function resetTotalCholesterol(event:MouseEvent):void
 		{
-			var user:VariableList = userProfile.variableList;
-			interventionProfile.variableList.totalCholesterol_mmol_L = user.totalCholesterol_mmol_L;
-
+			
+			interventionsPanel.totalCholesterol.value = userProfile.totalCholesterol_int = userProfile.totalCholesterol;
 			runModel.commitProperties();
 			
 		}
 		
 		private function resetHDLCholesterol(event:MouseEvent):void
 		{
-			var user:VariableList = userProfile.variableList;
-			interventionProfile.variableList.hdlCholesterol_mmol_L = user.totalCholesterol_mmol_L;
-
+			interventionsPanel.hdlCholesterol.value = userProfile.hdlCholesterol_int = userProfile.hdlCholesterol;
 			runModel.commitProperties();
 			
 		}
