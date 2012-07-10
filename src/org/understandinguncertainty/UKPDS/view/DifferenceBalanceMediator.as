@@ -27,7 +27,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var userProfile:UserModel;
 		
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		public function DifferenceBalanceMediator()
 		{

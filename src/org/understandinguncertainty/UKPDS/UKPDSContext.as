@@ -13,7 +13,8 @@ package org.understandinguncertainty.UKPDS
 	import org.understandinguncertainty.UKPDS.model.AppState;
 	import org.understandinguncertainty.UKPDS.model.FraminghamRunModel;
 	import org.understandinguncertainty.UKPDS.model.ICardioModel;
-	import org.understandinguncertainty.UKPDS.model.UKPDSRunModel;
+	import org.understandinguncertainty.UKPDS.model.UKPDSModel;
+	import org.understandinguncertainty.UKPDS.model.UKPDSParameters;
 	import org.understandinguncertainty.UKPDS.model.UserModel;
 	import org.understandinguncertainty.UKPDS.view.AgeSettings;
 	import org.understandinguncertainty.UKPDS.view.AgeSettingsMediator;
@@ -45,12 +46,12 @@ package org.understandinguncertainty.UKPDS
 	import org.understandinguncertainty.UKPDS.view.OutcomesMediator;
 	import org.understandinguncertainty.UKPDS.view.Profile;
 	import org.understandinguncertainty.UKPDS.view.ProfileMediator;
-	import org.understandinguncertainty.UKPDS.view.UKPDSProfile;
-	import org.understandinguncertainty.UKPDS.view.UKPDSProfileMediator;
 	import org.understandinguncertainty.UKPDS.view.RiskByAge;
 	import org.understandinguncertainty.UKPDS.view.RiskByAgeMediator;
 	import org.understandinguncertainty.UKPDS.view.ScreenSelector;
 	import org.understandinguncertainty.UKPDS.view.ScreenSelectorMediator;
+	import org.understandinguncertainty.UKPDS.view.UKPDSProfile;
+	import org.understandinguncertainty.UKPDS.view.UKPDSProfileMediator;
 	import org.understandinguncertainty.personal.signals.ClearInterventionsSignal;
 	import org.understandinguncertainty.personal.signals.InterventionEditedSignal;
 	import org.understandinguncertainty.personal.signals.ModelUpdatedSignal;
@@ -90,9 +91,11 @@ package org.understandinguncertainty.UKPDS
 //			injector.mapValue(UserModel, interventionProfile, "interventionProfile");	
 			
 			injector.mapSingleton(UserModel);
+			
+			injector.mapSingleton(UKPDSParameters);
 
 			// Inject the risk model
-			injector.mapSingletonOf(ICardioModel, UKPDSRunModel); 
+			injector.mapSingletonOf(ICardioModel, UKPDSModel); 
 			//injector.mapSingletonOf(ICardioModel, FraminghamRunModel); 
 			//injector.mapSingletonOf(ICardioModel, QRunModel);
 			

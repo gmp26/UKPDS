@@ -26,7 +26,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var riskByAgeChart:RiskByAge;
 		
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		[Inject]
 		public var appState:AppState;
@@ -48,9 +48,9 @@ package org.understandinguncertainty.UKPDS.view
 			//trace("OutlookChart register");
 			modelUpdatedSignal.add(updateView);
 			riskByAgeChart.chanceAxis.maximum = 100;
-			riskByAgeChart.lineChart.dataProvider=runModel.getResultSet();
+			riskByAgeChart.lineChart.dataProvider=model.getResultSet();
 
-			runModel.commitProperties();
+			model.recalculate();
 		}
 		
 		override public function onRemove():void
@@ -66,18 +66,18 @@ package org.understandinguncertainty.UKPDS.view
 			
 			riskByAgeChart.withSeries.visible = 
 				riskByAgeChart.withLegend.visible = (appState.interventionAge < 95);
-			riskByAgeChart.lineChart.dataProvider = runModel.getResultSet();
+			riskByAgeChart.lineChart.dataProvider = model.getResultSet();
 			riskByAgeChart.ageAxis.minimum = appState.minimumAge;
-			riskByAgeChart.chanceAxis.maximum = 10*Math.ceil(runModel.peakf/10);
+			riskByAgeChart.chanceAxis.maximum = 10*Math.ceil(model.peakf/10);
 
 			annotate();
 			
-			if(runModel.yearGain > 0) {
-				riskByAgeChart.yearGain.text = runModel.yearGain.toPrecision(2);
+			if(model.yearGain > 0) {
+				riskByAgeChart.yearGain.text = model.yearGain.toPrecision(2);
 				gainedLost = "gained"
 			}
 			else {
-				riskByAgeChart.yearGain.text = (-runModel.yearGain).toPrecision(2);
+				riskByAgeChart.yearGain.text = (-model.yearGain).toPrecision(2);
 				gainedLost = "lost"					
 			}
 			
@@ -112,8 +112,8 @@ package org.understandinguncertainty.UKPDS.view
 			// determine mid-age without intervention risk
 			var midAge_int:int = Math.round((intAge + riskByAgeChart.ageAxis.maximum)/2);
 			var midAge:int = Math.round((riskByAgeChart.ageAxis.minimum + riskByAgeChart.ageAxis.maximum)/2);
-			var result:Object = runModel.getResultSet().getItemAt(midAge - appState.minimumAge);
-			var result_int:Object = runModel.getResultSet().getItemAt(midAge_int - appState.minimumAge);
+			var result:Object = model.getResultSet().getItemAt(midAge - appState.minimumAge);
+			var result_int:Object = model.getResultSet().getItemAt(midAge_int - appState.minimumAge);
 			if(result.fdash_int < result.fdash) {
 				riskByAgeChart.dataCanvas.addDataChild(riskByAgeChart.withoutLegend, null, null, midAge, result.fdash);
 				if(visibleInterventions)

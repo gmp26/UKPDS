@@ -23,7 +23,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var outlookChart:DeanfieldChart;
 		
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		[Inject]
 		public var appState:AppState;
@@ -38,12 +38,12 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			//trace("DeanfieldChart register");
 			modelUpdatedSignal.add(updateView);
-			runModel.commitProperties();
+			model.recalculate();
 
 //			outlookChart.maxChance.addEventListener(Event.CHANGE, annotate);
 //			outlookChart.maxAgeSlider.addEventListener(Event.CHANGE, updateModel);
 //			updateModel();
-			outlookChart.areaChart.dataProvider=runModel.getResultSet();
+			outlookChart.areaChart.dataProvider=model.getResultSet();
 		}
 		
 		override public function onRemove():void
@@ -68,20 +68,20 @@ package org.understandinguncertainty.UKPDS.view
 				return;
 			}
 			
-			outlookChart.areaChart.dataProvider = runModel.getResultSet();
+			outlookChart.areaChart.dataProvider = model.getResultSet();
 			outlookChart.ageAxis.minimum = appState.minimumAge;
 
 			annotate();
 			
 			outlookChart.gainLabel.visible = false;
 			outlookChart.lossLabel.visible = false;
-			if(runModel.yearGain > 0.1) {
-				outlookChart.yearGain.text = runModel.yearGain.toPrecision(2);
+			if(model.yearGain > 0.1) {
+				outlookChart.yearGain.text = model.yearGain.toPrecision(2);
 				gainedLost = "gained"
 				outlookChart.gainLabel.visible = true;
 			}
-			else if(runModel.yearGain < -0.1) {
-				outlookChart.yearLoss.text = (-runModel.yearGain).toPrecision(2);
+			else if(model.yearGain < -0.1) {
+				outlookChart.yearLoss.text = (-model.yearGain).toPrecision(2);
 				gainedLost = "lost"					
 				outlookChart.lossLabel.visible = true;
 			}
@@ -111,15 +111,15 @@ package org.understandinguncertainty.UKPDS.view
 			outlookChart.dataCanvas.addDataChild(intLabel, intAge+0.2, (outlookChart.chanceAxis.minimum + outlookChart.chanceAxis.maximum)/4);
 			
 			// Add mean survival age 
-			outlookChart.meanAgeText.text = runModel.meanAge.toPrecision(3) + " years";
+			outlookChart.meanAgeText.text = model.meanAge.toPrecision(3) + " years";
 			outlookChart.dataCanvas.addDataChild(outlookChart.meanAgeLabel,
 				null,
 				null, 
 				null,
 				0,
-				runModel.meanAge);
+				model.meanAge);
 			
-			if(runModel.yearGain > 0.1) {
+			if(model.yearGain > 0.1) {
 				var labelAge:int = Math.round((appState.interventionAge+95)/2);
 				var dp:ArrayCollection = outlookChart.areaChart.dataProvider as ArrayCollection;
 				var labelIndex:int = labelAge - appState.minimumAge;
@@ -128,7 +128,7 @@ package org.understandinguncertainty.UKPDS.view
 					outlookChart.dataCanvas.addDataChild(outlookChart.gainLabel,null,95, null,null,labelAge, null);
 				}
 			}
-			else if(runModel.yearGain < 0.1) {
+			else if(model.yearGain < 0.1) {
 				labelAge = Math.round((appState.interventionAge+95)/2);
 				dp = outlookChart.areaChart.dataProvider as ArrayCollection;
 				labelIndex = labelAge - appState.minimumAge;

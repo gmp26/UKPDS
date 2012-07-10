@@ -60,11 +60,9 @@ package org.understandinguncertainty.UKPDS.view
 		
 		[Inject]
 		public var userProfile:UserModel;
-		
-		public var inter:UserModel;
-		
+				
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		[Inject]
 		public var appState:AppState;
@@ -122,7 +120,7 @@ package org.understandinguncertainty.UKPDS.view
 		override public function onRemove():void
 		{
 			removeEventListeners();
-			//runModel.commitProperties();
+			//model.commitProperties();
 		}
 		
 		private function addEventListeners():void {
@@ -302,8 +300,8 @@ package org.understandinguncertainty.UKPDS.view
 			//trace("commitProfile");
 
 			// Set the user profile variableList BEFORE cloning it into the interventions profile
-			setPersonalDetails();			
-			inter.variableList = userProfile.variableList.clone();			
+			setPersonalDetails();
+			userProfile.resetInterventions();
 			
 		}
 		

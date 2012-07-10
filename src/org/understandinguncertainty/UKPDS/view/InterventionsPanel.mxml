@@ -41,7 +41,7 @@
 		<s:Group height="10"/>
 		
 		<s:VGroup gap="2" width="100%" horizontalAlign="left">
-			<s:Label text="Future smoking category" />
+			<s:Label text="@Resource(bundle='UKPDS', key='sideBar2.futureSmokingCategory')" />
 			<mx:ComboBox id="futureSmokingCategory" width="155" selectedIndex="0" rowCount="5"/>
 		</s:VGroup>
 		
@@ -50,6 +50,10 @@
 			label="@Resource(bundle='UKPDS', key='sideBar2.hba1c')" 
 			width="100%"
 			height="50"
+			fixed="2"
+			minimum="4"
+			maximum="6"
+			stepSize="0.01"
 			/>
 		
 		<components:InterventionStepper
@@ -74,6 +78,21 @@
 			width="100%"
 			height="50"
 			/>
+
+		<components:InterventionStepper
+			id="weight_kg"
+			label="@Resource(bundle='UKPDS', key='sideBar2.weight')"
+			width="100%"
+			height="50"
+			/>
+		
+		<components:InterventionStepper
+			id="minsActivityPerWeek"
+			label="@Resource(bundle='UKPDS', key='sideBar2.minsActivityPerWeek')"
+			width="100%"
+			height="50"
+			/>
+		
 		<s:Label id="nonHDLField"/>
 		<s:Label id="bmiField"/>
 

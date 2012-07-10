@@ -29,7 +29,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var userProfile:UserModel;
 				
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		[Inject]
 		public var appState:AppState;
@@ -46,6 +46,9 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			
 			// Set stepper limits
+			interventionsPanel.hba1c.minimum = 4;
+			interventionsPanel.hba1c.maximum = 6
+			
 			interventionsPanel.sbp.minimum = 100;
 			interventionsPanel.sbp.maximum = 220;
 
@@ -103,7 +106,7 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
 			interventionsPanel.bmiField.text = "BMI: " + userProfile.bmi_int.toPrecision(3);
 				
-			runModel.commitProperties();
+			model.recalculate();
 		}
 		
 		private function stepperChanged(event:Event):void
@@ -117,7 +120,7 @@ package org.understandinguncertainty.UKPDS.view
 			
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
 			
-			runModel.commitProperties();
+			model.recalculate();
 		}
 		
 		private function futureSmokingChanged(event:Event):void 
@@ -125,7 +128,7 @@ package org.understandinguncertainty.UKPDS.view
 
 			userProfile.smoker_int = interventionsPanel.futureSmokingCategory.selectedIndex == 1;
 
-			runModel.commitProperties();
+			model.recalculate();
 		}
 		
 		private function resetAll(event:MouseEvent):void
@@ -137,21 +140,21 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			
 			interventionsPanel.sbp.value = userProfile.sbp_int = userProfile.sbp;
-			runModel.commitProperties();
+			model.recalculate();
 		}
 		
 		private function resetTotalCholesterol(event:MouseEvent):void
 		{
 			
 			interventionsPanel.totalCholesterol.value = userProfile.totalCholesterol_int = userProfile.totalCholesterol;
-			runModel.commitProperties();
+			model.recalculate();
 			
 		}
 		
 		private function resetHDLCholesterol(event:MouseEvent):void
 		{
 			interventionsPanel.hdlCholesterol.value = userProfile.hdlCholesterol_int = userProfile.hdlCholesterol;
-			runModel.commitProperties();
+			model.recalculate();
 			
 		}
 		

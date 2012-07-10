@@ -34,9 +34,9 @@ package org.understandinguncertainty.UKPDS.view
 			
 			numbersAvailableSignal.add(updateView);
 			
-			var colourNumbers:ColourNumbersVO = runModel.colourNumbers;
+			var colourNumbers:ColourNumbersVO = model.colourNumbers;
 			if(colourNumbers)
-				updateView(runModel.colourNumbers, runModel.showDifferences);
+				updateView(model.colourNumbers, model.showDifferences);
 
 		}
 		

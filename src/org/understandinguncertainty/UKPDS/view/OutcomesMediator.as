@@ -22,7 +22,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var modelUpdatedSignal:ModelUpdatedSignal;
 		
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		[Inject]
 		public var userProfile:UserModel;
@@ -39,7 +39,7 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			//trace("Outcomes register");
 			modelUpdatedSignal.add(updateView);
-			runModel.commitProperties();
+			model.recalculate();
 		}
 		
 		override public function onRemove():void
@@ -50,10 +50,10 @@ package org.understandinguncertainty.UKPDS.view
 				
 		private function updateView() : void
 		{
-			if(runModel) {
+			if(model) {
 				
 				var targetAge:int = userProfile.age + appState.targetInterval;
-				var dataProvider:ArrayCollection = runModel.getResultSet();
+				var dataProvider:ArrayCollection = model.getResultSet();
 				if(appState.targetInterval >= dataProvider.length)
 					appState.targetInterval = dataProvider.length - 1;
 				var targetItem:Object = dataProvider.getItemAt(appState.targetInterval);

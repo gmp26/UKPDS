@@ -34,7 +34,7 @@ package org.understandinguncertainty.UKPDS.model
 		/** 
 		 * Recalculates the model based on current properties
 		 */
-		function commitProperties():void
+		function recalculate():void
 
 		/**
 		 * @param b sets whether to show differences in the UI

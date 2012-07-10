@@ -28,7 +28,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var numbersAvailableSignal:NumbersAvailableSignal;
 		
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		[Inject]
 		public var appState:AppState;
@@ -42,7 +42,7 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			trace("Balance register");
 			modelUpdatedSignal.add(updateView);
-			runModel.commitProperties();
+			model.recalculate();
 			balance.differenceCheckBox.addEventListener(Event.CHANGE, updateView);
 		}
 		
@@ -56,15 +56,15 @@ package org.understandinguncertainty.UKPDS.view
 		private function updateView(event:Event = null) : void
 		{
 			trace("Balance updateView");
-			var colours:ColourNumbersVO = runModel.colourNumbers;
+			var colours:ColourNumbersVO = model.colourNumbers;
 			appState.showDifferences = balance.differenceCheckBox.selected;
 			
 			balance.title.text = "What we expect to happen in "+appState.targetInterval+" years to 100 people like you";
 			balance.leftSubtitle.text = "carrying on as usual";
 			balance.rightSubtitle.text = "after interventions";
 			
-			runModel.showDifferences = balance.differenceCheckBox.selected;
-			numbersAvailableSignal.dispatch(colours, runModel.showDifferences);
+			model.showDifferences = balance.differenceCheckBox.selected;
+			numbersAvailableSignal.dispatch(colours, model.showDifferences);
 		}
 	}
 }

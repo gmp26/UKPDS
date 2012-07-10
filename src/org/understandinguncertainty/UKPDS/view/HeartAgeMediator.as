@@ -17,7 +17,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var heartAge:HeartAge;
 		
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		[Inject]
 		public var appState:AppState;
@@ -34,7 +34,7 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			//trace("heartAge register");		
 			modelUpdatedSignal.add(updateView);
-			runModel.commitProperties();
+			model.recalculate();
 		}
 		
 		override public function onRemove():void
@@ -51,8 +51,8 @@ package org.understandinguncertainty.UKPDS.view
 				return;
 			}
 /*			
-			if(runModel.yearGain >= 0.1) {
-				var yg:String = runModel.yearGain.toPrecision(2);
+			if(model.yearGain >= 0.1) {
+				var yg:String = model.yearGain.toPrecision(2);
 				heartAge.gainText.visible = true;
 				heartAge.gainText.text = "gaining " + yg + " years through interventions"
 			}
@@ -60,21 +60,21 @@ package org.understandinguncertainty.UKPDS.view
 				heartAge.gainText.visible = false;
 			}
 			
-			meanAge = runModel.meanAge;
+			meanAge = model.meanAge;
 			heartAge.meanSurvival.text = "On average, expect to survive to\n" + Math.floor(meanAge) + "\nwithout a heart attack or stroke";
-			var yGain:Number = Math.max(0, runModel.yearGain);
+			var yGain:Number = Math.max(0, model.yearGain);
 */			
 			/*
 			heartAge.thermometer.dataProvider = new ArrayCollection([{
-				meanYears:runModel.meanAge - yGain, 
+				meanYears:model.meanAge - yGain, 
 				yearGain:yGain, 
 				summary:""
 			}]);
 
 			heartAge.hAxis.minimum = userProfile.age;
-			heartAge.hAxis.maximum = 102; //5*Math.ceil((runModel.meanAge + 5)/5);
+			heartAge.hAxis.maximum = 102; //5*Math.ceil((model.meanAge + 5)/5);
 			*/
-			heartAge.heartAgeText.text = runModel.heartAgeText;
+			heartAge.heartAgeText.text = model.heartAgeText;
 		}
 	}
 }

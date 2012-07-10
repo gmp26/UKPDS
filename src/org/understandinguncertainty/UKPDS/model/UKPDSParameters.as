@@ -11,7 +11,7 @@ package org.understandinguncertainty.UKPDS.model
 		private var chd:ParamsVO;
 		private var stroke:ParamsVO;
 		private var noncv:ParamsVO;
-
+		private var mean:ParamsVO;
 
 		function UKPDSParameters()
 		{
@@ -25,7 +25,7 @@ package org.understandinguncertainty.UKPDS.model
 			chd.hba1c						= 1.183;
 			chd.systolicBloodPressure		= 1.088;
 			chd.lipidRatio 					= 3.845;
-			chd.atrialFibrilation			= Number.NaN;
+			chd.atrialFibrillation			= Number.NaN;
 			
 			chd.int_hba1c					= 1.183431953;
 			chd.int_stop_smoking_man		= 0.518394649;
@@ -45,7 +45,7 @@ package org.understandinguncertainty.UKPDS.model
 			stroke.hba1c					= Number.NaN;
 			stroke.systolicBloodPressure	= 1.122;
 			stroke.lipidRatio 				= 1.138;
-			stroke.atrialFibrilation		= 8.554;	
+			stroke.atrialFibrillation		= 8.554;	
 			
 			stroke.int_stop_smoking_man		= 0.518394649;
 			stroke.int_stop_smoking_woman	= 0.483709273;
@@ -81,6 +81,41 @@ package org.understandinguncertainty.UKPDS.model
 					* Math.pow(chd.lipidRatio, Math.log(lipidRatio)-1.59);
 		}			
 			
+		public function stroke_q1(
+			age:Number,
+			gender:String,
+			smoker:Boolean,
+			systolicBloodPressure:Number,
+			lipidRatio:Number,
+			atrialFibrillation:Boolean
+			):Number {
+			
+			return stroke.intercept
+					* Math.pow(stroke.age, age-55)
+					* (gender == "male" ? 1 : stroke.female)
+					* (smoker ? stroke.smoker : 1)
+					* Math.pow(stroke.systolicBloodPressure, (systolicBloodPressure-135.5)/10)
+					* Math.pow(stroke.lipidRatio, lipidRatio-5.11)
+					* (atrialFibrillation ? stroke.atrialFibrillation : 1);
+		}
+		
+		public function chd_hazard(t:Number, duration:Number, q1:Number):Number {
+			var d:Number = chd.diabetesDuration;
+			return q1*Math.pow(d,duration)*(1-Math.pow(d,t))/(1-d);
+		}
+								   
+		public function stroke_hazard(t:Number, duration:Number, q2:Number):Number {
+			var d:Number = stroke.diabetesDuration;
+			return q2*Math.pow(d,duration)*(1-Math.pow(d,t))/(1-d);
+		}
+		
+		public function cvd_hazard(t:Number, duration:Number, q1:Number, q2:Number):Number {
+			return chd_hazard(t, duration, q1) + stroke_hazard(t, duration, q2);
+		}
+								   
+		/*
+		Functionality moved to UserModel
+		
 		// chd intervention hazard
 		public function chd_intervention(
 			q1:Number, // input result of chd_q1 calculation above
@@ -120,6 +155,16 @@ package org.understandinguncertainty.UKPDS.model
 				* Math.pow(stroke.int_ace_arb, delta_ace_arb)
 				* Math.pow(stroke.int_sbp, delta_sbp);
 		}
+		
+		// noncv intervention hazard
+		public function noncv_intervention(
+		gender: String,
+		stop_smoking:Boolean):Number {
+		
+		return (stop_smoking ? (gender == "male" ? noncv.int_stop_smoking_man : noncv.int_stop_smoking_woman) : 1)
+		}
+		
+		*/
 		
 		// See pub/UKPDS_CVD_risk_calculations.xls sheet NonCV_deaths
 		public var noncvHazards:Object = {
@@ -196,14 +241,6 @@ package org.understandinguncertainty.UKPDS.model
 				0.08274848
 			]
 		};
-		
-		// noncv intervention hazard
-		public function noncv_intervention(
-			gender: String,
-			stop_smoking:Boolean):Number {
-			
-			return (stop_smoking ? (gender == "male" ? noncv.int_stop_smoking_man : noncv.int_stop_smoking_woman) : 1)
-		}
 		
 	}
 }

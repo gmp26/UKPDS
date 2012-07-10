@@ -44,6 +44,16 @@ package org.understandinguncertainty.personal.variables
 				return yearDiff - 1;
 
 		}
+		
+		private const msInYear:Number = 1000*60*60*24*365.25;
 
+		public function getDuration():Number {
+			var date:Date = value;
+			if(date == null) return -1;
+			var now:Date = new Date();
+			
+			var elapsedMilliSecs:Number = now.time - date.time;
+			return elapsedMilliSecs/msInYear;
+		}
 	}
 }

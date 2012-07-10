@@ -19,7 +19,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var ageSettings:AgeSettings;
 		
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		[Inject]
 		public var appState:AppState;
@@ -59,13 +59,13 @@ package org.understandinguncertainty.UKPDS.view
 		private function updateTargetInterval(event:Event):void
 		{
 			appState.targetInterval = ageSettings.targetInterval.value;
-			runModel.commitProperties();
+			model.recalculate();
 		}		
 
 		private function updateInterventionAge(event:Event):void
 		{
 			appState.interventionAge = ageSettings.interventionAgeStepper.value;
-			runModel.commitProperties();
+			model.recalculate();
 		}		
 	}
 }

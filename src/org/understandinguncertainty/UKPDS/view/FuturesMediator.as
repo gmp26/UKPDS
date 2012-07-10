@@ -17,7 +17,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var futures:Futures;
 		
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		[Inject]
 		public var appState:AppState;
@@ -34,7 +34,7 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			//trace("heartAge register");		
 			modelUpdatedSignal.add(updateView);
-			runModel.commitProperties();
+			model.recalculate();
 		}
 		
 		override public function onRemove():void
@@ -52,13 +52,13 @@ package org.understandinguncertainty.UKPDS.view
 			}
 
 			var yg:String;
-			if(runModel.yearGain >= 0.1) {
-				yg = runModel.yearGain.toPrecision(2);
+			if(model.yearGain >= 0.1) {
+				yg = model.yearGain.toPrecision(2);
 				futures.gainText.visible = true;
 				futures.gainText.text = "gaining " + yg + " years through interventions"
 			}
-			else if(runModel.yearGain <= -0.1) {
-				yg = (-runModel.yearGain).toPrecision(2);
+			else if(model.yearGain <= -0.1) {
+				yg = (-model.yearGain).toPrecision(2);
 				futures.gainText.visible = true;
 				futures.gainText.text = "losing " + yg + " years through interventions"
 			}
@@ -66,20 +66,20 @@ package org.understandinguncertainty.UKPDS.view
 				futures.gainText.visible = false;
 			}
 			
-			meanAge = runModel.meanAge;
+			meanAge = model.meanAge;
 			futures.meanSurvival.text = "On average, expect\nto survive to age " + Math.floor(meanAge) + "\nwithout a heart attack or stroke";
-			var yGain:Number = Math.max(0, runModel.yearGain);
-			var yLoss:Number = Math.min(0, runModel.yearGain);
+			var yGain:Number = Math.max(0, model.yearGain);
+			var yLoss:Number = Math.min(0, model.yearGain);
 			futures.thermometer.dataProvider = new ArrayCollection([{
-				meanYears:runModel.meanAge - yGain - yLoss,
+				meanYears:model.meanAge - yGain - yLoss,
 				yearLoss:yLoss,
 				yearGain:yGain, 
 				summary:""
 			}]);
 
 			futures.hAxis.minimum = userProfile.age;
-			futures.hAxis.maximum = 102; //5*Math.ceil((runModel.meanAge + 5)/5);
-			//futures.futuresText.text = runModel.heartAgeText;
+			futures.hAxis.maximum = 102; //5*Math.ceil((model.meanAge + 5)/5);
+			//futures.futuresText.text = model.heartAgeText;
 		}
 	}
 }

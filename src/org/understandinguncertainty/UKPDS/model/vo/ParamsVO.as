@@ -15,7 +15,7 @@ package org.understandinguncertainty.UKPDS.model.vo
 		public var smoker:Number;
 		public var hba1c:Number;
 		public var systolicBloodPressure:Number;
-		public var atrialFibrilation:Number;
+		public var atrialFibrillation:Number;
 		
 		// UKPDS interventions
 		public var int_hba1c:Number;

@@ -21,7 +21,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var compare:Compare;
 		
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		[Inject]
 		public var appState:AppState;
@@ -39,7 +39,7 @@ package org.understandinguncertainty.UKPDS.view
 			compare.maxChance.addEventListener(Event.CHANGE, maxChanceChanged);
 			compare.vAxis.labelFunction = addPercent;
 			compare.chart.dataTipFunction = dataTipFunction;
-			runModel.commitProperties();
+			model.recalculate();
 		}
 		
 		override public function onRemove():void
@@ -63,7 +63,7 @@ package org.understandinguncertainty.UKPDS.view
 			}
 			
 			var targetAge:int = userProfile.age + appState.targetInterval;
-			var dp:ArrayCollection = runModel.getResultSet();
+			var dp:ArrayCollection = model.getResultSet();
 			
 			compare.titleLabel.text = compare.title1 + " " + appState.targetInterval + " " 
 				+ compare.title2 + " " + (appState.minimumAge + appState.targetInterval)

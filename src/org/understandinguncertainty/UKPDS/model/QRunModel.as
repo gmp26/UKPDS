@@ -24,7 +24,7 @@ package org.understandinguncertainty.UKPDS.model
 	import org.understandinguncertainty.personal.types.BooleanPersonalVariable;
 
 	[ResourceBundle("UKPDS")]
-	public class QRunModel extends AbstractRunModel implements ICardioModel
+	public class QRunModel extends AbstractModel implements ICardioModel
 	{	
 		private var _showDifferences:Boolean = false;
 		
@@ -147,7 +147,7 @@ package org.understandinguncertainty.UKPDS.model
 		private var committing:Boolean = false;
 		
 		
-		public function commitProperties():void {
+		public function recalculate():void {
 
 			if(committing) {
 				return;

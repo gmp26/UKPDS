@@ -53,7 +53,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var userProfile:UserModel;		
 		
 		[Inject]
-		public var runModel:ICardioModel;
+		public var model:ICardioModel;
 		
 		[Inject]
 		public var appState:AppState;
@@ -89,7 +89,7 @@ package org.understandinguncertainty.UKPDS.view
 		override public function onRemove():void
 		{
 			removeEventListeners();
-			runModel.commitProperties();
+			model.recalculate();
 		}
 		
 		private function addEventListeners():void {

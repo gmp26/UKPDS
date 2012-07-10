@@ -27,7 +27,7 @@ package org.understandinguncertainty.UKPDS.view
 			differenceBalance = goodBalance;
 			super.onRegister();
 			/*
-			var colours:ColourNumbersVO = runModel.colourNumbers;
+			var colours:ColourNumbersVO = model.colourNumbers;
 			leftNumber = colours.green;
 			rightNumber = colours.green_int;
 			*/
@@ -36,9 +36,9 @@ package org.understandinguncertainty.UKPDS.view
 			
 			numbersAvailableSignal.add(updateView);
 			
-			var colourNumbers:ColourNumbersVO = runModel.colourNumbers;
+			var colourNumbers:ColourNumbersVO = model.colourNumbers;
 			if(colourNumbers)
-				updateView(runModel.colourNumbers, runModel.showDifferences);
+				updateView(model.colourNumbers, model.showDifferences);
 		}
 		
 		override public function onRemove():void

@@ -164,13 +164,23 @@ package org.understandinguncertainty.UKPDS.model
 		}
 		
 		// User Variables
-		public function get age():int 
+		public function get age():int
 		{
-			var dob:int = variableList.dateOfBirth.getAge();
+			var dob:Number = variableList.dateOfBirth.getAge();
 			if(dob == 0 || isNaN(dob))
 				trace("weird age seen:", dob);
 			
 			return dob;
+		}
+		
+		// User Variables
+		public function get ageAtDiagnosis():Number
+		{
+			var d:Number = variableList.dateOfBirth.getDuration();
+			if(d == 0 || isNaN(d))
+				trace("weird ageAtDiagnosis seen:", d);
+			
+			return d;
 		}
 		
 		public function get gender():String
@@ -190,12 +200,7 @@ package org.understandinguncertainty.UKPDS.model
 		public function get isFemale():Boolean {
 			return variableList.gender.toString() != "male";
 		}
-		
-		public function get atrialFibrilation():int
-		{
-			return boolInt(variableList.atrialFibrillation.value);
-		}
-		
+			
 		public function get bmi():Number
 		{
 			return calc_bmi(variableList.weight_kg.value, variableList.height_m.value);
@@ -223,6 +228,14 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public function get smokerAtDiagnosis():Boolean {
 			return Number(variableList.smokerAtDiagnosis.value) == 1;
+		}
+		
+		public function get lipidRatio():Number {
+			return calc_lipidRatio(totalCholesterol, hdlCholesterol);
+		}
+		
+		public function get atrialFibrillation():Boolean {
+			return variableList.atrialFibrillation.value;
 		}
 		
 		public function get smoke_cat():int

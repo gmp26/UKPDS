@@ -15,7 +15,7 @@ package org.understandinguncertainty.UKPDS.model
 	import org.understandinguncertainty.personal.types.BooleanPersonalVariable;
 
 	[ResourceBundle("UKPDS")]
-	public class FraminghamRunModel extends AbstractRunModel implements ICardioModel
+	public class FraminghamRunModel extends AbstractModel implements ICardioModel
 	{	
 		private var _showDifferences:Boolean = false;
 		
@@ -50,7 +50,7 @@ package org.understandinguncertainty.UKPDS.model
 			return (userProfile.gender == "male") ? maleParameters : femaleParameters;
 		}
 		
-		public function commitProperties():void {
+		public function recalculate():void {
 
 
 			_peakf = 0;
