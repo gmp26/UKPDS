@@ -8,6 +8,10 @@ Body mass index: minimum 15, maximum 45
 Physical activity: Minutes of moderate physical activity per week: minimum = 0, maximum = 420.
 Total cholesterol: minimum = 3 mmol/ l, maximum = 10.
 
+From Kingshuk
+LDL: 0.1 -10.0 mmol/L (usually between 2-5)
+HDL: 0.1 - 5.0 mmol/L (usually around 1)
+
 From MS:
 HbA1c (%) 	men: 6.6	women: 6.9
 SBP (mmHg) 	men: 133	women: 139

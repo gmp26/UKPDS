@@ -123,13 +123,13 @@ package org.understandinguncertainty.UKPDS.model
 			
 			// Kick off calculation at t=0;
 			var expH0:Number = Math.exp(-parameters.cvd_hazard(0, userProfile.diabetesDuration, q1_chd, q2_stroke));
-			var maxQuarters:int = Math.floor((appState.maxAge - userProfile.ageAtDiagnosis)*4);
+			var maxQuarters:int = Math.floor((appState.maximumAge - userProfile.ageAtDiagnosis)*4);
 			
 			for(var quarter:int=0; quarter <= maxQuarters; quarter++) {
 				
 				var t:Number = quarter/4;
 				var expH1:Number = Math.exp(-parameters.cvd_hazard(t, userProfile.diabetesDuration, q1_chd, q2_stroke));
-				var a = expH1 - expH0;
+				a = expH1 - expH0;
 				expH0 = expH1;
 				
 				var calculatedParams:CalculatedParams = calculateOneYear(quarter);
