@@ -55,7 +55,9 @@ package org.understandinguncertainty.UKPDS.model
 			var a_int:Number;
 			var a_gp:Number
 			var b:Number;
+			var b_gp:Number;
 			var b_int:Number;
+			
 			var c:Number;
 			var c_int:Number;
 			var c_gp:Number;
@@ -110,6 +112,16 @@ package org.understandinguncertainty.UKPDS.model
 				userProfile.sbp,
 				userProfile.lipidRatio);
 			
+			var q1_chd_gp:Number = parameters.chd_q1(
+				userProfile.ageAtDiagnosis,
+				userProfile.gender,
+				userProfile.afroCarib,
+				false,
+				userProfile.isMale ? 6.6 : 6.9,
+				userProfile.isMale ? 133 : 139,
+				userProfile.isMale ? 5.2 : 5.1);
+			
+			var chd_H_int:Number = q1_chd*userProfile.chdHazardForInterventions;
 
 			var q2_stroke:Number = parameters.stroke_q1(
 				userProfile.ageAtDiagnosis,
@@ -119,32 +131,115 @@ package org.understandinguncertainty.UKPDS.model
 				userProfile.lipidRatio,
 				userProfile.atrialFibrillation
 			);
+			
+			var q2_stroke_gp:Number = parameters.stroke_q1(
+				userProfile.ageAtDiagnosis,
+				userProfile.gender,
+				false,
+				userProfile.isMale ? 133 : 139,
+				userProfile.isMale ? 5.2 : 5.1,
+				false
+			);
+			
+			var stroke_H_int:Number = q2_stroke*userProfile.strokeHazardForInterventions;
 
 			
 			// Kick off calculation at t=0;
 			var expH0:Number = Math.exp(-parameters.cvd_hazard(0, userProfile.diabetesDuration, q1_chd, q2_stroke));
+			var expH0_int:Number = Math.exp(-parameters.cvd_hazard(0, userProfile.diabetesDuration, chd_H_int, stroke_H_int));
+			var expH0_gp:Number = Math.exp(-parameters.cvd_hazard(0, userProfile.diabetesDuration, q1_chd_gp, q2_stroke_gp));
 			var maxQuarters:int = Math.floor((appState.maximumAge - userProfile.ageAtDiagnosis)*4);
 			
 			for(var quarter:int=0; quarter <= maxQuarters; quarter++) {
 				
 				var t:Number = quarter/4;
+				
+				// Calculate cvd risk for quarter
 				var expH1:Number = Math.exp(-parameters.cvd_hazard(t, userProfile.diabetesDuration, q1_chd, q2_stroke));
 				a = expH1 - expH0;
 				expH0 = expH1;
 				
-				var calculatedParams:CalculatedParams = calculateOneYear(quarter);
+				// and after interventions
+				var expH1_int:Number = Math.exp(-parameters.cvd_hazard(t, userProfile.diabetesDuration, chd_H_int, stroke_H_int));
+				a_int = expH1_int - expH0_int;
+				expH0_int = expH1_int;
+				
+				// and for comparison
+				var expH1_gp:Number = Math.exp(-parameters.cvd_hazard(t, userProfile.diabetesDuration, q1_chd_gp, q2_stroke_gp));
+				a = expH1_gp - expH0_gp;
+				expH0_gp = expH1_gp;
+				
+				// Calculate noncvd risk for quarter
+				b = parameters.noncvdHazard(t, userProfile.gender, userProfile.smokerAtDiagnosis);
+				b_int = b * userProfile.nonCVDHazardForInterventions;
+				b_gp = parameters.noncvdHazard(t, userProfile.gender, false);
+				
+				c = e*b;
+				c_int = e_int*b_int;
+				c_gp = e_gp*b;
+				
+				d = e*a;
+				d_int = e_int*a_int;
+				d_gp = e_gp*a_gp;
+				
+				e -= (c+d);
+				e_int -= (c_int+d_int);
+				e_gp -= (c_gp + d_gp);
+				sum_e_int += e_int;
+				sum_e += e;
+				
+				f += d;
+				f_int += d_int;
+				f_gp += d_gp;
+				
+				m += c;
+				m_int += c_int;
+				m_gp += c_gp;
+				
+				// outlook yellow
+				var yellow:Number = f+m - (m_int+f_int);
+				
+				// cope with rare occasions when m+f > 100
+				var greenUnclamped:Number = 100 - Math.max(m + f, m_int + f_int);
+				if(greenUnclamped < 0)
+					yellow = Math.min(0, yellow + greenUnclamped);
+				yellow = Math.max(0,yellow);
+				
+				var green:Number = Math.min(100, Math.max(0, greenUnclamped));
+				var red:Number = f_int;
+				
+				if(quarter % 4) series_deanfield.push({
+					age:		t+1,
+					
+					// for Outlook (+ve)
+					green:		green,
+					yellow:		green + yellow,		
+					red:		green + yellow + red,					
+					
+					// for Outlook (-ve)
+					redNeg:	    f_int,					// f_int == f until interventions are entered
+					yellowNeg: 	f_int + yellow,			// yellow is sitting on top of f_int
+					blueNeg:	m_int + f_int + yellow, // no longer used
+					
+					yellowOnly: yellow,
+					redOnly:	red,
+					
+					// for Outcomes
+					fdash:		f, 
+					fdash_int:	f_int,
+					mdash:		m,
+					mdash_int:	m_int,
+					f_gp:		f_gp
+				});
+				
+				_peakf = Math.max(_peakf, f);
+				_peakf = Math.max(_peakf, f_int);
+				peakYellowNeg = Math.max(f_int + yellow, peakYellowNeg);
 			}
 			_resultSet = new ArrayCollection(series_deanfield);
 			
 			modelUpdatedSignal.dispatch();
 		}		
-		
-		private function calculateOneYear(quarter:int):CalculatedParams
-		{
-			
-			var H:CalculatedParams;
-			return H;
-		}
 		
 		private var _peakf:Number;
 		

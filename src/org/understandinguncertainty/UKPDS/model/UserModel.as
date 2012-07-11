@@ -142,8 +142,7 @@ package org.understandinguncertainty.UKPDS.model
 						
 			return r;
 		}
-		
-		
+				
 
 		private function boundaryHazard(before:Number, after:Number, threshold:Number, droppingRatio:Number):Number {
 			if (before >= threshold && after < threshold) {

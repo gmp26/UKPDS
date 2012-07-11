@@ -46,8 +46,8 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			
 			// Set stepper limits
-			interventionsPanel.hba1c.minimum = 4;
-			interventionsPanel.hba1c.maximum = 6
+			interventionsPanel.hba1c.minimum = 5;
+			interventionsPanel.hba1c.maximum = 11;
 			
 			interventionsPanel.sbp.minimum = 100;
 			interventionsPanel.sbp.maximum = 220;
@@ -60,6 +60,9 @@ package org.understandinguncertainty.UKPDS.view
 			
 			interventionsPanel.sbp.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.sbp.addEventListener(MouseEvent.CLICK, resetSBP);
+			
+			interventionsPanel.hba1c.addEventListener(Event.CHANGE, stepperChanged);
+			interventionsPanel.hba1c.addEventListener(MouseEvent.CLICK, resetHba1c);
 			
 			interventionsPanel.totalCholesterol.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.totalCholesterol.addEventListener(MouseEvent.CLICK, resetTotalCholesterol);
@@ -87,12 +90,16 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.sbp.removeEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.sbp.removeEventListener(MouseEvent.CLICK, resetSBP);
 
+			interventionsPanel.hba1c.removeEventListener(Event.CHANGE, stepperChanged);
+			interventionsPanel.hba1c.removeEventListener(MouseEvent.CLICK, resetHba1c);
+			
 			interventionsPanel.totalCholesterol.removeEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.totalCholesterol.removeEventListener(MouseEvent.CLICK, resetTotalCholesterol);
 			
 			interventionsPanel.hdlCholesterol.removeEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.hdlCholesterol.removeEventListener(MouseEvent.CLICK, resetHDLCholesterol);
 			
+
 			interventionsPanel.resetButton.removeEventListener(MouseEvent.CLICK, resetAll);
 		}
 		
@@ -102,6 +109,7 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.totalCholesterol.original = interventionsPanel.totalCholesterol.value = userProfile.totalCholesterol_int;
 			interventionsPanel.hdlCholesterol.original = interventionsPanel.hdlCholesterol.value = userProfile.hdlCholesterol_int;		
 			interventionsPanel.futureSmokingCategory.selectedIndex = userProfile.smoker_int ? 1 : 0;
+			interventionsPanel.hba1c.value = userProfile.hba1c_int;
 			
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
 			interventionsPanel.bmiField.text = "BMI: " + userProfile.bmi_int.toPrecision(3);
@@ -117,6 +125,7 @@ package org.understandinguncertainty.UKPDS.view
 			userProfile.totalCholesterol_int = interventionsPanel.totalCholesterol.value;
 			userProfile.hdlCholesterol_int = interventionsPanel.hdlCholesterol.value;
 			userProfile.smoker_int = interventionsPanel.futureSmokingCategory.selectedIndex == 1;
+			userProfile.hba1c_int = interventionsPanel.hba1c.value;
 			
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
 			
@@ -154,6 +163,13 @@ package org.understandinguncertainty.UKPDS.view
 		private function resetHDLCholesterol(event:MouseEvent):void
 		{
 			interventionsPanel.hdlCholesterol.value = userProfile.hdlCholesterol_int = userProfile.hdlCholesterol;
+			model.recalculate();
+			
+		}
+		
+		private function resetHba1c(event:MouseEvent):void
+		{
+			interventionsPanel.hba1c.value = userProfile.hba1c_int = userProfile.hba1c;
 			model.recalculate();
 			
 		}

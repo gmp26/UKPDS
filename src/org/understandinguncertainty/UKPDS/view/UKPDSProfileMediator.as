@@ -100,11 +100,8 @@ package org.understandinguncertainty.UKPDS.view
 			*/
 			
 			profile.smokerGroup.dataProvider = new ArrayCollection([
-				"No",
-				"I quit",
-				"I smoke less than 10/day",
-				"I smoke less than 20/day",
-				"I smoke 20+/day"
+				"non smoker",
+				"smoker"
 				]);
 			
 			profile.cholUnits.dataProvider = cholUnitFactors;
@@ -240,11 +237,8 @@ package org.understandinguncertainty.UKPDS.view
 			profile.ethnicGroup.selectedIndex = Number(pvars.ethnicGroup);
 			profile.height_mStep.value = pvars.height_m.value;
 			profile.weight_kgStep.value = pvars.weight_kg.value;
-			//profile.townsendGroup.selectedIndex = Number(pvars.townsendGroup);
-			//profile.fh.selected = pvars.relativeHadCVD.value;
-			//profile.crd.selected = pvars.chronicRenalDisease.value;
 			profile.af.selected = pvars.atrialFibrillation.value;
-			//profile.ra.selected = pvars.rheumatoidArthritis.value;
+			profile.hba1cStepper.value = pvars.hba1c.value;
 			
 			profile.smokerGroup.selectedIndex = Number(pvars.smokerAtDiagnosis.value);
 			
@@ -277,9 +271,7 @@ package org.understandinguncertainty.UKPDS.view
 			pvars.ethnicGroup.value = profile.ethnicGroup.selectedIndex;
 			pvars.height_m.value = profile.height_mStep.value;
 			pvars.weight_kg.value = profile.weight_kgStep.value;
-			//pvars.townsendGroup.value = profile.townsendGroup.selectedIndex;
-			//pvars.relativeHadCVD.value = profile.fh.selected;
-			//pvars.chronicRenalDisease.value = profile.crd.selected;
+			pvars.hba1c.value = profile.hba1cStepper.value;
 			pvars.atrialFibrillation.value = profile.af.selected;
 			//pvars.rheumatoidArthritis.value = profile.ra.selected;
 			pvars.smokerAtDiagnosis.value = profile.smokerGroup.selectedIndex;

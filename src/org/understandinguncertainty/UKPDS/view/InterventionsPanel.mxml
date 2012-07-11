@@ -51,8 +51,6 @@
 			width="100%"
 			height="50"
 			fixed="2"
-			minimum="4"
-			maximum="6"
 			stepSize="0.01"
 			/>
 		

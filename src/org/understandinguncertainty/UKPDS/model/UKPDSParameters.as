@@ -80,7 +80,7 @@ package org.understandinguncertainty.UKPDS.model
 					* Math.pow(chd.systolicBloodPressure, (systolicBloodPressure-135.7)/10)
 					* Math.pow(chd.lipidRatio, Math.log(lipidRatio)-1.59);
 		}			
-			
+
 		public function stroke_q1(
 			age:Number,
 			gender:String,
@@ -113,61 +113,9 @@ package org.understandinguncertainty.UKPDS.model
 			return chd_hazard(t, duration, q1) + stroke_hazard(t, duration, q2);
 		}
 								   
-		/*
-		Functionality moved to UserModel
-		
-		// chd intervention hazard
-		public function chd_intervention(
-			q1:Number, // input result of chd_q1 calculation above
-			gender: String,
-			delta_hba1c:Number,
-			stop_smoking:Boolean,
-			delta_ldl_cholesterol:Number,
-			lose_weight:Boolean,
-			become_active:Boolean,
-			delta_ace_arb:Number):Number {
-			
-			return q1 					
-					* Math.pow(chd.int_hba1c, delta_hba1c)
-					* (stop_smoking ? (gender == "male" ? chd.int_stop_smoking_man : chd.int_stop_smoking_woman) : 1)
-					* Math.pow(chd.int_ldl_cholesterol, delta_ldl_cholesterol)
-					* (lose_weight ? chd.int_lose_weight : 1)
-					* (become_active ? chd.int_become_active : 1)
-					* Math.pow(chd.int_ace_arb, delta_ace_arb);
-			}
-		
-		// stroke intervention hazard
-		public function stroke_intervention(
-			gender: String,
-			delta_hba1c:Number,
-			stop_smoking:Boolean,
-			delta_ldl_cholesterol:Number,
-			lose_weight:Boolean,
-			become_active:Boolean,
-			delta_ace_arb:Number,
-			delta_sbp:Number):Number {
-			
-			return Math.pow(stroke.int_hba1c, delta_hba1c)
-				* (stop_smoking ? (gender == "male" ? stroke.int_stop_smoking_man : stroke.int_stop_smoking_woman) : 1)
-				* Math.pow(stroke.int_ldl_cholesterol, delta_ldl_cholesterol)
-				* (lose_weight ? stroke.int_lose_weight : 1)
-				* (become_active ? stroke.int_become_active : 1)
-				* Math.pow(stroke.int_ace_arb, delta_ace_arb)
-				* Math.pow(stroke.int_sbp, delta_sbp);
-		}
-		
-		// noncv intervention hazard
-		public function noncv_intervention(
-		gender: String,
-		stop_smoking:Boolean):Number {
-		
-		return (stop_smoking ? (gender == "male" ? noncv.int_stop_smoking_man : noncv.int_stop_smoking_woman) : 1)
-		}
-		
-		*/
 		
 		// See pub/UKPDS_CVD_risk_calculations.xls sheet NonCV_deaths
-		public var noncvHazards:Object = {
+		public var noncvdHazards:Object = {
 			male: [
 				7.90137E-05,	// age 15-19 
 				0.000133194,
@@ -242,5 +190,10 @@ package org.understandinguncertainty.UKPDS.model
 			]
 		};
 		
+		public function noncvdHazard(age:Number, gender:String, smoker:Boolean):Number {
+			var index:int = Math.floor((age-15)/5);
+			var key:String = gender + (smoker ? "Smoker" : "");
+			return noncvdHazards[key][index];
+		}
 	}
 }

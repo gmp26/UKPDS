@@ -21,7 +21,7 @@ package org.understandinguncertainty.UKPDS.model
 		public var maximumAge:int = 95;
 		public var selectedScreenName:String = "profile";
 		
-		private var _minimumAge:int = 0;
+		private var _minimumAge:int = 15;
 
 		public function get minimumAge():int
 		{

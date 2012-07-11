@@ -82,19 +82,20 @@ Copyright University of Cambridge. All rights reserved
 										 daySource="{diagnosisDdStep}" dayProperty="value" required="true" />
 
 		<ns:NumberValidator id="heightValidator" 
-							minValue="20" maxValue="40"
+							minValue="15" maxValue="45"
 							exceedsMaxError = "{bmiTooBig}"
 							lowerThanMinError = "{bmiTooSmall}"
 							required="true" 
 							source="{height_mStep}" 
 							property="bmi" />
 		<ns:NumberValidator id="weightValidator" 
-							minValue="20" maxValue="40" 
+							minValue="15" maxValue="45" 
 							exceedsMaxError = "{bmiTooBig}"
 							lowerThanMinError = "{bmiTooSmall}"
 							required="true" 
 							source="{weight_kgStep}" 
 							property="bmi" />
+
 		<validators:CholRatioValidator id="totalCholValidator" source="{totalCholesterolStep}" property="cholRatio"
 							required="true" 
 							/>
@@ -102,7 +103,7 @@ Copyright University of Cambridge. All rights reserved
 							required="true" 
 							/>
 		
-		<ns:NumberValidator id="hba1cValidator" domain="real" minValue="4" maxValue="6" required="true" source="{hba1cStepper}" property="value"/>	
+		<ns:NumberValidator id="hba1cValidator" domain="real" minValue="5" maxValue="11" required="true" source="{hba1cStepper}" property="value"/>	
 		<ns:NumberValidator id="sbpValidator" domain="real" minValue="70" maxValue="210" required="true" source="{systolicBloodPressureInputStep}" property="value"/>	
 							
 	</fx:Declarations>
@@ -280,7 +281,7 @@ Copyright University of Cambridge. All rights reserved
 						<s:Group width="100%"/>
 						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.HbA1c')" fontWeight="normal"/>
 						<s:NumericStepper id="hba1cStepper" 
-										  minimum="4" maximum="6" value="5" 
+										  minimum="5" maximum="11" value="6" 
 										  width="70" 
 										  stepSize="0.1"
 										  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"
