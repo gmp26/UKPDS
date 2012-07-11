@@ -9,15 +9,15 @@ package org.understandinguncertainty.UKPDS.view
 	import mx.collections.ArrayCollection;
 	
 	import org.robotlegs.mvcs.Mediator;
+	import org.understandinguncertainty.QRLifetime.vo.QParametersVO;
 	import org.understandinguncertainty.UKPDS.components.InterventionCheck;
 	import org.understandinguncertainty.UKPDS.components.InterventionStepper;
 	import org.understandinguncertainty.UKPDS.model.AppState;
 	import org.understandinguncertainty.UKPDS.model.ICardioModel;
 	import org.understandinguncertainty.UKPDS.model.UserModel;
+	import org.understandinguncertainty.personal.VariableList;
 	import org.understandinguncertainty.personal.signals.InterventionEditedSignal;
 	import org.understandinguncertainty.personal.signals.UpdateModelSignal;
-	import org.understandinguncertainty.QRLifetime.vo.QParametersVO;
-	import org.understandinguncertainty.personal.VariableList;
 	import org.understandinguncertainty.personal.types.BooleanPersonalVariable;
 	
 	public class InterventionsPanelMediator extends Mediator
@@ -58,6 +58,10 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.hdlCholesterol.minimum = 0.0000001;
 			interventionsPanel.hdlCholesterol.maximum = 12;
 			
+			var h2:Number = Math.pow(userProfile.height_m,2);
+			interventionsPanel.weight_kg.minimum = h2*15;
+			interventionsPanel.weight_kg.maximum = h2*45;
+			
 			interventionsPanel.sbp.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.sbp.addEventListener(MouseEvent.CLICK, resetSBP);
 			
@@ -69,6 +73,9 @@ package org.understandinguncertainty.UKPDS.view
 			
 			interventionsPanel.hdlCholesterol.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.hdlCholesterol.addEventListener(MouseEvent.CLICK, resetHDLCholesterol);
+			
+			interventionsPanel.weight_kg.addEventListener(Event.CHANGE, stepperChanged);
+			interventionsPanel.weight_kg.addEventListener(MouseEvent.CLICK, resetWeight);
 			
 			interventionsPanel.resetButton.addEventListener(MouseEvent.CLICK, resetAll);
 			
@@ -99,7 +106,9 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.hdlCholesterol.removeEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.hdlCholesterol.removeEventListener(MouseEvent.CLICK, resetHDLCholesterol);
 			
-
+			interventionsPanel.weight_kg.removeEventListener(Event.CHANGE, stepperChanged);
+			interventionsPanel.weight_kg.removeEventListener(MouseEvent.CLICK, resetWeight);
+			
 			interventionsPanel.resetButton.removeEventListener(MouseEvent.CLICK, resetAll);
 		}
 		
@@ -109,7 +118,8 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.totalCholesterol.original = interventionsPanel.totalCholesterol.value = userProfile.totalCholesterol_int;
 			interventionsPanel.hdlCholesterol.original = interventionsPanel.hdlCholesterol.value = userProfile.hdlCholesterol_int;		
 			interventionsPanel.futureSmokingCategory.selectedIndex = userProfile.smoker_int ? 1 : 0;
-			interventionsPanel.hba1c.value = userProfile.hba1c_int;
+			interventionsPanel.hba1c.original = interventionsPanel.hba1c.value = userProfile.hba1c_int;
+			interventionsPanel.weight_kg.original = interventionsPanel.weight_kg.value = userProfile.weight_kg_int;
 			
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
 			interventionsPanel.bmiField.text = "BMI: " + userProfile.bmi_int.toPrecision(3);
@@ -126,6 +136,7 @@ package org.understandinguncertainty.UKPDS.view
 			userProfile.hdlCholesterol_int = interventionsPanel.hdlCholesterol.value;
 			userProfile.smoker_int = interventionsPanel.futureSmokingCategory.selectedIndex == 1;
 			userProfile.hba1c_int = interventionsPanel.hba1c.value;
+			userProfile.weight_kg_int = interventionsPanel.weight_kg.value;
 			
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
 			
@@ -157,21 +168,24 @@ package org.understandinguncertainty.UKPDS.view
 			
 			interventionsPanel.totalCholesterol.value = userProfile.totalCholesterol_int = userProfile.totalCholesterol;
 			model.recalculate();
-			
 		}
 		
 		private function resetHDLCholesterol(event:MouseEvent):void
 		{
 			interventionsPanel.hdlCholesterol.value = userProfile.hdlCholesterol_int = userProfile.hdlCholesterol;
 			model.recalculate();
-			
 		}
 		
 		private function resetHba1c(event:MouseEvent):void
 		{
 			interventionsPanel.hba1c.value = userProfile.hba1c_int = userProfile.hba1c;
 			model.recalculate();
-			
+		}
+		
+		private function resetWeight(event:MouseEvent):void
+		{
+			interventionsPanel.weight_kg.value = userProfile.weight_kg_int = userProfile.weight_kg;
+			model.recalculate();
 		}
 		
 	}

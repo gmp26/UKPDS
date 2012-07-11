@@ -35,7 +35,7 @@ package org.understandinguncertainty.UKPDS.model
 		public var hdlCholesterol_int:Number;
 		public var smoker_int:Boolean;
 		public var weight_kg_int:Number;
-		public var minsActivityPerWeek_int:Number;
+		public var active_int:Number;
 		
 		// reset interventions to zero - i.e. no change from Profile values
 		public function resetInterventions():void {
@@ -45,7 +45,7 @@ package org.understandinguncertainty.UKPDS.model
 			hdlCholesterol_int = Number(variableList.hdlCholesterol_mmol_L.value);
 			smoker_int = Boolean(variableList.smokerAtDiagnosis.value);
 			weight_kg_int = Number(variableList.weight_kg.value);
-			minsActivityPerWeek_int = Number(variableList.minsActivityPerWeek.value);
+			active_int = Number(variableList.active.value);
 		} 
 		
 		public function get chdHazardForInterventions():Number {
@@ -81,7 +81,10 @@ package org.understandinguncertainty.UKPDS.model
 			ratio *= r;
 			
 			// Activity
-			r = boundaryHazard(minsActivityPerWeek, minsActivityPerWeek_int, 240, 1/0.57);
+			// Active for more than 4 hours per week
+			r = active ? 
+				(active_int ? 1 : 1/0.57) :
+				(active_int ? 0.57 : 1);
 			ratio *= r;
 			
 			return ratio;
@@ -119,8 +122,10 @@ package org.understandinguncertainty.UKPDS.model
 				boundaryHazard(before, after, 32.6, 0.776);
 			ratio *= r;
 			
-			// Activity
-			r = boundaryHazard(minsActivityPerWeek, minsActivityPerWeek_int, 240, 1/0.57);
+			// Active for more than 4 hours per week
+			r = active ? 
+				(active_int ? 1 : 1/0.57) :
+				(active_int ? 0.57 : 1);
 			ratio *= r;
 			
 			return ratio;
@@ -156,10 +161,6 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public function calc_ldl(total:Number, hdl:Number):Number {
 			return (total - hdl)/1.24;
-		}
-		
-		public function get active():Boolean {
-			return minsActivityPerWeek_int >= 240;
 		}
 		
 		// User Variables
@@ -253,8 +254,8 @@ package org.understandinguncertainty.UKPDS.model
 			return Number(variableList.hdlCholesterol_mmol_L.value);	
 		}
 		
-		public function get minsActivityPerWeek():Number {
-			return variableList.minsActivityPerWeek.value;
+		public function get active():Boolean {
+			return variableList.active.value;
 		}
 		
 		public function boolInt(b:Boolean):int

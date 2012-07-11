@@ -84,9 +84,9 @@
 			height="50"
 			/>
 		
-		<components:InterventionStepper
-			id="minsActivityPerWeek"
-			label="@Resource(bundle='UKPDS', key='sideBar2.minsActivityPerWeek')"
+		<components:InterventionCheck
+			id="active"
+			label="@Resource(bundle='UKPDS', key='sideBar2.active')"
 			width="100%"
 			height="50"
 			/>

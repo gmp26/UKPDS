@@ -26,7 +26,7 @@ package org.understandinguncertainty.UKPDS.validators
 			var dd:int = parseInt(value.day);
 			
 			var now:Date = new Date();
-			if((yyyy > now.fullYear - 30)
+			if((yyyy > now.fullYear - 15)
 				|| (yyyy == now.fullYear && ( mm > now.month
 					|| mm == now.month && dd > now.date))) {
 				
@@ -37,7 +37,7 @@ package org.understandinguncertainty.UKPDS.validators
 				return results;
 			}
 			
-			if( yyyy + 84 < now.fullYear)  {
+			if( yyyy + 95 < now.fullYear)  {
 				
 				// Patient is too old
 				results.push(new ValidationResult(

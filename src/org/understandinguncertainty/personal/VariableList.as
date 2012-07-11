@@ -43,7 +43,7 @@ package org.understandinguncertainty.personal
 		public var smokerAtDiagnosis:BooleanPersonalVariable = new BooleanPersonalVariable("smokerAtDiagnosis", false);
 		public var weight_kg:NumberPersonalVariable = new NumberPersonalVariable("weight_kg", 65);
 		public var height_m:NumberPersonalVariable = new NumberPersonalVariable("height_m", 1.7);
-		public var minsActivityPerWeek:NumberPersonalVariable = new NumberPersonalVariable("minsActivityPerWeek", 200);
+		public var active:BooleanPersonalVariable = new BooleanPersonalVariable("active", false);
 		
 		/* following are unused in UKPDS */
 		/*
@@ -86,6 +86,7 @@ package org.understandinguncertainty.personal
 			s += " sbp:" + (systolicBloodPressure.value as Number) + "\n";
 			s += " smok:" + (smokerAtDiagnosis.value as Boolean);
 			s += " ethnicGroup:" + (ethnicGroup.value as Number);
+			s += " active:" + (active.value as Boolean);
 			return s;
 		}
 		

@@ -2,7 +2,7 @@
   <hdlCholesterol_mmol_L>1.000001</hdlCholesterol_mmol_L>
   <gender>female</gender>
   <totalCholesterol_mmol_L>4.9000010000000005</totalCholesterol_mmol_L>
-  <active>false</active>
+  <active>true</active>
   <atrialFibrillation>false</atrialFibrillation>
   <hba1c>7.5</hba1c>
   <ethnicGroup>0</ethnicGroup>

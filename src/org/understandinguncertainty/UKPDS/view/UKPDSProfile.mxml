@@ -196,6 +196,12 @@ Copyright University of Cambridge. All rights reserved
 						<s:Label id="bmiField" text=""/>
 					</s:HGroup>
 					
+					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.check.active')" fontWeight="normal"/>
+						<s:CheckBox id="active" selected="false"/>						
+					</s:HGroup>
+					
 					<!-- no townsend in UKPDS
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>

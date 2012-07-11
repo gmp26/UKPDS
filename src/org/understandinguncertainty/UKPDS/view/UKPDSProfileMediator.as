@@ -88,16 +88,6 @@ package org.understandinguncertainty.UKPDS.view
 				"Other ethnic group"
 				]);
 			
-			// Townsend quintile selection
-			/*
-			profile.townsendGroup.dataProvider = new ArrayCollection([
-				"1: Affluent",
-				"2: ",
-				"3: Average",
-				"4: ",
-				"5: Least affluent",
-				]);
-			*/
 			
 			profile.smokerGroup.dataProvider = new ArrayCollection([
 				"non smoker",
@@ -175,8 +165,6 @@ package org.understandinguncertainty.UKPDS.view
 			profile.height_mStep.removeEventListener(Event.CHANGE, validate);
 			profile.weight_kgStep.removeEventListener(Event.CHANGE, validate);
 			
-			//profile.townsendGroup.removeEventListener(Event.CHANGE, showTownsendImage);
-
 			profile.totalCholesterolStep.removeEventListener(Event.CHANGE, validate);
 			profile.hdlCholesterolStep.removeEventListener(Event.CHANGE, validate);
 			profile.systolicBloodPressureInputStep.removeEventListener(Event.CHANGE, validate);
@@ -227,16 +215,25 @@ package org.understandinguncertainty.UKPDS.view
 		private function showPersonalData(event:Event=null):void {
 			var pvars:VariableList = ps.variableList;
 			var dob:Date = pvars.dateOfBirth.value as Date;
+
 			//trace("profile:showing dob=",dob);
 			profile.yyyyStep.value = dob.fullYear; //.toString();
 			profile.mmStep.value = (dob.month + 1);
 			profile.ddStep.value = dob.date;
 			profile.gender.selectedValue = pvars.gender.toString();
+
+			var dodiagnosis:Date = pvars.dateOfDiagnosis.value as Date;
+
+			//trace("profile:showing dob=",dob);
+			profile.diagnosisYyyyStep.value = dodiagnosis.fullYear; //.toString();
+			profile.diagnosisMmStep.value = (dodiagnosis.month + 1);
+			profile.diagnosisDdStep.value = dodiagnosis.date;
 			
 			// extra Q parameters
 			profile.ethnicGroup.selectedIndex = Number(pvars.ethnicGroup);
 			profile.height_mStep.value = pvars.height_m.value;
 			profile.weight_kgStep.value = pvars.weight_kg.value;
+			profile.active.selected = pvars.active.value;
 			profile.af.selected = pvars.atrialFibrillation.value;
 			profile.hba1cStepper.value = pvars.hba1c.value;
 			
@@ -265,15 +262,19 @@ package org.understandinguncertainty.UKPDS.view
 			var s:String = [profile.ddStep.value.toString(), profile.mmStep.value.toString(), profile.yyyyStep.value.toString()].join(":");
 			//trace("profile: setting dob=", s);
 			pvars.dateOfBirth.fromString(s);
+			
+			s = [profile.diagnosisDdStep.value.toString(), profile.diagnosisMmStep.value.toString(), profile.diagnosisYyyyStep.value.toString()].join(":");
+			pvars.dateOfDiagnosis.fromString(s);
+			
 			pvars.gender.fromString(profile.gender.selectedValue as String);
 			
 			// extra Q parameters
 			pvars.ethnicGroup.value = profile.ethnicGroup.selectedIndex;
 			pvars.height_m.value = profile.height_mStep.value;
 			pvars.weight_kg.value = profile.weight_kgStep.value;
+			pvars.active.value = profile.active.selected;
 			pvars.hba1c.value = profile.hba1cStepper.value;
 			pvars.atrialFibrillation.value = profile.af.selected;
-			//pvars.rheumatoidArthritis.value = profile.ra.selected;
 			pvars.smokerAtDiagnosis.value = profile.smokerGroup.selectedIndex;
 			
 			//pvars.diabetic.value = profile.diabetic.selected
