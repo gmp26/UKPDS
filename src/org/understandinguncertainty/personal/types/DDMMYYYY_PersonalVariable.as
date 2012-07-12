@@ -59,6 +59,6 @@ package org.understandinguncertainty.personal.types
 		{
 			return "Date";	
 		}
-
+		
 	}
 }

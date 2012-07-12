@@ -123,7 +123,7 @@ package org.understandinguncertainty.UKPDS.model
 			
 			var chd_H_int:Number = q1_chd*userProfile.chdHazardForInterventions;
 
-			var q2_stroke:Number = parameters.stroke_q1(
+			var q2_stroke:Number = parameters.stroke_q2(
 				userProfile.ageAtDiagnosis,
 				userProfile.gender,
 				userProfile.smokerAtDiagnosis,
@@ -132,7 +132,7 @@ package org.understandinguncertainty.UKPDS.model
 				userProfile.atrialFibrillation
 			);
 			
-			var q2_stroke_gp:Number = parameters.stroke_q1(
+			var q2_stroke_gp:Number = parameters.stroke_q2(
 				userProfile.ageAtDiagnosis,
 				userProfile.gender,
 				false,
@@ -143,36 +143,47 @@ package org.understandinguncertainty.UKPDS.model
 			
 			var stroke_H_int:Number = q2_stroke*userProfile.strokeHazardForInterventions;
 
+			var T:Number = userProfile.diabetesDuration;
 			
 			// Kick off calculation at t=0;
-			var expH0:Number = Math.exp(-parameters.cvd_hazard(0, userProfile.diabetesDuration, q1_chd, q2_stroke));
-			var expH0_int:Number = Math.exp(-parameters.cvd_hazard(0, userProfile.diabetesDuration, chd_H_int, stroke_H_int));
-			var expH0_gp:Number = Math.exp(-parameters.cvd_hazard(0, userProfile.diabetesDuration, q1_chd_gp, q2_stroke_gp));
+			var expH0:Number = 1; //Math.exp(-parameters.cvd_hazard(0, userProfile.diabetesDuration, q1_chd, q2_stroke));
+			var expH0_int:Number = 1; //Math.exp(-parameters.cvd_hazard(0, userProfile.diabetesDuration, chd_H_int, stroke_H_int));
+			var expH0_gp:Number = 1;//Math.exp(-parameters.cvd_hazard(0, userProfile.diabetesDuration, q1_chd_gp, q2_stroke_gp));
+
+			var b0:Number = 0;
+			var b0_int:Number = 0;
+			var b0_gp:Number = 0;
+			
 			var maxQuarters:int = Math.floor((appState.maximumAge - userProfile.ageAtDiagnosis)*4);
 			
-			for(var quarter:int=0; quarter <= maxQuarters; quarter++) {
+			
+			for(var quarter:int=1; quarter <= maxQuarters; quarter++) {
 				
 				var t:Number = quarter/4;
 				
 				// Calculate cvd risk for quarter
-				var expH1:Number = Math.exp(-parameters.cvd_hazard(t, userProfile.diabetesDuration, q1_chd, q2_stroke));
+				var expH1:Number = Math.exp(-parameters.cvd_hazard(t, 0.25, q1_chd, q2_stroke));
 				a = expH1 - expH0;
 				expH0 = expH1;
 				
 				// and after interventions
-				var expH1_int:Number = Math.exp(-parameters.cvd_hazard(t, userProfile.diabetesDuration, chd_H_int, stroke_H_int));
+				var expH1_int:Number = Math.exp(-parameters.cvd_hazard(t, T, chd_H_int, stroke_H_int));
 				a_int = expH1_int - expH0_int;
 				expH0_int = expH1_int;
 				
 				// and for comparison
-				var expH1_gp:Number = Math.exp(-parameters.cvd_hazard(t, userProfile.diabetesDuration, q1_chd_gp, q2_stroke_gp));
-				a = expH1_gp - expH0_gp;
+				var expH1_gp:Number = Math.exp(-parameters.cvd_hazard(t, T, q1_chd_gp, q2_stroke_gp));
+				a_gp = expH1_gp - expH0_gp;
 				expH0_gp = expH1_gp;
 				
 				// Calculate noncvd risk for quarter
-				b = parameters.noncvdHazard(t, userProfile.gender, userProfile.smokerAtDiagnosis);
+				b = parameters.noncvdHazard(userProfile.ageAtDiagnosis+t, userProfile.gender, userProfile.smokerAtDiagnosis);
+				
+				// and after interventions
 				b_int = b * userProfile.nonCVDHazardForInterventions;
-				b_gp = parameters.noncvdHazard(t, userProfile.gender, false);
+				
+				// and for comparison
+				b_gp = parameters.noncvdHazard(userProfile.ageAtDiagnosis+t, userProfile.gender, false);
 				
 				c = e*b;
 				c_int = e_int*b_int;

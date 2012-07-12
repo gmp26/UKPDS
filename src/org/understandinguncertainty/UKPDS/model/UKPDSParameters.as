@@ -12,6 +12,7 @@ package org.understandinguncertainty.UKPDS.model
 		private var stroke:ParamsVO;
 		private var noncv:ParamsVO;
 		private var mean:ParamsVO;
+		
 
 		function UKPDSParameters()
 		{
@@ -38,7 +39,7 @@ package org.understandinguncertainty.UKPDS.model
 			stroke = new ParamsVO();
 			stroke.intercept 				= 0.00186;
 			stroke.diabetesDuration 		= 1.145;
-			stroke.age 						= 1.145;
+			stroke.age 						= 1.092; /* paper says 1.145, but spreadsheet says 1.092 */
 			stroke.female					= 0.7; 
 			stroke.afroCarib				= Number.NaN;
 			stroke.smoker					= 1.547;
@@ -81,7 +82,7 @@ package org.understandinguncertainty.UKPDS.model
 					* Math.pow(chd.lipidRatio, Math.log(lipidRatio)-1.59);
 		}			
 
-		public function stroke_q1(
+		public function stroke_q2(
 			age:Number,
 			gender:String,
 			smoker:Boolean,
@@ -101,12 +102,16 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public function chd_hazard(t:Number, duration:Number, q1:Number):Number {
 			var d:Number = chd.diabetesDuration;
-			return q1*Math.pow(d,duration)*(1-Math.pow(d,t))/(1-d);
+			var rv:Number = q1*Math.pow(d,duration)*(1-Math.pow(d,t))/(1-d);
+			//trace("chd_hazard=",rv, "t=",t, "T=",duration, "q1=",q1);
+			return rv;
 		}
 								   
 		public function stroke_hazard(t:Number, duration:Number, q2:Number):Number {
 			var d:Number = stroke.diabetesDuration;
-			return q2*Math.pow(d,duration)*(1-Math.pow(d,t))/(1-d);
+			var rv:Number =  q2*Math.pow(d,duration)*(1-Math.pow(d,t))/(1-d);
+			//trace("stroke_hazard=",rv, "t=",t, "T=",duration, "q2=",q2);
+			return rv;
 		}
 		
 		public function cvd_hazard(t:Number, duration:Number, q1:Number, q2:Number):Number {
@@ -171,22 +176,22 @@ package org.understandinguncertainty.UKPDS.model
 				0.085657979
 			],
 			femaleSmoker: [
-				0.000125025,
-				0.000127638,
-				0.000182861,
-				0.00025939,
-				0.000412211,
-				0.000612527,
-				0.00089644,
-				0.001493377,
-				0.002311048,
-				0.003418003,
-				0.005109478,
-				0.008192161,
-				0.013453725,
-				0.023245883,
-				0.040175306,
-				0.08274848
+				0.000119277,
+				0.000121769,
+				0.000174454,
+				0.000247464,
+				0.000393259,
+				0.000584364,
+				0.000855225,
+				0.001424716,
+				0.002204793,
+				0.003260853,
+				0.004874559,
+				0.00781551,
+				0.012835163,
+				0.022177106,
+				0.038328166,
+				0.078943952
 			]
 		};
 		

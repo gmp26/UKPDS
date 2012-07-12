@@ -188,7 +188,7 @@ package org.understandinguncertainty.UKPDS.model
 			return variableList.gender.toString();
 		}
 		
-		
+		// in years
 		public function get diabetesDuration():Number {
 			return variableList.dateOfDiagnosis.getDuration();
 		}

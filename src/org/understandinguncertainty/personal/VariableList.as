@@ -79,7 +79,6 @@ package org.understandinguncertainty.personal
 		public function toString():String
 		{
 			var s:String = "age:" + (dateOfBirth.getAge());
-			s +=" T:" + (dateOfDiagnosis.getDuration());
 			s += " sex:" + (gender.value as String);
 			s += " tc:" + (totalCholesterol_mmol_L.value as Number);
 			s += " hdl:" + (hdlCholesterol_mmol_L.value as Number);

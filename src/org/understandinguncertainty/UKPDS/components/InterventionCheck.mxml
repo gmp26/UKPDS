@@ -69,7 +69,7 @@
 		<s:Label id="text" />
 		<s:HGroup width="100%" verticalAlign="middle">
 
-			<s:Button id="before" label="{originalUnticked}"/>
+			<s:Button id="before" label="{originalUnticked}" width="60"/>
 			
 			<s:Label text="→" fontSize="14"/>
 						

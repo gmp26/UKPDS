@@ -23,8 +23,9 @@ package org.understandinguncertainty.personal.variables
 			super.value = v;
 		}
 		
+		// millisecs in a year
 		private const msInYear:Number = 1000*60*60*24*365.25;
-
+		
 		public function getDuration():Number {
 			var date:Date = value;
 			if(date == null) return -1;
