@@ -196,6 +196,8 @@ package org.understandinguncertainty.UKPDS.model
 				m_int += c_int;
 				m_gp += c_gp;
 				
+				trace("push: ",a,b,c,d,e,f,m);
+				
 				// outlook yellow
 				var yellow:Number = f+m - (m_int+f_int);
 				

@@ -16,7 +16,6 @@ package org.understandinguncertainty.UKPDS.view
 	import org.understandinguncertainty.UKPDS.model.ICardioModel;
 	import org.understandinguncertainty.UKPDS.model.UserModel;
 	import org.understandinguncertainty.personal.VariableList;
-	import org.understandinguncertainty.personal.signals.InterventionEditedSignal;
 	import org.understandinguncertainty.personal.signals.UpdateModelSignal;
 	import org.understandinguncertainty.personal.types.BooleanPersonalVariable;
 	
@@ -33,9 +32,6 @@ package org.understandinguncertainty.UKPDS.view
 		
 		[Inject]
 		public var appState:AppState;
-		
-		[Inject]
-		public var interventionEditedSignal:InterventionEditedSignal;
 		
 		public function InterventionsPanelMediator()
 		{
@@ -62,6 +58,9 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.weight_kg.minimum = h2*15;
 			interventionsPanel.weight_kg.maximum = h2*45;
 			
+			interventionsPanel.smoker.addEventListener(Event.CHANGE, stepperChanged);
+			interventionsPanel.smoker.addEventListener(MouseEvent.CLICK, resetSmoker);
+
 			interventionsPanel.sbp.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.sbp.addEventListener(MouseEvent.CLICK, resetSBP);
 			
@@ -77,17 +76,12 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.weight_kg.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.weight_kg.addEventListener(MouseEvent.CLICK, resetWeight);
 			
+			interventionsPanel.active.addEventListener(Event.CHANGE, stepperChanged);
+			interventionsPanel.active.addEventListener(MouseEvent.CLICK, resetWeight);
+			
 			interventionsPanel.resetButton.addEventListener(MouseEvent.CLICK, resetAll);
 			
-			interventionsPanel.futureSmokingCategory.dataProvider = new ArrayCollection([
-				"Non Smoker",
-				"Smoker"
-			]);
-			interventionsPanel.futureSmokingCategory.addEventListener(Event.CHANGE, futureSmokingChanged);
-
-			
 			interventionsPanel.conversionFactor = appState.mmol ? 1 : appState.mmolConvert;
-			
 			
 			setInterventions();
 		}
@@ -109,17 +103,23 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.weight_kg.removeEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.weight_kg.removeEventListener(MouseEvent.CLICK, resetWeight);
 			
+			interventionsPanel.active.removeEventListener(Event.CHANGE, stepperChanged);
+			interventionsPanel.active.removeEventListener(MouseEvent.CLICK, resetWeight);
+			
 			interventionsPanel.resetButton.removeEventListener(MouseEvent.CLICK, resetAll);
 		}
 		
 		private function setInterventions():void
 		{	
+			interventionsPanel.smoker.original = interventionsPanel.smoker.selected = userProfile.smoker_int;
 			interventionsPanel.sbp.original = interventionsPanel.sbp.value = userProfile.sbp_int;
 			interventionsPanel.totalCholesterol.original = interventionsPanel.totalCholesterol.value = userProfile.totalCholesterol_int;
 			interventionsPanel.hdlCholesterol.original = interventionsPanel.hdlCholesterol.value = userProfile.hdlCholesterol_int;		
-			interventionsPanel.futureSmokingCategory.selectedIndex = userProfile.smoker_int ? 1 : 0;
+			interventionsPanel.smoker.original = interventionsPanel.smoker.selected = userProfile.smoker_int;
 			interventionsPanel.hba1c.original = interventionsPanel.hba1c.value = userProfile.hba1c_int;
 			interventionsPanel.weight_kg.original = interventionsPanel.weight_kg.value = userProfile.weight_kg_int;
+			interventionsPanel.active.original = interventionsPanel.active.selected = userProfile.active_int;
+				
 			
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
 			interventionsPanel.bmiField.text = "BMI: " + userProfile.bmi_int.toPrecision(3);
@@ -129,20 +129,19 @@ package org.understandinguncertainty.UKPDS.view
 		
 		private function stepperChanged(event:Event):void
 		{
-			var conversion:Number = appState.mmol ? 1 : 1/appState.mmolConvert;
-			
+			userProfile.smoker_int = interventionsPanel.smoker.selected;
 			userProfile.sbp_int = interventionsPanel.sbp.value;
 			userProfile.totalCholesterol_int = interventionsPanel.totalCholesterol.value;
 			userProfile.hdlCholesterol_int = interventionsPanel.hdlCholesterol.value;
-			userProfile.smoker_int = interventionsPanel.futureSmokingCategory.selectedIndex == 1;
 			userProfile.hba1c_int = interventionsPanel.hba1c.value;
 			userProfile.weight_kg_int = interventionsPanel.weight_kg.value;
+			userProfile.active_int = interventionsPanel.active.selected;
 			
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
 			
 			model.recalculate();
 		}
-		
+		/*
 		private function futureSmokingChanged(event:Event):void 
 		{
 
@@ -150,10 +149,17 @@ package org.understandinguncertainty.UKPDS.view
 
 			model.recalculate();
 		}
-		
+		*/
 		private function resetAll(event:MouseEvent):void
 		{
 			userProfile.resetInterventions();
+		}
+		
+		private function resetSmoker(event:MouseEvent):void
+		{
+			
+			interventionsPanel.smoker.original = userProfile.smoker_int = userProfile.smokerAtDiagnosis;
+			model.recalculate();
 		}
 		
 		private function resetSBP(event:MouseEvent):void
@@ -186,6 +192,11 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			interventionsPanel.weight_kg.value = userProfile.weight_kg_int = userProfile.weight_kg;
 			model.recalculate();
+		}
+		
+		private function resetActive(event:MouseEvent):void
+		{
+			interventionsPanel.active.reset();
 		}
 		
 	}

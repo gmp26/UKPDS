@@ -35,7 +35,7 @@ package org.understandinguncertainty.UKPDS.model
 		public var hdlCholesterol_int:Number;
 		public var smoker_int:Boolean;
 		public var weight_kg_int:Number;
-		public var active_int:Number;
+		public var active_int:Boolean;
 		
 		// reset interventions to zero - i.e. no change from Profile values
 		public function resetInterventions():void {
@@ -45,7 +45,7 @@ package org.understandinguncertainty.UKPDS.model
 			hdlCholesterol_int = Number(variableList.hdlCholesterol_mmol_L.value);
 			smoker_int = Boolean(variableList.smokerAtDiagnosis.value);
 			weight_kg_int = Number(variableList.weight_kg.value);
-			active_int = Number(variableList.active.value);
+			active_int = Boolean(variableList.active.value);
 		} 
 		
 		public function get chdHazardForInterventions():Number {

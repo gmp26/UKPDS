@@ -53,7 +53,6 @@ package org.understandinguncertainty.UKPDS
 	import org.understandinguncertainty.UKPDS.view.UKPDSProfile;
 	import org.understandinguncertainty.UKPDS.view.UKPDSProfileMediator;
 	import org.understandinguncertainty.personal.signals.ClearInterventionsSignal;
-	import org.understandinguncertainty.personal.signals.InterventionEditedSignal;
 	import org.understandinguncertainty.personal.signals.ModelUpdatedSignal;
 	import org.understandinguncertainty.personal.signals.NextScreenSignal;
 	import org.understandinguncertainty.personal.signals.NumbersAvailableSignal;
@@ -112,7 +111,6 @@ package org.understandinguncertainty.UKPDS
 			injector.mapSingleton(ClearInterventionsSignal);
 			injector.mapSingleton(ShowDifferencesChangedSignal);
 			
-			injector.mapSingleton(InterventionEditedSignal);
 			injector.mapSingleton(UpdateModelSignal);
 			injector.mapSingleton(ModelUpdatedSignal);
 			injector.mapSingleton(NumbersAvailableSignal);

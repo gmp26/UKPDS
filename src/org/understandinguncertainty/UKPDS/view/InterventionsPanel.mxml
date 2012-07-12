@@ -36,14 +36,21 @@
 		
 	</s:HGroup>
 	
-	<s:VGroup id="container" gap="8" paddingLeft="20" paddingRight="20" paddingTop="30" paddingBottom="15" horizontalAlign="right">
+	<s:VGroup id="container" gap="4" paddingLeft="20" paddingRight="20" paddingTop="30" paddingBottom="15" horizontalAlign="right">
 			
-		<s:Group height="10"/>
+		<components:InterventionCheck
+			id="smoker"
+			label="@Resource(bundle='UKPDS', key='sideBar2.smoker')"
+			width="100%"
+			height="50"
+			/>
 		
-		<s:VGroup gap="2" width="100%" horizontalAlign="left">
-			<s:Label text="@Resource(bundle='UKPDS', key='sideBar2.futureSmokingCategory')" />
-			<mx:ComboBox id="futureSmokingCategory" width="155" selectedIndex="0" rowCount="5"/>
-		</s:VGroup>
+		<components:InterventionCheck
+			id="active"
+			label="@Resource(bundle='UKPDS', key='sideBar2.active')"
+			width="100%"
+			height="50"
+			/>
 		
 		<components:InterventionStepper
 			id="hba1c" 
@@ -84,13 +91,7 @@
 			height="50"
 			/>
 		
-		<components:InterventionCheck
-			id="active"
-			label="@Resource(bundle='UKPDS', key='sideBar2.active')"
-			width="100%"
-			height="50"
-			/>
-		
+
 		<s:Label id="nonHDLField"/>
 		<s:Label id="bmiField"/>
 

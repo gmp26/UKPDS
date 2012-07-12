@@ -12,26 +12,30 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import org.understandinguncertainty.personal.signals.InterventionEditedSignal;
+
+			private const originalTicked:String = 'yes [✓]'; 
+			private const originalUnticked:String = 'no [ ]'; 
 			
 			[Bindable]
-			public var label:String;
+			public function get label():String
+			{
+				return text.text;
+			}
 			
-
+			public function set label(value:String):void
+			{
+				text.text = value;
+			}
+									
 			[Bindable]
 			public function get original():Boolean
 			{
-				return checkBox.selected;
+				return before.label==originalTicked;
 			}	
 			public function set original(b:Boolean):void
 			{
-
-				// This works so long as all our checkboxes 
-				// are ticked for more benefit
-				checkBox.enabled = true;
-				checkBox.validateNow();
-				checkBox.selected = b;
-				checkBox.enabled = !b;
+				before.label = b ? originalTicked : originalUnticked;
+				invalidateProperties();
 			}
 
 
@@ -42,39 +46,36 @@
 			public function set selected(b:Boolean):void
 			{
 				checkBox.selected = b;
+				invalidateProperties();
 			}
-			
-			public var editSignal:InterventionEditedSignal;
-			
-			private function reset():void
+						
+			public function reset():void
 			{
 				checkBox.selected = original;
-				changed();
+				invalidateProperties();
 			}
 			
-			
-			private function changed():void
+			override protected function commitProperties():void
 			{
-				editSignal.dispatch(id);
+				super.commitProperties();
+				before.enabled = original != checkBox.selected;
 			}
 			
+
 		]]>
 	</fx:Script>
 	
-	<s:HGroup width="100%" verticalAlign="middle">
-		<!--
-		<s:Button 
-			label="Reset" 
-			width="60"
-			enabled="{checkBox.selected != original}"
-			click="reset()" />
-		-->
-		<s:Group width="100%"/>
-		<s:Label text="{label}" visible="{checkBox.enabled}"/>
-		<s:CheckBox id="checkBox"
-					selected="{original}"
-					visible="{checkBox.enabled}"
-					change="changed()" label="foo" skinClass="spark.skins.spark.CheckBoxSkin"/>
-	</s:HGroup>
+	<s:VGroup width="100%" gap="2">
+		<s:Label id="text" />
+		<s:HGroup width="100%" verticalAlign="middle">
+
+			<s:Button id="before" label="{originalUnticked}"/>
+			
+			<s:Label text="→" fontSize="14"/>
+						
+			<s:CheckBox id="checkBox" selected="{original}"/>
+
+		</s:HGroup>
+	</s:VGroup>
 
 </s:VGroup>
