@@ -161,19 +161,24 @@ package org.understandinguncertainty.UKPDS.model
 				
 				var t:Number = quarter/4;
 				
+				// for debug
+				var H1:Number = parameters.chd_hazard(t, T, q1_chd);
+				var H2:Number = parameters.chd_hazard(t, T, q2_stroke);
+				var H:Number = H1+H2;
+
 				// Calculate cvd risk for quarter
-				var expH1:Number = Math.exp(-parameters.cvd_hazard(t, 0.25, q1_chd, q2_stroke));
-				a = expH1 - expH0;
+				var expH1:Number = Math.exp(-H); //Math.exp(-parameters.cvd_hazard(t, 0.25, q1_chd, q2_stroke));
+				a = expH0 - expH1; // section 1.4 of the paper has this the wrong way round
 				expH0 = expH1;
 				
 				// and after interventions
 				var expH1_int:Number = Math.exp(-parameters.cvd_hazard(t, T, chd_H_int, stroke_H_int));
-				a_int = expH1_int - expH0_int;
+				a_int = expH0_int - expH1_int;
 				expH0_int = expH1_int;
 				
 				// and for comparison
 				var expH1_gp:Number = Math.exp(-parameters.cvd_hazard(t, T, q1_chd_gp, q2_stroke_gp));
-				a_gp = expH1_gp - expH0_gp;
+				a_gp = expH0_gp - expH1_gp;
 				expH0_gp = expH1_gp;
 				
 				// Calculate noncvd risk for quarter
@@ -207,7 +212,8 @@ package org.understandinguncertainty.UKPDS.model
 				m_int += c_int;
 				m_gp += c_gp;
 				
-				trace("push: ",a,b,c,d,e,f,m);
+				trace("base: ", t, a,b,c,d,e,f,m);
+				trace("intv: ", t, a_int,b_int,c_int,d_int,e_int,f_int,m_int);
 				
 				// outlook yellow
 				var yellow:Number = f+m - (m_int+f_int);
@@ -222,7 +228,7 @@ package org.understandinguncertainty.UKPDS.model
 				var red:Number = f_int;
 				
 				if(quarter % 4) series_deanfield.push({
-					age:		t+1,
+					age:		userProfile.age + t,
 					
 					// for Outlook (+ve)
 					green:		green,
