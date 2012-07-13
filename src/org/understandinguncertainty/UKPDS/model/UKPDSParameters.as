@@ -103,14 +103,14 @@ package org.understandinguncertainty.UKPDS.model
 		public function chd_hazard(t:Number, duration:Number, q1:Number):Number {
 			var d:Number = chd.diabetesDuration;
 			var rv:Number = q1*Math.pow(d,duration)*(1-Math.pow(d,t))/(1-d);
-			//trace("chd_hazard=",rv, "t=",t, "T=",duration, "q1=",q1);
+			trace("chd_hazard=",rv, "t=",t, "T=",duration, "q1=",q1);
 			return rv;
 		}
 								   
 		public function stroke_hazard(t:Number, duration:Number, q2:Number):Number {
 			var d:Number = stroke.diabetesDuration;
 			var rv:Number =  q2*Math.pow(d,duration)*(1-Math.pow(d,t))/(1-d);
-			//trace("stroke_hazard=",rv, "t=",t, "T=",duration, "q2=",q2);
+			trace("stroke_hazard=",rv, "t=",t, "T=",duration, "q2=",q2);
 			return rv;
 		}
 		

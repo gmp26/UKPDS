@@ -160,10 +160,11 @@ package org.understandinguncertainty.UKPDS.model
 			for(var quarter:int=1; quarter <= maxQuarters; quarter++) {
 				
 				var t:Number = quarter/4;
+				var age:Number = userProfile.ageAtDiagnosis+t;
 				
 				// for debug
 				var H1:Number = parameters.chd_hazard(t, T, q1_chd);
-				var H2:Number = parameters.chd_hazard(t, T, q2_stroke);
+				var H2:Number = parameters.stroke_hazard(t, T, q2_stroke);
 				var H:Number = H1+H2;
 
 				// Calculate cvd risk for quarter
@@ -172,9 +173,13 @@ package org.understandinguncertainty.UKPDS.model
 				expH0 = expH1;
 				
 				// and after interventions
-				var expH1_int:Number = Math.exp(-parameters.cvd_hazard(t, T, chd_H_int, stroke_H_int));
-				a_int = expH0_int - expH1_int;
-				expH0_int = expH1_int;
+					var expH1_int:Number = Math.exp(-parameters.cvd_hazard(t, T, chd_H_int, stroke_H_int));
+					a_int = expH0_int - expH1_int;
+					expH0_int = expH1_int;
+					
+				if(age < appState.interventionAge) {
+					a_int = a;
+				}
 				
 				// and for comparison
 				var expH1_gp:Number = Math.exp(-parameters.cvd_hazard(t, T, q1_chd_gp, q2_stroke_gp));
@@ -182,13 +187,18 @@ package org.understandinguncertainty.UKPDS.model
 				expH0_gp = expH1_gp;
 				
 				// Calculate noncvd risk for quarter
-				b = parameters.noncvdHazard(userProfile.ageAtDiagnosis+t, userProfile.gender, userProfile.smokerAtDiagnosis);
+				b = parameters.noncvdHazard(age, userProfile.gender, userProfile.smokerAtDiagnosis);
 				
 				// and after interventions
-				b_int = b * userProfile.nonCVDHazardForInterventions;
+				if(age > appState.interventionAge) {
+					b_int = b * userProfile.nonCVDHazardForInterventions;
+				}
+				else {
+					b_int = b;
+				}
 				
 				// and for comparison
-				b_gp = parameters.noncvdHazard(userProfile.ageAtDiagnosis+t, userProfile.gender, false);
+				b_gp = parameters.noncvdHazard(age, userProfile.gender, false);
 				
 				c = e*b;
 				c_int = e_int*b_int;
@@ -214,9 +224,12 @@ package org.understandinguncertainty.UKPDS.model
 				
 				trace("base: ", t, a,b,c,d,e,f,m);
 				trace("intv: ", t, a_int,b_int,c_int,d_int,e_int,f_int,m_int);
-				
+
 				// outlook yellow
 				var yellow:Number = f+m - (m_int+f_int);
+				
+				// outlook red
+				var ored:Number = Math.min(0, yellow);
 				
 				// cope with rare occasions when m+f > 100
 				var greenUnclamped:Number = 100 - Math.max(m + f, m_int + f_int);
@@ -227,13 +240,14 @@ package org.understandinguncertainty.UKPDS.model
 				var green:Number = Math.min(100, Math.max(0, greenUnclamped));
 				var red:Number = f_int;
 				
+				
 				if(quarter % 4) series_deanfield.push({
-					age:		userProfile.age + t,
+					age:		age,
 					
 					// for Outlook (+ve)
 					green:		green,
 					yellow:		green + yellow,		
-					red:		green + yellow + red,					
+					red:		green - ored,					
 					
 					// for Outlook (-ve)
 					redNeg:	    f_int,					// f_int == f until interventions are entered
