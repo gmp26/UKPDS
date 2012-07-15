@@ -58,11 +58,8 @@ package org.understandinguncertainty.UKPDS.view
 		[Inject]
 		public var appState:AppState;
 		
-		[Inject(name="userProfile")]
+		[Inject]
 		public var user:UserModel;
-		
-		[Inject(name="interventionProfile")]
-		public var inter:UserModel;
 		
 		[Inject]
 		public var clearInterventionsSignal:ClearInterventionsSignal;

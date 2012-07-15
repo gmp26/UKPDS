@@ -46,7 +46,14 @@ package org.understandinguncertainty.UKPDS.model
 			smoker_int = Boolean(variableList.smokerAtDiagnosis.value);
 			weight_kg_int = Number(variableList.weight_kg.value);
 			active_int = Boolean(variableList.active.value);
+			
+			_nonZeroInterventions = false;
 		} 
+		
+		private var _nonZeroInterventions:Boolean = false;
+		public function get nonZeroInterventions():Boolean {
+			return _nonZeroInterventions;
+		}
 		
 		public function get chdHazardForInterventions():Number {
 			
@@ -86,6 +93,10 @@ package org.understandinguncertainty.UKPDS.model
 				(active_int ? 1 : 1/0.57) :
 				(active_int ? 0.57 : 1);
 			ratio *= r;
+			
+			if(ratio != 1) {
+				_nonZeroInterventions = true;;
+			}
 			
 			return ratio;
 		}
@@ -128,6 +139,10 @@ package org.understandinguncertainty.UKPDS.model
 				(active_int ? 0.57 : 1);
 			ratio *= r;
 			
+			if(ratio != 1) {
+				_nonZeroInterventions = true;
+			}
+			
 			return ratio;
 		}
 		
@@ -145,6 +160,10 @@ package org.understandinguncertainty.UKPDS.model
 				}
 			}
 						
+			if(r != 1) {
+				_nonZeroInterventions = true;;
+			}
+			
 			return r;
 		}
 				

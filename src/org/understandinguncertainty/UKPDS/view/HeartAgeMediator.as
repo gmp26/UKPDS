@@ -45,35 +45,10 @@ package org.understandinguncertainty.UKPDS.view
 		
 		private function updateView():void
 		{
-			if(appState.selectedScreenName != "heartAge") {
-				
-				// flashScore_gp may not be valid
+			if(appState.selectedScreenName != "heartAge") {				
 				return;
 			}
-/*			
-			if(model.yearGain >= 0.1) {
-				var yg:String = model.yearGain.toPrecision(2);
-				heartAge.gainText.visible = true;
-				heartAge.gainText.text = "gaining " + yg + " years through interventions"
-			}
-			else {
-				heartAge.gainText.visible = false;
-			}
-			
-			meanAge = model.meanAge;
-			heartAge.meanSurvival.text = "On average, expect to survive to\n" + Math.floor(meanAge) + "\nwithout a heart attack or stroke";
-			var yGain:Number = Math.max(0, model.yearGain);
-*/			
-			/*
-			heartAge.thermometer.dataProvider = new ArrayCollection([{
-				meanYears:model.meanAge - yGain, 
-				yearGain:yGain, 
-				summary:""
-			}]);
 
-			heartAge.hAxis.minimum = userProfile.age;
-			heartAge.hAxis.maximum = 102; //5*Math.ceil((model.meanAge + 5)/5);
-			*/
 			heartAge.heartAgeText.text = model.heartAgeText;
 		}
 	}

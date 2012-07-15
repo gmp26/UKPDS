@@ -37,9 +37,6 @@ package org.understandinguncertainty.UKPDS.view
 		[Inject]
 		public var userProfile:UserModel;
 
-		[Inject(name="interventionProfile")]
-		public var interventionProfile:UserModel;
-		
 		private const interventionColour:uint = 0x000000;
 		private const targetColour:uint = 0xcc0000;
 		
@@ -107,7 +104,7 @@ package org.understandinguncertainty.UKPDS.view
 			riskByAgeChart.dataCanvas.addDataChild(intLabel, intAge+0.2, (riskByAgeChart.chanceAxis.minimum + riskByAgeChart.chanceAxis.maximum)/4);
 			
 			/* add legends */
-			var visibleInterventions:Boolean = !userProfile.variableList.equals(interventionProfile.variableList);
+			var visibleInterventions:Boolean = userProfile.nonZeroInterventions;
 
 			// determine mid-age without intervention risk
 			var midAge_int:int = Math.round((intAge + riskByAgeChart.ageAxis.maximum)/2);

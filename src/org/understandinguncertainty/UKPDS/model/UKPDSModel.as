@@ -53,7 +53,7 @@ package org.understandinguncertainty.UKPDS.model
 
 			var a:Number;
 			var a_int:Number;
-			var a_gp:Number
+			var a_gp:Number;
 			var b:Number;
 			var b_gp:Number;
 			var b_int:Number;
@@ -156,6 +156,8 @@ package org.understandinguncertainty.UKPDS.model
 			
 			var maxQuarters:int = Math.floor((appState.maximumAge - userProfile.ageAtDiagnosis)*4);
 			
+			var a_now:Number = 0;
+			heartAge = userProfile.ageAtDiagnosis;
 			
 			for(var quarter:int=1; quarter <= maxQuarters; quarter++) {
 				
@@ -171,16 +173,9 @@ package org.understandinguncertainty.UKPDS.model
 				var expH1:Number = Math.exp(-H); //Math.exp(-parameters.cvd_hazard(t, 0.25, q1_chd, q2_stroke));
 				a = expH0 - expH1; // section 1.4 of the paper has this the wrong way round
 				expH0 = expH1;
+				//expH0_int = expH0;
 				
-				// and after interventions
-					var expH1_int:Number = Math.exp(-parameters.cvd_hazard(t, T, chd_H_int, stroke_H_int));
-					a_int = expH0_int - expH1_int;
-					expH0_int = expH1_int;
 					
-				if(age < appState.interventionAge) {
-					a_int = a;
-				}
-				
 				// and for comparison
 				var expH1_gp:Number = Math.exp(-parameters.cvd_hazard(t, T, q1_chd_gp, q2_stroke_gp));
 				a_gp = expH0_gp - expH1_gp;
@@ -190,11 +185,27 @@ package org.understandinguncertainty.UKPDS.model
 				b = parameters.noncvdHazard(age, userProfile.gender, userProfile.smokerAtDiagnosis);
 				
 				// and after interventions
-				if(age > appState.interventionAge) {
-					b_int = b * userProfile.nonCVDHazardForInterventions;
+				if(age < appState.interventionAge) {
+					expH0_int = Math.exp(-parameters.cvd_hazard(t, T, chd_H_int, stroke_H_int));
+					a_int = a;
+					b_int = b;
 				}
 				else {
-					b_int = b;
+					var expH1_int:Number = Math.exp(-parameters.cvd_hazard(t, T, chd_H_int, stroke_H_int));
+					a_int = expH0_int - expH1_int;
+					expH0_int = expH1_int;
+
+					b_int = b * userProfile.nonCVDHazardForInterventions;
+				}
+				if(quarter == 1) {
+					a_now = a_int;
+				}
+				
+				// and for heart age calculation - we only look at cvd risk
+				if(a_gp > a_now) {
+					heartAge = userProfile.ageAtDiagnosis + t - 0.125;
+					a_now = 1;
+					trace("heartAge? ", t, a_gp, a, heartAge);
 				}
 				
 				// and for comparison
@@ -222,8 +233,8 @@ package org.understandinguncertainty.UKPDS.model
 				m_int += c_int;
 				m_gp += c_gp;
 				
-				trace("base: ", t, a,b,c,d,e,f,m);
-				trace("intv: ", t, a_int,b_int,c_int,d_int,e_int,f_int,m_int);
+//				trace("base: ", t, a,b,c,d,e,f,m);
+//				trace("intv: ", t, a_int,b_int,c_int,d_int,e_int,f_int,m_int);
 
 				// outlook yellow
 				var yellow:Number = f+m - (m_int+f_int);

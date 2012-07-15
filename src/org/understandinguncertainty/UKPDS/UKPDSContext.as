@@ -9,7 +9,6 @@ package org.understandinguncertainty.UKPDS
 	import mx.resources.ResourceManager;
 	
 	import org.robotlegs.mvcs.SignalContext;
-	import org.understandinguncertainty.UKPDS.controller.SetupInterventionProfile;
 	import org.understandinguncertainty.UKPDS.model.AppState;
 	import org.understandinguncertainty.UKPDS.model.FraminghamRunModel;
 	import org.understandinguncertainty.UKPDS.model.ICardioModel;

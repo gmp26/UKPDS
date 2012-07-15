@@ -38,7 +38,7 @@
 				invalidateProperties();
 			}
 
-
+			
 			public function get selected():Boolean
 			{
 				return checkBox.selected;
@@ -61,6 +61,34 @@
 				before.enabled = original != checkBox.selected;
 			}
 			
+			private var _checkboxListener:Function = null;
+			
+			override public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
+			{
+				if(type == Event.CHANGE) {
+					super.addEventListener(type, listener, useCapture, priority, useWeakReference);
+					checkBox.addEventListener(type, _checkboxListener = function(event:Event):void {
+						before.enabled = checkBox.selected != original;
+						dispatchEvent(new Event(Event.CHANGE));
+					}, useCapture, priority, useWeakReference);
+				}
+				else if(type == MouseEvent.CLICK)
+					before.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			}
+			
+			override public function removeEventListener(type:String, listener:Function, useCapture:Boolean=false):void
+			{
+				if(type == Event.CHANGE) {
+					if(_checkboxListener != null) {
+						checkBox.removeEventListener(type, _checkboxListener);
+						_checkboxListener = null;
+					}
+					super.removeEventListener(type, listener);
+				}
+				else if(type == MouseEvent.CLICK)
+					before.removeEventListener(type, listener);
+			}
+
 
 		]]>
 	</fx:Script>
@@ -73,7 +101,7 @@
 			
 			<s:Label text="→" fontSize="14"/>
 						
-			<s:CheckBox id="checkBox" selected="{original}"/>
+			<s:CheckBox id="checkBox" selected="{original}" />
 
 		</s:HGroup>
 	</s:VGroup>
