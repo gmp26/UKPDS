@@ -44,19 +44,17 @@ package org.understandinguncertainty.UKPDS
 	import org.understandinguncertainty.UKPDS.view.MainPanelMediator;
 	import org.understandinguncertainty.UKPDS.view.Outcomes;
 	import org.understandinguncertainty.UKPDS.view.OutcomesMediator;
-	import org.understandinguncertainty.UKPDS.view.Profile;
-	import org.understandinguncertainty.UKPDS.view.ProfileMediator;
 	import org.understandinguncertainty.UKPDS.view.RiskByAge;
 	import org.understandinguncertainty.UKPDS.view.RiskByAgeMediator;
 	import org.understandinguncertainty.UKPDS.view.ScreenSelector;
 	import org.understandinguncertainty.UKPDS.view.ScreenSelectorMediator;
 	import org.understandinguncertainty.UKPDS.view.UKPDSProfile;
 	import org.understandinguncertainty.UKPDS.view.UKPDSProfileMediator;
-	import org.understandinguncertainty.personal.signals.ClearInterventionsSignal;
 	import org.understandinguncertainty.personal.signals.ModelUpdatedSignal;
 	import org.understandinguncertainty.personal.signals.NextScreenSignal;
 	import org.understandinguncertainty.personal.signals.NumbersAvailableSignal;
 	import org.understandinguncertainty.personal.signals.ProfileCommitSignal;
+	import org.understandinguncertainty.personal.signals.ProfileDefaultsLoadedSignal;
 	import org.understandinguncertainty.personal.signals.ProfileLoadSignal;
 	import org.understandinguncertainty.personal.signals.ProfileSaveSignal;
 	import org.understandinguncertainty.personal.signals.ProfileValidSignal;
@@ -102,6 +100,7 @@ package org.understandinguncertainty.UKPDS
 			
 
 			// Signals
+			injector.mapSingleton(ProfileDefaultsLoadedSignal);
 			injector.mapSingleton(ProfileValidSignal);
 			injector.mapSingleton(ProfileLoadSignal);
 			injector.mapSingleton(ProfileSaveSignal);
@@ -110,7 +109,6 @@ package org.understandinguncertainty.UKPDS
 			injector.mapSingleton(ScreenChangedSignal);
 			injector.mapSingleton(ScreensNamedSignal);
 			injector.mapSingleton(NextScreenSignal);
-			injector.mapSingleton(ClearInterventionsSignal);
 			injector.mapSingleton(ShowDifferencesChangedSignal);
 			
 			injector.mapSingleton(UpdateModelSignal);

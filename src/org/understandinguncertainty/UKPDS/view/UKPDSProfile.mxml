@@ -8,9 +8,9 @@ Copyright University of Cambridge. All rights reserved
 		 xmlns:validators="org.understandinguncertainty.UKPDS.validators.*" 
 		 xmlns:ns="library://ns.adobe.com/flex/mx"
 		 xmlns:components="org.understandinguncertainty.UKPDS.components.*"
->
+		 >
 	
-
+	
 	<fx:Script>
 		<![CDATA[
 			import mx.controls.ToolTip;
@@ -27,7 +27,7 @@ Copyright University of Cambridge. All rights reserved
 			{
 				systolicBloodPressureInputStep.value = value;
 			}
-
+			
 			
 			// create imperial measure string from metric 
 			private function feet(m:Number):String {
@@ -66,21 +66,21 @@ Copyright University of Cambridge. All rights reserved
 		<fx:String id="cholRatioTooBig">Cholesterol ratio is too large</fx:String>
 		<fx:String id="cholRatioTooSmall">Cholesterol ratio is too small</fx:String>
 		<fx:String id="consultMessage">If you have this condition you should consult with your doctor about the importance of life time risk calculation for your management</fx:String>
-				
+		
 		<s:SolidColor id="fill" color="0xffffff" alpha="1"/>
 		<s:SolidColor id="legalFill" color="0xeeeeee" alpha="1"/>
 		<s:SolidColorStroke id="legalStroke" weight="1" color="0" alpha="0.4"/>
 		
 		<s:SolidColorStroke id="stroke" weight="2" color="0" alpha="0.4"/>
 		<validators:DateOfBirthValidator id="dateValidator"
-						  yearSource="{yyyyStep}" yearProperty="value"
-						  monthSource="{mmStep}" monthProperty="value" 
-						  daySource="{ddStep}" dayProperty="value" required="true" />
+										 yearSource="{yyyyStep}" yearProperty="value"
+										 monthSource="{mmStep}" monthProperty="value" 
+										 daySource="{ddStep}" dayProperty="value" required="true" />
 		<validators:DateOfDiagnosisValidator id="diagnosisDateValidator"
-										 yearSource="{diagnosisYyyyStep}" yearProperty="value"
-										 monthSource="{diagnosisMmStep}" monthProperty="value" 
-										 daySource="{diagnosisDdStep}" dayProperty="value" required="true" />
-
+											 yearSource="{diagnosisYyyyStep}" yearProperty="value"
+											 monthSource="{diagnosisMmStep}" monthProperty="value" 
+											 daySource="{diagnosisDdStep}" dayProperty="value" required="true" />
+		
 		<ns:NumberValidator id="heightValidator" 
 							minValue="15" maxValue="45"
 							exceedsMaxError = "{bmiTooBig}"
@@ -95,26 +95,26 @@ Copyright University of Cambridge. All rights reserved
 							required="true" 
 							source="{weight_kgStep}" 
 							property="bmi" />
-
+		
 		<validators:CholRatioValidator id="totalCholValidator" source="{totalCholesterolStep}" property="cholRatio"
-							required="true" 
-							/>
+									   required="true" 
+									   />
 		<validators:CholRatioValidator id="hdlCholValidator" source="{hdlCholesterolStep}" property="cholRatio"
-							required="true" 
-							/>
+									   required="true" 
+									   />
 		
 		<ns:NumberValidator id="hba1cValidator" domain="real" minValue="5" maxValue="11" required="true" source="{hba1cStepper}" property="value"/>	
 		<ns:NumberValidator id="sbpValidator" domain="real" minValue="70" maxValue="210" required="true" source="{systolicBloodPressureInputStep}" property="value"/>	
-							
-	</fx:Declarations>
 		
+	</fx:Declarations>
+	
 	<s:Group>
 		<s:filters>
 			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
 		</s:filters>
 		<s:Rect radiusX="5" fill="{fill}" stroke="{stroke}" alpha="1" width="100%" height="100%"/>
-
-		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20">
+		
+		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="right">
 			
 			<s:Label text="@Resource(bundle='UKPDS', key='sideBar1.profile')" fontSize="18"/>
 			
@@ -155,7 +155,7 @@ Copyright University of Cambridge. All rights reserved
 							<s:NumericStepper id="diagnosisYyyyStep" width="53" minimum="1928" maximum="2050" value="2000"/>
 						</s:VGroup>
 					</s:HGroup>
-
+					
 					
 					<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>
@@ -179,7 +179,7 @@ Copyright University of Cambridge. All rights reserved
 							<components:HeightStepper id="height_mStep" 
 													  value="1.7" width="55" minimum="1.5" maximum="2.5" stepSize="0.01"
 													  weight="{weight_kgStep.value}"
-											  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"/>
+													  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"/>
 							<s:Label id="inches" text='{feet(height_mStep.value)}' color="#888888" fontSize="8"/>
 						</s:VGroup>
 						
@@ -198,90 +198,55 @@ Copyright University of Cambridge. All rights reserved
 					
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>
+						<s:Label text="@Resource(bundle='UKPDS', key='profile.qrsk.smoker')" fontWeight="normal" />
+						<ns:ComboBox id="smokerGroup" width="60" selectedIndex="0" rowCount="5"/>
+					</s:HGroup>
+					
+					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Group width="100%"/>
 						<s:Label text="@Resource(bundle='UKPDS', key='profile.check.active')" fontWeight="normal"/>
 						<s:CheckBox id="active" selected="false"/>						
 					</s:HGroup>
 					
-					<!-- no townsend in UKPDS
-					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
-						<s:Group width="100%"/>
-						<s:Label text="@Resource(bundle='UKPDS', key='profile.qrsk.townsend')" fontWeight="normal" />
-						<ns:ComboBox id="townsendGroup" width="120" selectedIndex="2" rowCount="5"/>
-					</s:HGroup>
-					<s:HGroup width="100%" horizontalAlign="center" paddingTop="12" paddingBottom="12">
-						<ns:Image id="townsendBand" source="assets/townsend/band3.jpg" height="75" width="100"/>
-					</s:HGroup>
-					-->
-					<!--<s:Group height="95"/>-->
-					
-					<!-- UKPDS - no legalese for now 
-					<s:Group>
-						<s:Rect width="100%" height="100%" 
-								fill="{legalFill}" 
-								stroke="{legalStroke}"
-								radiusX="5" radiusY="5"/>
-						<s:VGroup 
-							paddingBottom="10"
-							paddingTop="10"
-							paddingLeft="10"
-							paddingRight="10"
-							>
-							
-							<s:HGroup width="100%" verticalAlign="bottom">
-								<s:Group width="100%"/>
-								<s:Label text="I have never suffered from Cardiovascular Disease" fontWeight="normal"/>
-								<components:HadCVDCheck id="cvdAlready" errorSkin="{ErrorSkin}"/>
-							</s:HGroup>
-							
-							<s:HGroup width="100%" verticalAlign="bottom">
-								<s:Group width="100%"/>
-								<s:Label text="I have read the" fontWeight="normal"/>
-								<s:Button id="termsButton" label="terms and conditions"/>
-								<components:HadCVDCheck id="termsCheckbox" errorSkin="{ErrorSkin}"/>
-							</s:HGroup>
-										
-						</s:VGroup>
-					</s:Group>
-					-->
 				</s:VGroup>
 				
-				<s:VGroup>
-											
-					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
-						<s:Group width="100%"/>
-						<s:Label text="@Resource(bundle='UKPDS', key='profile.qrsk.smoker')" fontWeight="normal" />
-						<ns:ComboBox id="smokerGroup" width="160" selectedIndex="0" rowCount="5"/>
-					</s:HGroup>
+				<s:VGroup horizontalAlign="right">
 					
-					<s:HGroup width="100%" verticalAlign="middle">
-						
-						<s:VGroup width = "100%" >
-							<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
-								<s:Group width="100%"/>   
-								<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.totalChol')" fontWeight="normal"/>
-								<!--<s:TextInput id="totalCholesterolInput" editable="true" text="" width="40" />-->
-								<components:TotalCholStepper id="totalCholesterolStep" width="70"
-													hdlChol="{hdlCholesterolStep.value}"
-													value="4" minimum="0.000001" maximum="20" stepSize="0.1"
-													valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
-													/>
-							</s:HGroup>
-							
-							<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
-								<s:Group width="100%"/>
-								<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.HDLChol')" fontWeight="normal"/>
-								<!--<s:TextInput id="hdlCholesterolInput" editable="true" text="" width="40"  />-->
-								<components:HDLCholStepper id = "hdlCholesterolStep" width="70"
-												  totalChol="{totalCholesterolStep.value}"
-												  value="1" minimum="0.000001" maximum="12" stepSize="0.1"
-												  valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
-												  />
-							</s:HGroup>
+					
+					<s:VGroup width = "100%" horizontalAlign="right">
+						<s:HGroup width="100%" verticalAlign="middle">
+							<s:VGroup width = "100%" horizontalAlign="right">
+								<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
+									<s:Group width="100%"/>   
+									<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.totalChol')" fontWeight="normal"/>
+									<!--<s:TextInput id="totalCholesterolInput" editable="true" text="" width="40" />-->
+									<components:TotalCholStepper id="totalCholesterolStep" width="70"
+																 hdlChol="{hdlCholesterolStep.value}"
+																 value="4" minimum="0.000001" maximum="20" stepSize="0.1"
+																 valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
+																 />
+								</s:HGroup>
+								
+								<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+									<s:Group width="100%"/>
+									<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.HDLChol')" fontWeight="normal"/>
+									<!--<s:TextInput id="hdlCholesterolInput" editable="true" text="" width="40"  />-->
+									<components:HDLCholStepper id = "hdlCholesterolStep" width="70"
+															   totalChol="{totalCholesterolStep.value}"
+															   value="1" minimum="0.000001" maximum="12" stepSize="0.1"
+															   valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
+															   />
+								</s:HGroup>
+							</s:VGroup>
+							<ns:ComboBox id="cholUnits" width="70" selectedIndex="0" labelField="unit" />
+						</s:HGroup>
+						<s:VGroup paddingRight="120" horizontalAlign="right">						
+							<s:Label id="nonHDLField" paddingLeft="30"/>
+							<s:Label id="LDLField" paddingLeft="30"/>
+							<s:Label id="lipidRatioField" paddingLeft="30"/>
 						</s:VGroup>
-						<ns:ComboBox id="cholUnits" width="70" selectedIndex="0" labelField="unit" />
-					</s:HGroup>
+					</s:VGroup>
 					
-					<s:Label id="nonHDLField" paddingLeft="30"/>
 					
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>
@@ -292,8 +257,7 @@ Copyright University of Cambridge. All rights reserved
 										  stepSize="0.1"
 										  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"
 										  />
-						<s:Label text="(%)"/>
-						
+						<ns:ComboBox id="hbA1cUnits" width="70" selectedIndex="0" labelField="unit" />						
 					</s:HGroup>
 					
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
@@ -306,69 +270,29 @@ Copyright University of Cambridge. All rights reserved
 										  valueFormatFunction="{function(val:Number):String {return val.toFixed(0);}}"
 										  />
 						<s:Label text="@Resource(bundle='UKPDS', key='units.mm_Hg')"/>
-
+						
 					</s:HGroup>
 					
-					<!-- UKPDS removed
-					<s:HGroup id="tt" width="100%" verticalAlign="bottom">
-						<s:Label text="@Resource(bundle='UKPDS', key='profile.check.SBPTreatment')" 
-								 fontWeight="normal"/>
-						<s:Group width="100%"/>
-						<s:CheckBox id="SBPTreated"
-									/>
-					</s:HGroup>
-
-					<s:HGroup width="100%" verticalAlign="bottom">
-						<s:Label text="@Resource(bundle='UKPDS', key='profile.check.diabetes')" 
-								 fontWeight="normal"/>
-						<s:Group width="100%"/>
-						<s:CheckBox id="diabetic"
-									/>
-					</s:HGroup>
-					
-					<s:HGroup width="100%" verticalAlign="bottom">
-						<s:Label text="@Resource(bundle='UKPDS', key='profile.qrsk.familyhistory')" fontWeight="normal"/>
-						<s:Group width="100%"/>
-						<s:CheckBox id="fh"/>
-					</s:HGroup>
-					
-					<s:HGroup width="100%" verticalAlign="bottom">
-						<s:Label text="@Resource(bundle='UKPDS', key='profile.qrsk.chronicRenalDisease')" 
-								 fontWeight="normal"/>
-						<s:Group width="100%"/>
-						<s:CheckBox id="crd"
-/>
-					</s:HGroup>
-					
-					<s:HGroup width="100%" verticalAlign="bottom">
-					<s:Label 
-					text="@Resource(bundle='UKPDS', key='profile.qrsk.rheumatoidArthritis')" fontWeight="normal"/>
-					<s:Group width="100%"/>
-					<s:CheckBox 
-					id="ra"/>
-					</s:HGroup>
-					
-					-->
-
-					<s:HGroup width="100%" verticalAlign="bottom">
+					<s:HGroup width="80%" verticalAlign="bottom">
 						<s:Label 
 							text="@Resource(bundle='UKPDS', key='profile.qrsk.atrialFibrillation')" fontWeight="normal"/>
 						<s:Group width="100%"/>
 						<s:CheckBox id="af"
-/>
+									/>
 					</s:HGroup>
 					
 					<s:Group height="8"/>
 					
-					<s:HGroup id="controlBar" width="100%">
-						<s:Button id="saveButton" label="@Resource(bundle='UKPDS', key='Save')" />
-						<s:Button id="loadButton" label="@Resource(bundle='UKPDS', key='Load')" />			
-						<s:Group width="100%" />
-						<s:Button label="@Resource(bundle='UKPDS', key='Next')" id="nextButton" />
-					</s:HGroup>
-					
 				</s:VGroup>
 			</s:HGroup>
+			<s:Group height="20"/>
+			<s:HGroup id="controlBar" width="40%" horizontalAlign="right">
+				<s:Button id="saveButton" label="@Resource(bundle='UKPDS', key='Save')" />
+				<s:Button id="loadButton" label="@Resource(bundle='UKPDS', key='Load')" />			
+				<s:Group width="100%" />
+				<s:Button label="@Resource(bundle='UKPDS', key='Next')" id="nextButton" />
+			</s:HGroup>
+			
 		</s:VGroup>
 	</s:Group>
 	

@@ -3,11 +3,30 @@ Validate model - especially wrt the 3 relevant dates:
 	date of birth:
 	date of diagnosis:
 	
-Looks like the heart age calculation needs adjustment
+x Looks like the heart age calculation needs adjustment
 
-Move Load defaults from file to startup rather than have it happen in Profile registration 
-because we don't want to reload them on return to Profile screen.
+x Move Load defaults from file to startup rather than have it happen in Profile registration 
+  because we don't want to reload them on return to Profile screen.
 
-Add in error popups on failure to load defaults or parse XML
+x Add in error popups on failure to load defaults or parse XML
 
 Add in dual units on Hba1c
+
+Add in provisional Drug interventions
+
+Profile would need:
+	a 'current prescription' section	
+		- to fill in drugs in use at the time measurements are taken
+
+Intervention would need:
+	a 'future prescription' section
+		- to fill in drugs to be used
+		
+Both would be popup panels.
+	The current prescription affects the default state for the future prescription, allowing deltas to be calculated
+ 	When the future prescription panel is dismissed, intervention panel acquires a 3-state menu:
+ 		'Under new prescription' which applies the deltas.
+ 		'Under old prescription' which does not apply the deltas.
+ 		'Untreated' which applies the reciprocal of the old prescription.
+		
+	

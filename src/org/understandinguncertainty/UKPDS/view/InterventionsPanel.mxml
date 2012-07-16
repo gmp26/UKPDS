@@ -16,7 +16,6 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import org.understandinguncertainty.personal.signals.ClearInterventionsSignal;
 					
 			[Bindable]
 			public var conversionFactor:Number = 1;

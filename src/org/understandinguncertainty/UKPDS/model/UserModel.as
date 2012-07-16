@@ -348,6 +348,14 @@ package org.understandinguncertainty.UKPDS.model
 			return weight/(height*height);
 		}
 		
+		public static function calc_hba1c_percent_to_mmol(percent:Number):Number {
+			return (percent - 2.15)*10.929;
+		}
+		
+		public static function calc_hba1c_mmol_to_percent(mmol:Number):Number {
+			return mmol/10.929 + 2.15;
+		}
+		
 		public static function metres_to_feet(metres:Number):Number
 		{
 			return Math.floor(metres * 3.2808399 + 1/24);

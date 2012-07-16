@@ -1,16 +1,15 @@
 <personalData>
-  <hdlCholesterol_mmol_L>1.000001</hdlCholesterol_mmol_L>
-  <gender>female</gender>
-  <totalCholesterol_mmol_L>4.9000010000000005</totalCholesterol_mmol_L>
-  <active>false</active>
-  <atrialFibrillation>false</atrialFibrillation>
-  <hba1c>7.5</hba1c>
-  <ethnicGroup>0</ethnicGroup>
-  <dateOfDiagnosis>11/7/2012</dateOfDiagnosis>
-  <height_m>1.7</height_m>
-  <smokerAtDiagnosis>true</smokerAtDiagnosis>
-  <dateOfBirth>11/7/1967</dateOfBirth>
-  <systolicBloodPressure>160</systolicBloodPressure>
-  <lipidRatio>5.11</lipidRatio>
   <weight_kg>65</weight_kg>
+  <smokerAtDiagnosis>false</smokerAtDiagnosis>
+  <dateOfDiagnosis>15/7/2002</dateOfDiagnosis>
+  <dateOfBirth>15/7/1972</dateOfBirth>
+  <systolicBloodPressure>136</systolicBloodPressure>
+  <active>false</active>
+  <ethnicGroup>0</ethnicGroup>
+  <hdlCholesterol_mmol_L>1.2000009999999999</hdlCholesterol_mmol_L>
+  <totalCholesterol_mmol_L>5.500001</totalCholesterol_mmol_L>
+  <height_m>1.7</height_m>
+  <atrialFibrillation>false</atrialFibrillation>
+  <hba1c>6.7</hba1c>
+  <gender>female</gender>
 </personalData>

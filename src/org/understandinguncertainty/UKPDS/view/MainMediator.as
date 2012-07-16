@@ -3,15 +3,21 @@ Copyright University of Cambridge. All rights reserved
 */
 package org.understandinguncertainty.UKPDS.view
 {
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
 	
 	import org.robotlegs.mvcs.Mediator;
+	import org.understandinguncertainty.UKPDS.model.UserModel;
 	import org.understandinguncertainty.UKPDS.model.vo.WidthHeightMeasurement;
+	import org.understandinguncertainty.UKPDS.support.ProfileLoader;
+	import org.understandinguncertainty.personal.signals.ProfileDefaultsLoadedSignal;
 	import org.understandinguncertainty.personal.signals.ReleaseScreenSignal;
 	import org.understandinguncertainty.personal.signals.ScreenChangedSignal;
+
 	
 	public class MainMediator extends Mediator
 	{
@@ -29,11 +35,26 @@ package org.understandinguncertainty.UKPDS.view
 		[Inject]
 		public var screenChangedSignal:ScreenChangedSignal;
 		
+		[Inject]
+		public var profileLoader:ProfileLoader;
+		
+		[Inject]
+		public var userProfile:UserModel;
+		
+		[Inject]
+		public var profileDefaultsLoaded:ProfileDefaultsLoadedSignal;
+		
+		private static const defaultsURL:String = "personaldata.xml";
+		
 		override public function onRegister():void
 		{
 			releaseScreenSignal.add(releaseScreen);
 			screenChangedSignal.add(screenChanged);	
 			main.credits.addEventListener(MouseEvent.CLICK, showCredits);
+
+			// Load defaults from server
+			profileLoader.load(defaultsURL, defaultsLoaded);
+			
 		}
 		
 		override public function onRemove():void
@@ -65,6 +86,25 @@ package org.understandinguncertainty.UKPDS.view
 			var credits:Credits = event.currentTarget as Credits;
 			credits.removeEventListener(CloseEvent.CLOSE, closeCredits);
 			PopUpManager.removePopUp(credits);
+		}
+		
+		private function defaultsLoaded(event:Event):void {
+			if(event.type == Event.COMPLETE) {
+				// read profile from XML
+				var xml:XML = profileLoader.xmlData(event);
+				try {
+					userProfile.variableList.readXML(xml);
+				}
+				catch (e:Error) {
+					Alert.show(e.message, "Error parsing "+defaultsURL, Alert.OK);
+				}
+				profileDefaultsLoaded.dispatch();
+				trace("dispatch");
+			}
+			else {
+				// barf somehow...
+				Alert.show("Unable to read "+defaultsURL, "Load Default Parameters Error", Alert.OK);
+			}
 		}
 		
 	}

@@ -1,16 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <personalData>
   <hdlCholesterol_mmol_L>1.2000009999999999</hdlCholesterol_mmol_L>
   <active>false</active>
   <systolicBloodPressure>136</systolicBloodPressure>
   <dateOfBirth>15/7/1972</dateOfBirth>
-  <hba1c>6.8</hba1c>
+  <hba1c>6.7</hba1c>
   <atrialFibrillation>false</atrialFibrillation>
   <dateOfDiagnosis>15/7/2002</dateOfDiagnosis>
-  <totalCholesterol_mmol_L>5.500001</totalCholesterol_mmol_L>
+  <totalCholesterol_mmol_L>5.5</totalCholesterol_mmol_L>
   <ethnicGroup>0</ethnicGroup>
   <smokerAtDiagnosis>false</smokerAtDiagnosis>
   <height_m>1.7</height_m>
   <lipidRatio>5.11</lipidRatio>
-  <gender>male</gender>
+  <gender>female</gender>
   <weight_kg>65</weight_kg>
 </personalData>

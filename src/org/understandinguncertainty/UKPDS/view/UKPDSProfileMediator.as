@@ -32,6 +32,7 @@ package org.understandinguncertainty.UKPDS.view
 	import org.understandinguncertainty.personal.VariableList;
 	import org.understandinguncertainty.personal.signals.NextScreenSignal;
 	import org.understandinguncertainty.personal.signals.ProfileCommitSignal;
+	import org.understandinguncertainty.personal.signals.ProfileDefaultsLoadedSignal;
 	import org.understandinguncertainty.personal.signals.ProfileLoadSignal;
 	import org.understandinguncertainty.personal.signals.ProfileSaveSignal;
 	import org.understandinguncertainty.personal.signals.ProfileValidSignal;
@@ -67,17 +68,14 @@ package org.understandinguncertainty.UKPDS.view
 		
 		[Inject]
 		public var appState:AppState;
-
-		[Inject]
-		public var profileLoader:ProfileLoader;
 		
+		[Inject]
+		public var profileDefaultsLoadedSignal:ProfileDefaultsLoadedSignal;
+
 		private var ps:PersonalisationFileStore;
 		
 		override public function onRegister():void
 		{
-			// Load defaults from server
-			profileLoader.load("testcase.xml", defaultsLoaded);
-			
 			//trace("Profile Register");
 			ps = userProfile.personalData;
 
@@ -96,18 +94,27 @@ package org.understandinguncertainty.UKPDS.view
 			
 			
 			profile.smokerGroup.dataProvider = new ArrayCollection([
-				"non smoker",
-				"smoker"
+				"No",
+				"Yes"
 				]);
 			
 			profile.cholUnits.dataProvider = cholUnitFactors;
+			profile.hbA1cUnits.dataProvider = hba1cUnits;
+			profile.hbA1cUnits.selectedIndex = 0;
 			
 			profile.cholUnits.selectedIndex = 0;
 			appState.mmol = (cholesterolUnit == mmol_L);				
 			
 			validate();
 			addEventListeners();
-			loadFromURL();
+			
+			// in case default loading happens first
+			showPersonalData();
+			
+			// and in case it doesn't
+			profileDefaultsLoadedSignal.add(showPersonalData);
+			
+			//loadFromURL();
 		}
 		
 		override public function onRemove():void
@@ -144,6 +151,7 @@ package org.understandinguncertainty.UKPDS.view
 			profile.hba1cStepper.addEventListener(Event.CHANGE, validate);
 			
 			profile.cholUnits.addEventListener(Event.CHANGE, changedUnits);
+			profile.hbA1cUnits.addEventListener(Event.CHANGE, change_hba1c_units);
 			
 			profile.saveButton.addEventListener(MouseEvent.CLICK, save);
 			profile.loadButton.addEventListener(MouseEvent.CLICK, load);
@@ -177,23 +185,11 @@ package org.understandinguncertainty.UKPDS.view
 			profile.hba1cStepper.removeEventListener(Event.CHANGE, validate);
 			
 			profile.cholUnits.removeEventListener(Event.CHANGE, changedUnits);
+			profile.hbA1cUnits.removeEventListener(Event.CHANGE, change_hba1c_units);
 			
 			profile.saveButton.removeEventListener(MouseEvent.CLICK, save);
 			profile.loadButton.removeEventListener(MouseEvent.CLICK, load);
 			profile.nextButton.removeEventListener(MouseEvent.CLICK, nextScreen);	
-		}
-		
-		private function defaultsLoaded(event:Event):void {
-			if(event.type == Event.COMPLETE) {
-				// read profile from XML
-				var xml:XML = profileLoader.xmlData(event);
-				userProfile.variableList.readXML(xml);
-				showPersonalData();
-			}
-			else {
-				// barf somehow...
-				throw new Error("IO Error");
-			}
 		}
 		
 		private function visitTerms(event:MouseEvent):void
@@ -265,6 +261,10 @@ package org.understandinguncertainty.UKPDS.view
 			
 			var nonHDL:Number = totalCholesterol - hdlCholesterol;
 			profile.nonHDLField.text = "NonHDL Cholesterol: " + nonHDL.toPrecision(3);
+			
+			profile.LDLField.text = "LDL Cholesterol: " + userProfile.calc_ldl(totalCholesterol, hdlCholesterol).toPrecision(3);
+			
+			profile.lipidRatioField.text = "Lipid Ratio: " + userProfile.lipidRatio.toPrecision(3);
 			
 			profile.systolicBloodPressure = Number(pvars.systolicBloodPressure);
 			//profile.SBPTreated.selected = pvars.SBPTreated.value;
@@ -445,7 +445,7 @@ package org.understandinguncertainty.UKPDS.view
 		private const cholConversionFactor:Number = 38.7;
 		private var mmol_L:String = "mmol/L";
 		private var mg_dL:String = "mg/dL";
-		
+				
 		public function get cholesterolUnit():String
 		{
 			if(profile.cholUnits.selectedIndex < 0) {
@@ -491,7 +491,49 @@ package org.understandinguncertainty.UKPDS.view
 			{unit:"mg/dL", factor: 1 / cholConversionFactor},
 		]);
 		
+		private var hba1cUnits:ArrayCollection = new ArrayCollection([
+			{unit:"%"},
+			{unit:"mmol/mol"},
+		]);
+		
+		
 		// TODO: Worry about minimum and maximum ranges and value conversions
+		private function change_hba1c_units(event:Event):void 
+		{
+			appState.hbA1c_Percent = (profile.hbA1cUnits.selectedIndex == 0);			
+			
+			profile.hba1cStepper.valueParseFunction = function(s:String):Number {
+				
+				if(appState.hbA1c_Percent) {
+					return Number(s);
+				}
+				else {
+					return UserModel.calc_hba1c_mmol_to_percent(Number(s));
+				}
+			}
+			
+			profile.hba1cStepper.textDisplay.text = appState.hbA1c_Percent ? 
+														userProfile.hba1c.toString() : 
+														UserModel.calc_hba1c_mmol_to_percent(userProfile.hba1c).toString();
+
+			validate();
+		}
+		
+		private function updateHbA1cStepper(stepper:NumericStepper, validator:Validator):void {
+			
+
+			stepper.valueParseFunction = function(s:String):Number {
+				
+				if(appState.hbA1c_Percent) {
+					return Number(s);
+				}
+				else {
+					return UserModel.calc_hba1c_mmol_to_percent(Number(s));
+				}
+			}
+			
+			stepper.validateNow();
+		}
 		
 		
 		private function changedUnits(event:Event):void
@@ -532,8 +574,6 @@ package org.understandinguncertainty.UKPDS.view
 				return val.toFixed(1);
 			};
 			
-			//stepper.validateNow();
-			
 			stepper.value = newVal;
 
 			if(f > 1) {
@@ -548,16 +588,11 @@ package org.understandinguncertainty.UKPDS.view
 					return val.toFixed(0);
 				};
 			}
-			//stepper.validateNow();
 
 			stepper.minimum = newMin;
 			stepper.maximum = newMax;
-//			validator.maxValue = newMax;
 
-			trace("stepper.value="+stepper.value);
-			
 			stepper.validateNow();
-
 		}
 		
 		private var _metres:Number = 1.75;

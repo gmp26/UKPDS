@@ -35,7 +35,7 @@ package org.understandinguncertainty.personal
 		public var dateOfDiagnosis:DateOfDiagnosis = new DateOfDiagnosis("dateOfDiagnosis", new Date());
 		public var hba1c:NumberPersonalVariable = new NumberPersonalVariable("hba1c", 6.72);
 		public var systolicBloodPressure:NumberPersonalVariable = new NumberPersonalVariable("systolicBloodPressure", 135.5);
-		public var lipidRatio:NumberPersonalVariable = new NumberPersonalVariable("lipidRatio", 5.11);
+//		public var lipidRatio:NumberPersonalVariable = new NumberPersonalVariable("lipidRatio", 5.11);
 		public var atrialFibrillation:BooleanPersonalVariable = new BooleanPersonalVariable("atrialFibrillation", false);
 		public var totalCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("totalCholesterol_mmol_L", 5.5);
 		public var hdlCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("hdlCholesterol_mmol_L", 1.16);

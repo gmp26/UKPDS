@@ -15,6 +15,10 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public const mmolConvert:Number = 38.7;
 		public var mmol:Boolean = true;
+		
+		public const hbA1cConvert:Number = 38.7;
+		public var hbA1c_Percent:Boolean = true;
+		
 		public var showDifferences:Boolean = false;
 		public var interventionAge:int = 0;
 		public var targetInterval:int = 10;
