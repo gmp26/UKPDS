@@ -54,10 +54,7 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.hdlCholesterol.minimum = 0.0000001;
 			interventionsPanel.hdlCholesterol.maximum = 12;
 			
-			var h2:Number = Math.pow(userProfile.height_m,2);
-			interventionsPanel.weight_kg.minimum = h2*15;
-			interventionsPanel.weight_kg.maximum = h2*45;
-			
+						
 			interventionsPanel.smoker.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.smoker.addEventListener(MouseEvent.CLICK, resetSmoker);
 
@@ -73,8 +70,9 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.hdlCholesterol.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.hdlCholesterol.addEventListener(MouseEvent.CLICK, resetHDLCholesterol);
 			
-			interventionsPanel.weight_kg.addEventListener(Event.CHANGE, stepperChanged);
-			interventionsPanel.weight_kg.addEventListener(MouseEvent.CLICK, resetWeight);
+			interventionsPanel.overweight.label = "Weight over " + userProfile.weightLimit.toFixed(1) + " kg ?";
+			interventionsPanel.overweight.addEventListener(Event.CHANGE, stepperChanged);
+			interventionsPanel.overweight.addEventListener(MouseEvent.CLICK, resetWeight);
 			
 			interventionsPanel.active.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.active.addEventListener(MouseEvent.CLICK, resetWeight);
@@ -100,8 +98,8 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.hdlCholesterol.removeEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.hdlCholesterol.removeEventListener(MouseEvent.CLICK, resetHDLCholesterol);
 			
-			interventionsPanel.weight_kg.removeEventListener(Event.CHANGE, stepperChanged);
-			interventionsPanel.weight_kg.removeEventListener(MouseEvent.CLICK, resetWeight);
+			interventionsPanel.overweight.removeEventListener(Event.CHANGE, stepperChanged);
+			interventionsPanel.overweight.removeEventListener(MouseEvent.CLICK, resetWeight);
 			
 			interventionsPanel.active.removeEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.active.removeEventListener(MouseEvent.CLICK, resetWeight);
@@ -117,12 +115,12 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.hdlCholesterol.original = interventionsPanel.hdlCholesterol.value = userProfile.hdlCholesterol_int;		
 			interventionsPanel.smoker.original = interventionsPanel.smoker.selected = userProfile.smoker_int;
 			interventionsPanel.hba1c.original = interventionsPanel.hba1c.value = userProfile.hba1c_int;
-			interventionsPanel.weight_kg.original = interventionsPanel.weight_kg.value = userProfile.weight_kg_int;
+			interventionsPanel.overweight.original = interventionsPanel.overweight.selected = userProfile.overweight_int;
 			interventionsPanel.active.original = interventionsPanel.active.selected = userProfile.active_int;
 				
 			
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
-			interventionsPanel.bmiField.text = "BMI: " + userProfile.bmi_int.toPrecision(3);
+//			interventionsPanel.bmiField.text = "BMI: " + userProfile.bmi_int.toPrecision(3);
 				
 			model.recalculate();
 		}
@@ -134,8 +132,8 @@ package org.understandinguncertainty.UKPDS.view
 			userProfile.totalCholesterol_int = interventionsPanel.totalCholesterol.value;
 			userProfile.hdlCholesterol_int = interventionsPanel.hdlCholesterol.value;
 			userProfile.hba1c_int = interventionsPanel.hba1c.value;
-			userProfile.weight_kg_int = interventionsPanel.weight_kg.value;
 			userProfile.active_int = interventionsPanel.active.selected;
+			userProfile.overweight_int = interventionsPanel.overweight.selected;
 			
 			interventionsPanel.nonHDLField.text = "NonHDL Cholesterol: " + (userProfile.totalCholesterol_int - userProfile.hdlCholesterol_int).toPrecision(2);
 			
@@ -190,7 +188,7 @@ package org.understandinguncertainty.UKPDS.view
 		
 		private function resetWeight(event:MouseEvent):void
 		{
-			interventionsPanel.weight_kg.value = userProfile.weight_kg_int = userProfile.weight_kg;
+			interventionsPanel.overweight.selected = userProfile.overweight_int = userProfile.overweight;
 			model.recalculate();
 		}
 		

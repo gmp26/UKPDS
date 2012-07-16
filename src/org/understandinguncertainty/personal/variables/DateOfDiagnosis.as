@@ -34,6 +34,6 @@ package org.understandinguncertainty.personal.variables
 			var elapsedMilliSecs:Number = now.time - date.time;
 			return elapsedMilliSecs/msInYear;
 		}
-			
+		
 	}
 }

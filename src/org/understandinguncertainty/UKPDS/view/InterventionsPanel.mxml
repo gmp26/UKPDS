@@ -6,6 +6,7 @@
 						xmlns:view="org.understandinguncertainty.UKPDS.view.*" 
 						xmlns:components="org.understandinguncertainty.UKPDS.components.*" 
 						xmlns:mx="library://ns.adobe.com/flex/mx"
+						gap="0"
 >
 
 	<fx:Metadata> 
@@ -27,7 +28,7 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->			
 	</fx:Declarations>
 	
-	<s:HGroup id="labelGroup" gap="0" paddingTop="15" verticalAlign="middle">
+	<s:HGroup id="labelGroup" gap="0" paddingTop="0" verticalAlign="middle">
 		
 		<s:Group width="20"/>
 		
@@ -36,7 +37,7 @@
 		
 	</s:HGroup>
 	
-	<s:VGroup id="container" gap="4" paddingLeft="20" paddingRight="20" paddingTop="30" paddingBottom="15" horizontalAlign="right">
+	<s:VGroup id="container" gap="0" paddingLeft="20" paddingRight="20" paddingTop="10" paddingBottom="15" horizontalAlign="right">
 			
 		<components:InterventionCheck
 			id="smoker"
@@ -48,6 +49,13 @@
 		<components:InterventionCheck
 			id="active"
 			label="@Resource(bundle='UKPDS', key='sideBar2.active')"
+			width="100%"
+			height="50"
+			/>
+		
+		<components:InterventionCheck
+			id="overweight"
+			label="@Resource(bundle='UKPDS', key='sideBar2.overWeight')"
 			width="100%"
 			height="50"
 			/>
@@ -84,13 +92,6 @@
 			height="50"
 			/>
 
-		<components:InterventionStepper
-			id="weight_kg"
-			label="@Resource(bundle='UKPDS', key='sideBar2.weight')"
-			width="100%"
-			height="50"
-			/>
-		
 
 		<s:Label id="nonHDLField"/>
 		<s:Label id="bmiField"/>

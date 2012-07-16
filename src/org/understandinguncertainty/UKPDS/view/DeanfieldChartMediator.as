@@ -39,28 +39,17 @@ package org.understandinguncertainty.UKPDS.view
 			//trace("DeanfieldChart register");
 			modelUpdatedSignal.add(updateView);
 			model.recalculate();
-
-//			outlookChart.maxChance.addEventListener(Event.CHANGE, annotate);
-//			outlookChart.maxAgeSlider.addEventListener(Event.CHANGE, updateModel);
-//			updateModel();
 			outlookChart.areaChart.dataProvider=model.getResultSet();
 		}
 		
 		override public function onRemove():void
 		{
 			//trace("DeanfieldChart remove");
-//			outlookChart.maxChance.removeEventListener(Event.CHANGE, annotate);
-//			outlookChart.maxAgeSlider.removeEventListener(Event.CHANGE, updateModel);
 			modelUpdatedSignal.remove(updateView);
 		}
 		
 		public var gainedLost:String;
-/*		
-		private function updateModel(event:Event = null):void
-		{
-			appState.maximumAge = outlookChart.maxAgeSlider.value;
-		}
-*/		
+	
 		private function updateView():void
 		{
 
@@ -143,7 +132,7 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			var item:Object = hitData.item;
 			var color:int = hitData.contextColor;
-			var s:String = "Age: " + item.age + "\n";
+			var s:String = "Age: " + item.age.toFixed(0) + "\n";
 			switch(hitData.contextColor) {
 				case outlookChart.goodFill.color:
 					s += "% Chance of Survival with no\nHeart Attack or Stroke: " + (item.green.toFixed(0)) + "%";

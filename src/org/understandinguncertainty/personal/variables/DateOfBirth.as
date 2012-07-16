@@ -45,7 +45,7 @@ package org.understandinguncertainty.personal.variables
 
 		}
 		
-		private const msInYear:Number = 1000*60*60*24*365.25;
+		public static const msInYear:Number = 1000*60*60*24*365.25;
 
 		public function getDuration():Number {
 			var date:Date = value;

@@ -1,0 +1,13 @@
+Validate model - especially wrt the 3 relevant dates:
+	time now:
+	date of birth:
+	date of diagnosis:
+	
+Looks like the heart age calculation needs adjustment
+
+Move Load defaults from file to startup rather than have it happen in Profile registration 
+because we don't want to reload them on return to Profile screen.
+
+Add in error popups on failure to load defaults or parse XML
+
+Add in dual units on Hba1c

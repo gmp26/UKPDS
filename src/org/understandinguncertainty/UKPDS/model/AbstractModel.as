@@ -62,7 +62,8 @@ package org.understandinguncertainty.UKPDS.model
 		}
 		
 		public function get meanAge():Number {
-			return appState.minimumAge + sum_e_int/100;
+			trace("sum_e_int/100", sum_e_int/100);
+			return userProfile.age + sum_e_int/100;
 		}
 		
 		protected var peakYellowNeg:Number = 20;

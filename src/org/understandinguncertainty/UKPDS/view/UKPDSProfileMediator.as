@@ -17,16 +17,17 @@ package org.understandinguncertainty.UKPDS.view
 	import mx.controls.ToolTip;
 	import mx.core.FlexGlobals;
 	import mx.managers.ToolTipManager;
+	import mx.validators.DateValidator;
 	import mx.validators.NumberValidator;
 	import mx.validators.Validator;
-	import mx.validators.DateValidator;
-	import org.understandinguncertainty.UKPDS.validators.DateOfBirthValidator;
-	import org.understandinguncertainty.UKPDS.validators.DateOfDiagnosisValidator;
 	
 	import org.robotlegs.mvcs.Mediator;
 	import org.understandinguncertainty.UKPDS.model.AppState;
 	import org.understandinguncertainty.UKPDS.model.ICardioModel;
 	import org.understandinguncertainty.UKPDS.model.UserModel;
+	import org.understandinguncertainty.UKPDS.support.ProfileLoader;
+	import org.understandinguncertainty.UKPDS.validators.DateOfBirthValidator;
+	import org.understandinguncertainty.UKPDS.validators.DateOfDiagnosisValidator;
 	import org.understandinguncertainty.personal.PersonalisationFileStore;
 	import org.understandinguncertainty.personal.VariableList;
 	import org.understandinguncertainty.personal.signals.NextScreenSignal;
@@ -67,11 +68,16 @@ package org.understandinguncertainty.UKPDS.view
 		[Inject]
 		public var appState:AppState;
 
+		[Inject]
+		public var profileLoader:ProfileLoader;
 		
 		private var ps:PersonalisationFileStore;
 		
 		override public function onRegister():void
 		{
+			// Load defaults from server
+			profileLoader.load("testcase.xml", defaultsLoaded);
+			
 			//trace("Profile Register");
 			ps = userProfile.personalData;
 
@@ -175,6 +181,19 @@ package org.understandinguncertainty.UKPDS.view
 			profile.saveButton.removeEventListener(MouseEvent.CLICK, save);
 			profile.loadButton.removeEventListener(MouseEvent.CLICK, load);
 			profile.nextButton.removeEventListener(MouseEvent.CLICK, nextScreen);	
+		}
+		
+		private function defaultsLoaded(event:Event):void {
+			if(event.type == Event.COMPLETE) {
+				// read profile from XML
+				var xml:XML = profileLoader.xmlData(event);
+				userProfile.variableList.readXML(xml);
+				showPersonalData();
+			}
+			else {
+				// barf somehow...
+				throw new Error("IO Error");
+			}
 		}
 		
 		private function visitTerms(event:MouseEvent):void

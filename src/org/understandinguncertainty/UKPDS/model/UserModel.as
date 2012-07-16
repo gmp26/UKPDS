@@ -7,6 +7,7 @@ package org.understandinguncertainty.UKPDS.model
 	
 	import org.understandinguncertainty.personal.PersonalisationFileStore;
 	import org.understandinguncertainty.personal.VariableList;
+	import org.understandinguncertainty.personal.variables.DateOfBirth;
 	
 	[ResourceBundle("UKPDS")]
 	public class UserModel 
@@ -34,7 +35,7 @@ package org.understandinguncertainty.UKPDS.model
 		public var totalCholesterol_int:Number;
 		public var hdlCholesterol_int:Number;
 		public var smoker_int:Boolean;
-		public var weight_kg_int:Number;
+		public var overweight_int:Boolean;
 		public var active_int:Boolean;
 		
 		// reset interventions to zero - i.e. no change from Profile values
@@ -44,7 +45,7 @@ package org.understandinguncertainty.UKPDS.model
 			totalCholesterol_int = Number(variableList.totalCholesterol_mmol_L.value);
 			hdlCholesterol_int = Number(variableList.hdlCholesterol_mmol_L.value);
 			smoker_int = Boolean(variableList.smokerAtDiagnosis.value);
-			weight_kg_int = Number(variableList.weight_kg.value);
+			overweight_int = overweight;
 			active_int = Boolean(variableList.active.value);
 			
 			_nonZeroInterventions = false;
@@ -80,11 +81,18 @@ package org.understandinguncertainty.UKPDS.model
 			}
 			
 			// Weight Loss
+			/*
 			var before:Number = calc_bmi(weight_kg, height_m);
 			var after:Number = calc_bmi(weight_kg_int, height_m);
 			r = isMale ? 
 				boundaryHazard(before, after, 30.4, 0.776) :
 				boundaryHazard(before, after, 32.6, 0.776);
+			*/
+			
+			r = 1;
+			if(overweight != overweight_int) {
+				r = overweight ? 0.776 : 1/0.776;
+			}
 			ratio *= r;
 			
 			// Activity
@@ -126,11 +134,18 @@ package org.understandinguncertainty.UKPDS.model
 			}
 			
 			// Weight Loss
+			/*
 			var before:Number = calc_bmi(weight_kg, height_m);
 			var after:Number = calc_bmi(weight_kg_int, height_m);
 			r = isMale ? 
 				boundaryHazard(before, after, 30.4, 0.776) :
 				boundaryHazard(before, after, 32.6, 0.776);
+			ratio *= r;
+			*/
+			r = 1;
+			if(overweight != overweight_int) {
+				r = overweight ? 0.776 : 1/0.776;
+			}
 			ratio *= r;
 			
 			// Active for more than 4 hours per week
@@ -185,7 +200,7 @@ package org.understandinguncertainty.UKPDS.model
 		// User Variables
 		public function get age():int
 		{
-			var dob:Number = variableList.dateOfBirth.getAge();
+			var dob:Number = variableList.dateOfBirth.getDuration();
 			if(dob == 0 || isNaN(dob))
 				trace("weird age seen:", dob);
 			
@@ -195,10 +210,12 @@ package org.understandinguncertainty.UKPDS.model
 		// User Variables
 		public function get ageAtDiagnosis():Number
 		{
+			var d:Number = variableList.dateOfDiagnosis.subtract(variableList.dateOfBirth)/DateOfBirth.msInYear;
+			/*
 			var d:Number = variableList.dateOfBirth.getDuration();
+			*/
 			if(d == 0 || isNaN(d))
 				trace("weird ageAtDiagnosis seen:", d);
-			
 			return d;
 		}
 		
@@ -224,10 +241,18 @@ package org.understandinguncertainty.UKPDS.model
 		{
 			return calc_bmi(variableList.weight_kg.value, variableList.height_m.value);
 		}
-		
+		/*
 		public function get bmi_int():Number
 		{
 			return calc_bmi(weight_kg_int, variableList.height_m.value);
+		}
+		*/
+		public function get weightLimit():Number {
+			return (isMale ? 30.4 : 32.6) * height_m * height_m;
+		}
+		
+		public function get overweight():Boolean {
+			return weight_kg > weightLimit;
 		}
 		
 		public function get afroCarib():Boolean

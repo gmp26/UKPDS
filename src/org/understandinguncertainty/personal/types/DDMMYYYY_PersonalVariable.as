@@ -60,5 +60,8 @@ package org.understandinguncertainty.personal.types
 			return "Date";	
 		}
 		
+		public function subtract(another:DDMMYYYY_PersonalVariable):Number {
+			return (value as Date).time - (another.value as Date).time;
+		}
 	}
 }

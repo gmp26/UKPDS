@@ -15,6 +15,7 @@ package org.understandinguncertainty.UKPDS
 	import org.understandinguncertainty.UKPDS.model.UKPDSModel;
 	import org.understandinguncertainty.UKPDS.model.UKPDSParameters;
 	import org.understandinguncertainty.UKPDS.model.UserModel;
+	import org.understandinguncertainty.UKPDS.support.ProfileLoader;
 	import org.understandinguncertainty.UKPDS.view.AgeSettings;
 	import org.understandinguncertainty.UKPDS.view.AgeSettingsMediator;
 	import org.understandinguncertainty.UKPDS.view.BadBalance;
@@ -91,6 +92,8 @@ package org.understandinguncertainty.UKPDS
 			injector.mapSingleton(UserModel);
 			
 			injector.mapSingleton(UKPDSParameters);
+			
+			injector.mapSingleton(ProfileLoader);
 
 			// Inject the risk model
 			injector.mapSingletonOf(ICardioModel, UKPDSModel); 

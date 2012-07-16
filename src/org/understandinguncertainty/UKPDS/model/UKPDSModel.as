@@ -154,15 +154,15 @@ package org.understandinguncertainty.UKPDS.model
 			var b0_int:Number = 0;
 			var b0_gp:Number = 0;
 			
-			var maxQuarters:int = Math.floor((appState.maximumAge - userProfile.ageAtDiagnosis)*4);
+			var maxQuarters:int = Math.floor((appState.maximumAge - userProfile.age)*4);
 			
 			var a_now:Number = 0;
-			heartAge = userProfile.ageAtDiagnosis;
+			heartAge = userProfile.age;
 			
-			for(var quarter:int=1; quarter <= maxQuarters; quarter++) {
+			for(var quarter:int=1; quarter < maxQuarters; quarter++) {
 				
 				var t:Number = quarter/4;
-				var age:Number = userProfile.ageAtDiagnosis+t;
+				var age:Number = userProfile.age+t;
 				
 				// for debug
 				var H1:Number = parameters.chd_hazard(t, T, q1_chd);
@@ -194,18 +194,17 @@ package org.understandinguncertainty.UKPDS.model
 					var expH1_int:Number = Math.exp(-parameters.cvd_hazard(t, T, chd_H_int, stroke_H_int));
 					a_int = expH0_int - expH1_int;
 					expH0_int = expH1_int;
-
 					b_int = b * userProfile.nonCVDHazardForInterventions;
 				}
-				if(quarter == 1) {
-					a_now = a_int;
-				}
 				
+				if(quarter == 1) {
+					a_now = a_int; // used to match with a_gp for heart age calculation
+				}
 				// and for heart age calculation - we only look at cvd risk
 				if(a_gp > a_now) {
-					heartAge = userProfile.ageAtDiagnosis + t - 0.125;
+					heartAge = age - 0.125;
 					a_now = 1;
-					trace("heartAge? ", t, a_gp, a, heartAge);
+//					trace("heartAge? ", t, a_gp, a, heartAge);
 				}
 				
 				// and for comparison
@@ -222,8 +221,11 @@ package org.understandinguncertainty.UKPDS.model
 				e -= (c+d);
 				e_int -= (c_int+d_int);
 				e_gp -= (c_gp + d_gp);
-				sum_e_int += e_int;
-				sum_e += e;
+				sum_e_int += e_int/4; /* we are working in quarter years... */
+				sum_e += e/4;
+				
+				trace(t, sum_e, sum_e_int);
+				
 				
 				f += d;
 				f_int += d_int;
