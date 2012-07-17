@@ -35,6 +35,7 @@
 			public function set original(b:Boolean):void
 			{
 				before.label = b ? originalTicked : originalUnticked;
+				checkBox.selected = b;
 				invalidateProperties();
 			}
 

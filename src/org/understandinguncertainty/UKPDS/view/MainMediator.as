@@ -99,7 +99,6 @@ package org.understandinguncertainty.UKPDS.view
 					Alert.show(e.message, "Error parsing "+defaultsURL, Alert.OK);
 				}
 				profileDefaultsLoaded.dispatch();
-				trace("dispatch");
 			}
 			else {
 				// barf somehow...

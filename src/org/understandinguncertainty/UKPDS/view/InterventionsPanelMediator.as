@@ -75,7 +75,7 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.overweight.addEventListener(MouseEvent.CLICK, resetWeight);
 			
 			interventionsPanel.active.addEventListener(Event.CHANGE, stepperChanged);
-			interventionsPanel.active.addEventListener(MouseEvent.CLICK, resetWeight);
+			interventionsPanel.active.addEventListener(MouseEvent.CLICK, resetActive);
 			
 			interventionsPanel.resetButton.addEventListener(MouseEvent.CLICK, resetAll);
 			
@@ -139,62 +139,62 @@ package org.understandinguncertainty.UKPDS.view
 			
 			model.recalculate();
 		}
-		/*
-		private function futureSmokingChanged(event:Event):void 
-		{
 
-			userProfile.smoker_int = interventionsPanel.futureSmokingCategory.selectedIndex == 1;
-
-			model.recalculate();
-		}
-		*/
-		private function resetAll(event:MouseEvent):void
+		private function resetAll(event:MouseEvent = null):void
 		{
-			userProfile.resetInterventions();
-		}
-		
-		private function resetSmoker(event:MouseEvent):void
-		{
+			//userProfile.resetInterventions();
+			interventionsPanel.smoker.selected = userProfile.smoker_int = userProfile.smokerAtDiagnosis;
+			interventionsPanel.hba1c.value = userProfile.hba1c_int = userProfile.hba1c;
+			interventionsPanel.sbp.value = userProfile.sbp_int = userProfile.sbp;
+			interventionsPanel.totalCholesterol.value = userProfile.totalCholesterol_int = userProfile.totalCholesterol;
+			interventionsPanel.hdlCholesterol.value = userProfile.hdlCholesterol_int = userProfile.hdlCholesterol;
+			interventionsPanel.overweight.selected = userProfile.overweight_int = userProfile.overweight;
+			interventionsPanel.active.selected = userProfile.active_int = userProfile.active;
 			
-			interventionsPanel.smoker.original = userProfile.smoker_int = userProfile.smokerAtDiagnosis;
+			userProfile.nonZeroInterventions = false;
 			model.recalculate();
 		}
 		
-		private function resetSBP(event:MouseEvent):void
+		private function resetSmoker(event:MouseEvent = null):void
 		{
-			
+			interventionsPanel.smoker.selected = userProfile.smoker_int = userProfile.smokerAtDiagnosis;
+			model.recalculate();
+		}
+		
+		private function resetSBP(event:MouseEvent = null):void
+		{
 			interventionsPanel.sbp.value = userProfile.sbp_int = userProfile.sbp;
 			model.recalculate();
 		}
 		
-		private function resetTotalCholesterol(event:MouseEvent):void
+		private function resetTotalCholesterol(event:MouseEvent = null):void
 		{
-			
 			interventionsPanel.totalCholesterol.value = userProfile.totalCholesterol_int = userProfile.totalCholesterol;
 			model.recalculate();
 		}
 		
-		private function resetHDLCholesterol(event:MouseEvent):void
+		private function resetHDLCholesterol(event:MouseEvent = null):void
 		{
 			interventionsPanel.hdlCholesterol.value = userProfile.hdlCholesterol_int = userProfile.hdlCholesterol;
 			model.recalculate();
 		}
 		
-		private function resetHba1c(event:MouseEvent):void
+		private function resetHba1c(event:MouseEvent = null):void
 		{
 			interventionsPanel.hba1c.value = userProfile.hba1c_int = userProfile.hba1c;
 			model.recalculate();
 		}
 		
-		private function resetWeight(event:MouseEvent):void
+		private function resetWeight(event:MouseEvent = null):void
 		{
 			interventionsPanel.overweight.selected = userProfile.overweight_int = userProfile.overweight;
 			model.recalculate();
 		}
 		
-		private function resetActive(event:MouseEvent):void
+		private function resetActive(event:MouseEvent = null):void
 		{
-			interventionsPanel.active.reset();
+			interventionsPanel.active.selected = userProfile.active_int = userProfile.active;
+			model.recalculate();
 		}
 		
 	}

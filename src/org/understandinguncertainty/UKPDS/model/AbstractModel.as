@@ -62,7 +62,7 @@ package org.understandinguncertainty.UKPDS.model
 		}
 		
 		public function get meanAge():Number {
-			trace("sum_e_int/100", sum_e_int/100);
+			//trace("sum_e_int/100", sum_e_int/100);
 			return userProfile.age + sum_e_int/100;
 		}
 		

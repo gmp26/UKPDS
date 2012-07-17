@@ -34,7 +34,8 @@ Copyright University of Cambridge. All rights reserved
 			<s:VGroup horizontalAlign="center" paddingTop="10">
 				<s:Label text="Your heart age is about" fontSize="20"/>
 				<s:Label x="50" id="heartAgeText" fontSize="36"/>
-				<s:Label text="compared to an average person of" fontSize="16" color="0xAAAAAA"/>
+				<s:Label text="compared to an average person" fontSize="16" color="0xAAAAAA"/>
+				<s:Label text="with type 2 diabetes of" fontSize="16" color="0xAAAAAA"/>
 				<s:Label text="the same age, gender and ethnicity" fontSize="16" color="0xAAAAAA"/>
 				<s:Group height="10"/>
 			</s:VGroup>		

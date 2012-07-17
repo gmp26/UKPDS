@@ -10,7 +10,6 @@ package org.understandinguncertainty.UKPDS
 	
 	import org.robotlegs.mvcs.SignalContext;
 	import org.understandinguncertainty.UKPDS.model.AppState;
-	import org.understandinguncertainty.UKPDS.model.FraminghamRunModel;
 	import org.understandinguncertainty.UKPDS.model.ICardioModel;
 	import org.understandinguncertainty.UKPDS.model.UKPDSModel;
 	import org.understandinguncertainty.UKPDS.model.UKPDSParameters;

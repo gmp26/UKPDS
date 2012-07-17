@@ -100,7 +100,7 @@ package org.understandinguncertainty.UKPDS.view
 			
 			profile.cholUnits.dataProvider = cholUnitFactors;
 			profile.hbA1cUnits.dataProvider = hba1cUnits;
-			profile.hbA1cUnits.selectedIndex = 0;
+			profile.hbA1cUnits.selectedIndex = appState.hbA1c_Percent ? 0 : 1;
 			
 			profile.cholUnits.selectedIndex = 0;
 			appState.mmol = (cholesterolUnit == mmol_L);				
@@ -114,6 +114,20 @@ package org.understandinguncertainty.UKPDS.view
 			// and in case it doesn't
 			profileDefaultsLoadedSignal.add(showPersonalData);
 			
+			profile.hba1cStepper.stepSize = 0.1;
+			/*
+			profile.hba1cStepper.valueParseFunction = function(s:String):Number {
+				return Number(s);
+			}
+			*/
+			
+			profile.hba1cStepper.valueFormatFunction = function(val:Number):String 
+			{
+				return appState.hbA1c_Percent ? val.toFixed(1) : val.toFixed(0);
+			};
+
+				
+
 			//loadFromURL();
 		}
 		
@@ -142,8 +156,6 @@ package org.understandinguncertainty.UKPDS.view
 			
 			profile.height_mStep.addEventListener(Event.CHANGE, validate);
 			profile.weight_kgStep.addEventListener(Event.CHANGE, validate);
-			
-			//profile.townsendGroup.addEventListener(Event.CHANGE, showTownsendImage);
 			
 			profile.totalCholesterolStep.addEventListener(Event.CHANGE, validate);
 			profile.hdlCholesterolStep.addEventListener(Event.CHANGE, validate);
@@ -250,20 +262,18 @@ package org.understandinguncertainty.UKPDS.view
 			profile.weight_kgStep.value = pvars.weight_kg.value;
 			profile.active.selected = pvars.active.value;
 			profile.af.selected = pvars.atrialFibrillation.value;
-			profile.hba1cStepper.value = pvars.hba1c.value;
 			
 			profile.smokerGroup.selectedIndex = Number(pvars.smokerAtDiagnosis.value);
 			
 			//profile.diabetic.selected = pvars.diabetic.value;
 			
-			hdlCholesterol_mmol_L = Number(pvars.hdlCholesterol_mmol_L);
-			totalCholesterol_mmol_L = Number(pvars.totalCholesterol_mmol_L);
+			hba1c_as_percent = Number(pvars.hba1c.value);
+			hdlCholesterol_mmol_L = Number(pvars.hdlCholesterol_mmol_L.value);
+			totalCholesterol_mmol_L = Number(pvars.totalCholesterol_mmol_L.value);
 			
 			var nonHDL:Number = totalCholesterol - hdlCholesterol;
-			profile.nonHDLField.text = "NonHDL Cholesterol: " + nonHDL.toPrecision(3);
-			
+			profile.nonHDLField.text = "NonHDL Cholesterol: " + nonHDL.toPrecision(3);	
 			profile.LDLField.text = "LDL Cholesterol: " + userProfile.calc_ldl(totalCholesterol, hdlCholesterol).toPrecision(3);
-			
 			profile.lipidRatioField.text = "Lipid Ratio: " + userProfile.lipidRatio.toPrecision(3);
 			
 			profile.systolicBloodPressure = Number(pvars.systolicBloodPressure);
@@ -292,11 +302,11 @@ package org.understandinguncertainty.UKPDS.view
 			pvars.height_m.value = profile.height_mStep.value;
 			pvars.weight_kg.value = profile.weight_kgStep.value;
 			pvars.active.value = profile.active.selected;
-			pvars.hba1c.value = profile.hba1cStepper.value;
 			pvars.atrialFibrillation.value = profile.af.selected;
 			pvars.smokerAtDiagnosis.value = profile.smokerGroup.selectedIndex;
 			
 			//pvars.diabetic.value = profile.diabetic.selected
+			pvars.hba1c.value = hba1c_as_percent;
 			pvars.hdlCholesterol_mmol_L.value = hdlCholesterol_mmol_L;
 			pvars.totalCholesterol_mmol_L.value = totalCholesterol_mmol_L;
 			pvars.systolicBloodPressure.value = profile.systolicBloodPressure;
@@ -385,7 +395,8 @@ package org.understandinguncertainty.UKPDS.view
 			
 			var nonHDL:Number = totalCholesterol - hdlCholesterol;		
 			profile.nonHDLField.text = "NonHDL Cholesterol: " + nonHDL.toPrecision(3);			
-
+			profile.LDLField.text = "LDL Cholesterol: " + userProfile.calc_ldl(totalCholesterol, hdlCholesterol).toPrecision(3);
+			profile.lipidRatioField.text = "Lipid Ratio: " + userProfile.lipidRatio.toPrecision(3);
 			
 			var e1:Boolean = (profile.hdlCholValidator.validate().results != null);
 			var e2:Boolean = (profile.totalCholValidator.validate().results != null);
@@ -491,6 +502,25 @@ package org.understandinguncertainty.UKPDS.view
 			{unit:"mg/dL", factor: 1 / cholConversionFactor},
 		]);
 		
+
+		// Get internal hba1c from display
+		public function get hba1c_as_percent():Number
+		{
+			if(appState.hbA1c_Percent)
+				return profile.hba1cStepper.value;
+			else
+				return UserModel.calc_hba1c_mmol_to_percent(profile.hba1cStepper.value);
+		}
+		public function set hba1c_as_percent(percent:Number):void
+		{
+			if(appState.hbA1c_Percent) {
+				profile.hba1cStepper.value = percent;
+			}
+			else {
+				profile.hba1cStepper.value = UserModel.calc_hba1c_percent_to_mmol(percent);
+			}
+		}
+		
 		private var hba1cUnits:ArrayCollection = new ArrayCollection([
 			{unit:"%"},
 			{unit:"mmol/mol"},
@@ -500,41 +530,33 @@ package org.understandinguncertainty.UKPDS.view
 		// TODO: Worry about minimum and maximum ranges and value conversions
 		private function change_hba1c_units(event:Event):void 
 		{
-			appState.hbA1c_Percent = (profile.hbA1cUnits.selectedIndex == 0);			
+			appState.hbA1c_Percent = (profile.hbA1cUnits.selectedIndex == 0);
+			var stepper:NumericStepper = profile.hba1cStepper;
 			
-			profile.hba1cStepper.valueParseFunction = function(s:String):Number {
-				
-				if(appState.hbA1c_Percent) {
-					return Number(s);
-				}
-				else {
-					return UserModel.calc_hba1c_mmol_to_percent(Number(s));
-				}
-			}
+			var oldValue:Number = profile.hba1cStepper.value;
+			var newValue:Number = appState.hbA1c_Percent ?
+				UserModel.calc_hba1c_mmol_to_percent(oldValue) :
+				UserModel.calc_hba1c_percent_to_mmol(oldValue);
 			
-			profile.hba1cStepper.textDisplay.text = appState.hbA1c_Percent ? 
-														userProfile.hba1c.toString() : 
-														UserModel.calc_hba1c_mmol_to_percent(userProfile.hba1c).toString();
+			stepper.minimum = 0;
+			stepper.maximum = 10000;
 
-			validate();
-		}
-		
-		private function updateHbA1cStepper(stepper:NumericStepper, validator:Validator):void {
+			stepper.stepSize = appState.hbA1c_Percent ? 0.1 : 1;
+			stepper.validateNow();
 			
-
-			stepper.valueParseFunction = function(s:String):Number {
-				
-				if(appState.hbA1c_Percent) {
-					return Number(s);
-				}
-				else {
-					return UserModel.calc_hba1c_mmol_to_percent(Number(s));
-				}
-			}
+			profile.hba1cValidator.minValue = stepper.minimum = 
+				appState.hbA1c_Percent ? 5 : Math.floor(UserModel.calc_hba1c_percent_to_mmol(5));
+			
+			profile.hba1cValidator.maxValue = stepper.maximum = 
+				appState.hbA1c_Percent ? 11 : Math.ceil(UserModel.calc_hba1c_percent_to_mmol(11));
+			
+			stepper.value = newValue;
 			
 			stepper.validateNow();
+			
+			//trace("stepperVal:", stepper.value, "oldValue:",oldValue,"newValue:",newValue, "range:",profile.hba1cStepper.minimum, profile.hba1cStepper.maximum); 
+			validate();
 		}
-		
 		
 		private function changedUnits(event:Event):void
 		{
@@ -567,7 +589,7 @@ package org.understandinguncertainty.UKPDS.view
 			stepper.maximum = Math.max(newMax, stepper.maximum);
 			stepper.stepSize = 0.1;
 			stepper.valueParseFunction = function(s:String):Number {
-				return Math.round(Number(s)*100000)/100000;
+				return Number(s); //Math.round(Number(s)*100000)/100000;
 			}
 			stepper.valueFormatFunction = function(val:Number):String 
 			{

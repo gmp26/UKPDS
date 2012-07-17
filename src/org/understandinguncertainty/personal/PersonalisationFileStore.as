@@ -81,7 +81,7 @@ package org.understandinguncertainty.personal
 		}
 		
 		private function loadError(event:Event):void {
-			trace("loadError");
+			Alert.show("Cannot load", "Load File Error");
 			inProgress = false;
 		}
 		
@@ -109,7 +109,6 @@ package org.understandinguncertainty.personal
 		}
 
 		private function saveError(event:Event):void {
-			//trace("saveError");
 			inProgress = false;
 		}		
 		

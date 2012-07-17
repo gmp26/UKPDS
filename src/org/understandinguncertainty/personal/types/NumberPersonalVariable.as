@@ -7,8 +7,8 @@ package org.understandinguncertainty.personal.types
 
 	public class NumberPersonalVariable extends GenericPersonalVariable implements IPersonalVariable
 	{
-		function NumberPersonalVariable(instanceName:String, defaultValue:*) {
-			super(instanceName, defaultValue);
+		function NumberPersonalVariable(instanceName:String, symbol:String, defaultValue:*) {
+			super(instanceName, symbol, defaultValue);
 		}
 		
 /*

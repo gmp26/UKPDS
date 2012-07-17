@@ -55,13 +55,16 @@ package org.understandinguncertainty.UKPDS.model
 		public function get nonZeroInterventions():Boolean {
 			return _nonZeroInterventions;
 		}
+		public function set nonZeroInterventions(b:Boolean):void {
+			_nonZeroInterventions = b;
+		}
 		
 		public function get chdHazardForInterventions():Number {
 			
 			var ratio:Number = 1;
 
 			// HbA1c
-			var r:Number = Math.pow(0.845,100*(hba1c - hba1c_int)/hba1c);
+			var r:Number = Math.pow(0.845,hba1c - hba1c_int);
 			ratio *= r;
 
 			// LDL
@@ -79,15 +82,6 @@ package org.understandinguncertainty.UKPDS.model
 				}
 				ratio *= r;
 			}
-			
-			// Weight Loss
-			/*
-			var before:Number = calc_bmi(weight_kg, height_m);
-			var after:Number = calc_bmi(weight_kg_int, height_m);
-			r = isMale ? 
-				boundaryHazard(before, after, 30.4, 0.776) :
-				boundaryHazard(before, after, 32.6, 0.776);
-			*/
 			
 			r = 1;
 			if(overweight != overweight_int) {
@@ -133,15 +127,6 @@ package org.understandinguncertainty.UKPDS.model
 				ratio *= r;
 			}
 			
-			// Weight Loss
-			/*
-			var before:Number = calc_bmi(weight_kg, height_m);
-			var after:Number = calc_bmi(weight_kg_int, height_m);
-			r = isMale ? 
-				boundaryHazard(before, after, 30.4, 0.776) :
-				boundaryHazard(before, after, 32.6, 0.776);
-			ratio *= r;
-			*/
 			r = 1;
 			if(overweight != overweight_int) {
 				r = overweight ? 0.776 : 1/0.776;
@@ -211,9 +196,7 @@ package org.understandinguncertainty.UKPDS.model
 		public function get ageAtDiagnosis():Number
 		{
 			var d:Number = variableList.dateOfDiagnosis.subtract(variableList.dateOfBirth)/DateOfBirth.msInYear;
-			/*
-			var d:Number = variableList.dateOfBirth.getDuration();
-			*/
+
 			if(d == 0 || isNaN(d))
 				trace("weird ageAtDiagnosis seen:", d);
 			return d;
@@ -241,12 +224,7 @@ package org.understandinguncertainty.UKPDS.model
 		{
 			return calc_bmi(variableList.weight_kg.value, variableList.height_m.value);
 		}
-		/*
-		public function get bmi_int():Number
-		{
-			return calc_bmi(weight_kg_int, variableList.height_m.value);
-		}
-		*/
+
 		public function get weightLimit():Number {
 			return (isMale ? 30.4 : 32.6) * height_m * height_m;
 		}
@@ -264,7 +242,7 @@ package org.understandinguncertainty.UKPDS.model
 		public function get hba1c():Number {
 			return variableList.hba1c.value;
 		}
-		
+				
 		public function get sbp():Number
 		{
 			return Number(variableList.systolicBloodPressure.value);	
@@ -280,12 +258,6 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public function get atrialFibrillation():Boolean {
 			return variableList.atrialFibrillation.value;
-		}
-		
-		public function get smoke_cat():int
-		{
-// TODO			return Number(variableList.smokerGroup.value);
-			return 1;
 		}
 
 		public function get totalCholesterol():Number

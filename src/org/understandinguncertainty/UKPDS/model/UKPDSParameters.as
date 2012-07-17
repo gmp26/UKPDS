@@ -197,6 +197,8 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public function noncvdHazard(age:Number, gender:String, smoker:Boolean):Number {
 			var index:int = Math.floor((age-15)/5);
+			if(index >= noncvdHazards.male.length)
+				index = noncvdHazards.male.length-1;
 			var key:String = gender + (smoker ? "Smoker" : "");
 			return noncvdHazards[key][index];
 		}

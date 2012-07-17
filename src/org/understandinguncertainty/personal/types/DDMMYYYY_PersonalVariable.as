@@ -8,8 +8,8 @@ package org.understandinguncertainty.personal.types
 	public class DDMMYYYY_PersonalVariable extends GenericPersonalVariable implements IPersonalVariable
 	{
 		
-		function DDMMYYYY_PersonalVariable(instanceName:String, date:Date) {
-			super(instanceName, date);
+		function DDMMYYYY_PersonalVariable(instanceName:String, symbol:String, date:Date) {
+			super(instanceName, symbol, date);
 		}
 		
 		override public function get value():* {

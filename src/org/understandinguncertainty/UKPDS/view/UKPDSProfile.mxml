@@ -238,7 +238,7 @@ Copyright University of Cambridge. All rights reserved
 															   />
 								</s:HGroup>
 							</s:VGroup>
-							<ns:ComboBox id="cholUnits" width="70" selectedIndex="0" labelField="unit" />
+							<ns:ComboBox id="cholUnits" width="90" selectedIndex="0" labelField="unit" />
 						</s:HGroup>
 						<s:VGroup paddingRight="120" horizontalAlign="right">						
 							<s:Label id="nonHDLField" paddingLeft="30"/>
@@ -254,10 +254,11 @@ Copyright University of Cambridge. All rights reserved
 						<s:NumericStepper id="hba1cStepper" 
 										  minimum="5" maximum="11" value="6" 
 										  width="70" 
-										  stepSize="0.1"
-										  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"
 										  />
-						<ns:ComboBox id="hbA1cUnits" width="70" selectedIndex="0" labelField="unit" />						
+										  <!--
+										  stepSize="0.1"
+										  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"-->
+						<ns:ComboBox id="hbA1cUnits" width="90" selectedIndex="0" labelField="unit" />						
 					</s:HGroup>
 					
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">

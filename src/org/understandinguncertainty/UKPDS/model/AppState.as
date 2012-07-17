@@ -22,7 +22,7 @@ package org.understandinguncertainty.UKPDS.model
 		public var showDifferences:Boolean = false;
 		public var interventionAge:int = 0;
 		public var targetInterval:int = 10;
-		public var maximumAge:int = 95;
+		public var maximumAge:int = 110;
 		public var selectedScreenName:String = "profile";
 		
 		private var _minimumAge:int = 15;

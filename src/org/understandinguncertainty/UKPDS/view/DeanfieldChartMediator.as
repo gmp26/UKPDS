@@ -109,21 +109,21 @@ package org.understandinguncertainty.UKPDS.view
 				model.meanAge);
 			
 			if(model.yearGain > 0.1) {
-				var labelAge:int = Math.round((appState.interventionAge+95)/2);
+				var labelAge:int = Math.round((appState.interventionAge+100)/2);
 				var dp:ArrayCollection = outlookChart.areaChart.dataProvider as ArrayCollection;
 				var labelIndex:int = labelAge - appState.minimumAge;
 				if(labelIndex > 0 && labelIndex < dp.length) {
 					var item:Object = dp.getItemAt(labelIndex);
-					outlookChart.dataCanvas.addDataChild(outlookChart.gainLabel,null,95, null,null,labelAge, null);
+					outlookChart.dataCanvas.addDataChild(outlookChart.gainLabel,null,100, null,null,labelAge, null);
 				}
 			}
 			else if(model.yearGain < 0.1) {
-				labelAge = Math.round((appState.interventionAge+95)/2);
+				labelAge = Math.round((appState.interventionAge+100)/2);
 				dp = outlookChart.areaChart.dataProvider as ArrayCollection;
 				labelIndex = labelAge - appState.minimumAge;
 				if(labelIndex > 0 && labelIndex < dp.length) {
 					item = dp.getItemAt(labelIndex);
-					outlookChart.dataCanvas.addDataChild(outlookChart.lossLabel,null,95, null,null,labelAge, null);
+					outlookChart.dataCanvas.addDataChild(outlookChart.lossLabel,null,100, null,null,labelAge, null);
 				}				
 			}
 		}

@@ -8,14 +8,24 @@ package org.understandinguncertainty.personal.types
 	public class GenericPersonalVariable
 	{		
 		private var _name:String;
+		private var _symbol:String;
 				
-		function GenericPersonalVariable(instanceName:String, defaultValue:*) {
+		function GenericPersonalVariable(instanceName:String, symbol:String, defaultValue:*) {
 			_name = instanceName;
+			_symbol = symbol;
 			_value = defaultValue;
 		}
 		
 		public function get name():String {
 			return _name;
+		}
+		
+		public function get symbol():String {
+			return _symbol;
+		}
+
+		public function set symbol(s:String):void {
+			_symbol = s;
 		}
 
 		protected var _value:*;

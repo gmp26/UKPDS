@@ -107,7 +107,7 @@ Copyright University of Cambridge. All rights reserved
 						<ns:horizontalAxis>
 							<ns:LinearAxis id="ageAxis" 
 										   displayName="@Resource(bundle='UKPDS',key='chartNeg.xaxis')" 
-										   maximum="95"/>
+										   maximum="100"/>
 						</ns:horizontalAxis>
 						
 						<ns:verticalAxis>
@@ -132,18 +132,7 @@ Copyright University of Cambridge. All rights reserved
 					<s:Label text="@Resource(bundle='UKPDS',key='chartNeg.xaxis')" />
 				</s:HGroup>
 			</s:VGroup>
-				
-<!--
-			<s:VGroup width="100%" verticalAlign="top" left="0" top="60">
-				<s:VSlider id="maxChance" height="50" value="100"  showDataTip="false" toolTip="Adjust Scale"
-						   minimum="50" maximum="100" stepSize="10" />
-			</s:VGroup>
-
-			<s:HGroup width="100%" horizontalAlign="right" right="10" bottom="7" >
-				<s:HSlider id="maxAgeSlider" width="50" value="95" showDataTip="false" toolTip="Adjust Scale"
-						   maximum="95" />
-			</s:HGroup>
--->			
+						
 		</s:Group>
 		
 		<view:AgeSettings currentState="excludeTargetAge" width="80%"/>

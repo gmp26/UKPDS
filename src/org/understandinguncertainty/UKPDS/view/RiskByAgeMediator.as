@@ -62,7 +62,7 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			
 			riskByAgeChart.withSeries.visible = 
-				riskByAgeChart.withLegend.visible = (appState.interventionAge < 95);
+				riskByAgeChart.withLegend.visible = (appState.interventionAge < 100);
 			riskByAgeChart.lineChart.dataProvider = model.getResultSet();
 			riskByAgeChart.ageAxis.minimum = appState.minimumAge;
 			riskByAgeChart.chanceAxis.maximum = 10*Math.ceil(model.peakf/10);

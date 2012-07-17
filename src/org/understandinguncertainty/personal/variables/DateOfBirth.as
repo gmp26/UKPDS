@@ -10,7 +10,7 @@ package org.understandinguncertainty.personal.variables
 	{
 				
 		function DateOfBirth(instanceName:String, date:Date) {
-			super(instanceName, date);
+			super(instanceName, "dob", date);
 		}
 
 		override public function get value():* {

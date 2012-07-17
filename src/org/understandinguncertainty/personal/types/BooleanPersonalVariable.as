@@ -8,8 +8,8 @@ package org.understandinguncertainty.personal.types
 	public class BooleanPersonalVariable extends GenericPersonalVariable implements IPersonalVariable
 	{
 		
-		public function BooleanPersonalVariable(instanceName:String, defaultValue:*) {
-			super(instanceName, defaultValue);
+		public function BooleanPersonalVariable(instanceName:String, symbol:String, defaultValue:*) {
+			super(instanceName, symbol, defaultValue);
 		}
 
 		public function fromString(s:String):void

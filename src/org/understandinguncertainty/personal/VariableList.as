@@ -24,7 +24,7 @@ package org.understandinguncertainty.personal
 		
 		public var dateOfBirth:DateOfBirth; 
 //		public var age:AgePersonalVariable = new AgePersonalVariable("age", 55);
-		public var gender:StringPersonalVariable = new StringPersonalVariable("gender", "male");
+		public var gender:StringPersonalVariable = new StringPersonalVariable("gender", "sex", "male");
 
 /*		public function get afroCaribbean():Boolean {
 			return Number(ethnicGroup.value) == 5; // magic number: selects "Black Caribbean" 
@@ -33,17 +33,17 @@ package org.understandinguncertainty.personal
 */
 		
 		public var dateOfDiagnosis:DateOfDiagnosis = new DateOfDiagnosis("dateOfDiagnosis", new Date());
-		public var hba1c:NumberPersonalVariable = new NumberPersonalVariable("hba1c", 6.72);
-		public var systolicBloodPressure:NumberPersonalVariable = new NumberPersonalVariable("systolicBloodPressure", 135.5);
+		public var hba1c:NumberPersonalVariable = new NumberPersonalVariable("hba1c", "hba", 6.72);
+		public var systolicBloodPressure:NumberPersonalVariable = new NumberPersonalVariable("systolicBloodPressure", "sbp", 135.5);
 //		public var lipidRatio:NumberPersonalVariable = new NumberPersonalVariable("lipidRatio", 5.11);
-		public var atrialFibrillation:BooleanPersonalVariable = new BooleanPersonalVariable("atrialFibrillation", false);
-		public var totalCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("totalCholesterol_mmol_L", 5.5);
-		public var hdlCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("hdlCholesterol_mmol_L", 1.16);
-		public var ethnicGroup:NumberPersonalVariable = new NumberPersonalVariable("ethnicGroup", 0);
-		public var smokerAtDiagnosis:BooleanPersonalVariable = new BooleanPersonalVariable("smokerAtDiagnosis", false);
-		public var weight_kg:NumberPersonalVariable = new NumberPersonalVariable("weight_kg", 65);
-		public var height_m:NumberPersonalVariable = new NumberPersonalVariable("height_m", 1.7);
-		public var active:BooleanPersonalVariable = new BooleanPersonalVariable("active", false);
+		public var atrialFibrillation:BooleanPersonalVariable = new BooleanPersonalVariable("atrialFibrillation", "af", false);
+		public var totalCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("totalCholesterol_mmol_L", "tc", 5.5);
+		public var hdlCholesterol_mmol_L:NumberPersonalVariable = new NumberPersonalVariable("hdlCholesterol_mmol_L", "hdl", 1.16);
+		public var ethnicGroup:NumberPersonalVariable = new NumberPersonalVariable("ethnicGroup", "eth", 0);
+		public var smokerAtDiagnosis:BooleanPersonalVariable = new BooleanPersonalVariable("smokerAtDiagnosis", "smk", false);
+		public var weight_kg:NumberPersonalVariable = new NumberPersonalVariable("weight_kg", "wt", 65);
+		public var height_m:NumberPersonalVariable = new NumberPersonalVariable("height_m", "ht", 1.7);
+		public var active:BooleanPersonalVariable = new BooleanPersonalVariable("active", "act", false);
 		
 		/* following are unused in UKPDS */
 		/*
@@ -137,11 +137,20 @@ package org.understandinguncertainty.personal
 			var vList:XMLList = describeType(this).variable;
 			for(var i:int = 0; i < vList.length(); i++) {
 				var name:String = vList[i].@name;
+				var type:String = vList[i].@type;
 				var pv:IPersonalVariable = this[name] as IPersonalVariable;
 				if(pv == null || pv.value == null) continue;
-				var stringValue:String = pv.toString();
+				var stringValue:String;
+				if(type.indexOf("NumberPersonalVariable") > 0) 
+				{
+					stringValue = (pv.value as Number).toPrecision(5).replace(/\.0*$/, "");
+				}
+				else {
+					stringValue = pv.toString();
+				}
+				var symbol:String = pv.symbol;
 				if(stringValue==null) continue;
-				var xml:XML = <{name}>{stringValue}</{name}>;
+				var xml:XML = <param name={name} symbol={symbol}>{stringValue}</param>; //<{name}>{stringValue}</{name}>;
 				written.appendChild(xml);
 			}
 			return written;
@@ -154,6 +163,29 @@ package org.understandinguncertainty.personal
 		 */
 		public function readXML(xml:XML):void {
 			
+			var params:XMLList = xml.param;
+			
+			for each (var param:XML in xml.param) {
+				var name:String = param.@name;
+				//var symbol:String = param.@symbol;
+				var value:String = param;
+				
+				var pv:IPersonalVariable = this[name] as IPersonalVariable;
+				if(pv != null && value.length > 0) {
+					pv.fromString(value);
+					//pv.symbol = symbol; // keep the symbols write only - its just a documentation feature
+				}
+			} 
+
+/*			
+			var vList:XMLList = describeType(this).variable;
+			for(var i:int = 0; i < vList.length(); i++) {
+				var name:String = vList[i].@name;
+				var nameValue:XMLList = xml.param.(@name==name);
+				
+			}
+*/
+			/*
 			var vList:XMLList = describeType(this).variable;
 			for(var i:int = 0; i < vList.length(); i++) {
 				var name:String = vList[i].@name;
@@ -164,7 +196,7 @@ package org.understandinguncertainty.personal
 				if(nameValue != null && nameValue.length() == 1)
 					pv.fromString(nameValue.toString());
 			}
-			
+			*/
 		}
 
 	}

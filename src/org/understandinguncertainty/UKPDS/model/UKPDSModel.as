@@ -6,7 +6,6 @@ package org.understandinguncertainty.UKPDS.model
 	import mx.collections.ArrayCollection;
 	import mx.resources.IResourceManager;
 	
-	import org.understandinguncertainty.UKPDS.model.vo.CalculatedParams;
 	import org.understandinguncertainty.UKPDS.model.vo.ColourNumbersVO;
 	import org.understandinguncertainty.UKPDS.model.vo.ParamsVO;
 	import org.understandinguncertainty.personal.VariableList;
@@ -39,6 +38,11 @@ package org.understandinguncertainty.UKPDS.model
 		 */
 		public function get showDifferences():Boolean {
 			return _showDifferences;
+		}
+		
+		// format number for trace
+		private function ff(n:Number):String {
+			return n.toPrecision(4);
 		}
 		
 		public function recalculate():void {
@@ -185,26 +189,30 @@ package org.understandinguncertainty.UKPDS.model
 				b = parameters.noncvdHazard(age, userProfile.gender, userProfile.smokerAtDiagnosis);
 				
 				// and after interventions
+				var expH1_int:Number;
 				if(age < appState.interventionAge) {
 					expH0_int = Math.exp(-parameters.cvd_hazard(t, T, chd_H_int, stroke_H_int));
 					a_int = a;
 					b_int = b;
+					//trace("--- ", t, expH0_int, expH1_int, a_gp, a_int, a, heartAge);
 				}
 				else {
-					var expH1_int:Number = Math.exp(-parameters.cvd_hazard(t, T, chd_H_int, stroke_H_int));
+					expH1_int = Math.exp(-parameters.cvd_hazard(t, T, chd_H_int, stroke_H_int));
 					a_int = expH0_int - expH1_int;
+					//trace("*** ", t, expH0_int, expH1_int, a_gp, a_int, a, heartAge);
 					expH0_int = expH1_int;
 					b_int = b * userProfile.nonCVDHazardForInterventions;
 				}
 				
 				if(quarter == 1) {
 					a_now = a_int; // used to match with a_gp for heart age calculation
+					//trace("+++ ", t, expH0_int, expH1_int, a_gp, a_int, a, heartAge);
 				}
 				// and for heart age calculation - we only look at cvd risk
 				if(a_gp > a_now) {
 					heartAge = age - 0.125;
+					//trace("... ", t, expH0_int, expH1_int, a_gp, a_int, a, heartAge);
 					a_now = 1;
-//					trace("heartAge? ", t, a_gp, a, heartAge);
 				}
 				
 				// and for comparison
@@ -224,7 +232,7 @@ package org.understandinguncertainty.UKPDS.model
 				sum_e_int += e_int/4; /* we are working in quarter years... */
 				sum_e += e/4;
 				
-				trace(t, sum_e, sum_e_int);
+//				trace(t, sum_e, sum_e_int);
 				
 				
 				f += d;
@@ -235,8 +243,8 @@ package org.understandinguncertainty.UKPDS.model
 				m_int += c_int;
 				m_gp += c_gp;
 				
-//				trace("base: ", t, a,b,c,d,e,f,m);
-//				trace("intv: ", t, a_int,b_int,c_int,d_int,e_int,f_int,m_int);
+				//trace("base: ", t, ff(a),ff(b),ff(c),ff(d),ff(e),ff(f),ff(m));
+				//trace("intv: ", t, ff(a_int),ff(b_int),ff(c_int),ff(d_int),ff(e_int),ff(f_int),ff(m_int));
 
 				// outlook yellow
 				var yellow:Number = f+m - (m_int+f_int);
