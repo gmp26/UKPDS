@@ -18,6 +18,7 @@ scripts
 CVS
 .DS_Store
 jbs.txt
+*.zip
 
 
 
