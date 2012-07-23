@@ -1,0 +1,15 @@
+<personalData>
+  <param name="totalCholesterol_mmol_L" symbol="tc">4.9000</param>
+  <param name="gender" symbol="sex">female</param>
+  <param name="hba1c" symbol="hba">7.5000</param>
+  <param name="dateOfBirth" symbol="dob">17/7/1967</param>
+  <param name="systolicBloodPressure" symbol="sbp">160</param>
+  <param name="active" symbol="act">false</param>
+  <param name="atrialFibrillation" symbol="af">false</param>
+  <param name="hdlCholesterol_mmol_L" symbol="hdl">1</param>
+  <param name="smokerAtDiagnosis" symbol="smk">true</param>
+  <param name="dateOfDiagnosis" symbol="dod">17/7/2012</param>
+  <param name="height_m" symbol="ht">1.6500</param>
+  <param name="weight_kg" symbol="wt">70</param>
+  <param name="ethnicGroup" symbol="eth">0</param>
+</personalData>

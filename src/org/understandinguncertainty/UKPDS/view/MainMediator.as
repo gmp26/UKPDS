@@ -44,7 +44,8 @@ package org.understandinguncertainty.UKPDS.view
 		[Inject]
 		public var profileDefaultsLoaded:ProfileDefaultsLoadedSignal;
 		
-		private static const defaultsURL:String = "personaldata.xml";
+		private static const defaultsURL:String = "personaldata.php";
+		private static const defaultsURL2:String = "personaldata.xml";
 		
 		override public function onRegister():void
 		{
@@ -101,8 +102,27 @@ package org.understandinguncertainty.UKPDS.view
 				profileDefaultsLoaded.dispatch();
 			}
 			else {
-				// barf somehow...
+				// Load defaults from server
 				Alert.show("Unable to read "+defaultsURL, "Load Default Parameters Error", Alert.OK);
+				profileLoader.load(defaultsURL2, defaults2Loaded);
+			}
+		}
+		
+		private function defaults2Loaded(event:Event):void {
+			if(event.type == Event.COMPLETE) {
+				// read profile from XML
+				var xml:XML = profileLoader.xmlData(event);
+				try {
+					userProfile.variableList.readXML(xml);
+				}
+				catch (e:Error) {
+					Alert.show(e.message, "Error parsing "+defaultsURL2, Alert.OK);
+				}
+				profileDefaultsLoaded.dispatch();
+			}
+			else {
+				// barf somehow...
+				Alert.show("Unable to read "+defaultsURL+" or "+defaultsURL2, "Load Default Parameters Error", Alert.OK);
 			}
 		}
 		
