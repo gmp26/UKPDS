@@ -133,7 +133,7 @@
 				var len:int = 0;
 				var count:int = 0;
 
-//				trace("f = " + f + " f_int = " + f_int + " m = " + m + " m_int = " + m_int);
+				//trace("f = " + f + " f_int = " + f_int + " m = " + m + " m_int = " + m_int);
 				yellow = Math.round(f - f_int);
 				red = 0;				
 				blue = 0;

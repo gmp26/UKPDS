@@ -262,7 +262,7 @@ package org.understandinguncertainty.UKPDS.model
 				var red:Number = f_int;
 				
 				
-				if(quarter % 4) series_deanfield.push({
+				if(quarter % 4 == 0) series_deanfield.push({
 					age:		age,
 					
 					// for Outlook (+ve)
@@ -292,6 +292,12 @@ package org.understandinguncertainty.UKPDS.model
 			}
 			_resultSet = new ArrayCollection(series_deanfield);
 			
+/*
+			for(var k:int=0; k < _resultSet.length; k++) {
+				var r:Object = _resultSet.getItemAt(k);
+				trace("age = "+r.age+" green = "+r.green + " f = " + r.fdash + " m = " + r.mdash);
+			}
+*/			
 			modelUpdatedSignal.dispatch();
 		}		
 		
