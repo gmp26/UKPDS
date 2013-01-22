@@ -150,7 +150,7 @@ package org.understandinguncertainty.UKPDS.view
 			profile.mmStep.addEventListener(Event.CHANGE, validate);
 			profile.yyyyStep.addEventListener(Event.CHANGE, validate);
 			
-			profile.diagnosisDdStep.addEventListener(Event.CHANGE, validate);
+			//profile.diagnosisDdStep.addEventListener(Event.CHANGE, validate);
 			profile.diagnosisMmStep.addEventListener(Event.CHANGE, validate);
 			profile.diagnosisYyyyStep.addEventListener(Event.CHANGE, validate);
 			
@@ -165,8 +165,8 @@ package org.understandinguncertainty.UKPDS.view
 			profile.cholUnits.addEventListener(Event.CHANGE, changedUnits);
 			profile.hbA1cUnits.addEventListener(Event.CHANGE, change_hba1c_units);
 			
-			profile.saveButton.addEventListener(MouseEvent.CLICK, save);
-			profile.loadButton.addEventListener(MouseEvent.CLICK, load);
+			//profile.saveButton.addEventListener(MouseEvent.CLICK, save);
+			//profile.loadButton.addEventListener(MouseEvent.CLICK, load);
 			profile.nextButton.addEventListener(MouseEvent.CLICK, nextScreen);	
 			
 		}
@@ -184,7 +184,7 @@ package org.understandinguncertainty.UKPDS.view
 			profile.mmStep.removeEventListener(Event.CHANGE, validate);
 			profile.yyyyStep.removeEventListener(Event.CHANGE, validate);
 			
-			profile.diagnosisDdStep.removeEventListener(Event.CHANGE, validate);
+			//profile.diagnosisDdStep.removeEventListener(Event.CHANGE, validate);
 			profile.diagnosisMmStep.removeEventListener(Event.CHANGE, validate);
 			profile.diagnosisYyyyStep.removeEventListener(Event.CHANGE, validate);
 			
@@ -199,8 +199,8 @@ package org.understandinguncertainty.UKPDS.view
 			profile.cholUnits.removeEventListener(Event.CHANGE, changedUnits);
 			profile.hbA1cUnits.removeEventListener(Event.CHANGE, change_hba1c_units);
 			
-			profile.saveButton.removeEventListener(MouseEvent.CLICK, save);
-			profile.loadButton.removeEventListener(MouseEvent.CLICK, load);
+			//profile.saveButton.removeEventListener(MouseEvent.CLICK, save);
+			//profile.loadButton.removeEventListener(MouseEvent.CLICK, load);
 			profile.nextButton.removeEventListener(MouseEvent.CLICK, nextScreen);	
 		}
 		
@@ -254,7 +254,7 @@ package org.understandinguncertainty.UKPDS.view
 			//trace("profile:showing dob=",dob);
 			profile.diagnosisYyyyStep.value = dodiagnosis.fullYear; //.toString();
 			profile.diagnosisMmStep.value = (dodiagnosis.month + 1);
-			profile.diagnosisDdStep.value = dodiagnosis.date;
+			//profile.diagnosisDdStep.value = 15; //dodiagnosis.date;
 			
 			// extra Q parameters
 			profile.ethnicGroup.selectedIndex = Number(pvars.ethnicGroup);
@@ -292,7 +292,7 @@ package org.understandinguncertainty.UKPDS.view
 			//trace("profile: setting dob=", s);
 			pvars.dateOfBirth.fromString(s);
 			
-			s = [profile.diagnosisDdStep.value.toString(), profile.diagnosisMmStep.value.toString(), profile.diagnosisYyyyStep.value.toString()].join(":");
+			s = ["15", profile.diagnosisMmStep.value.toString(), profile.diagnosisYyyyStep.value.toString()].join(":");
 			pvars.dateOfDiagnosis.fromString(s);
 			
 			pvars.gender.fromString(profile.gender.selectedValue as String);

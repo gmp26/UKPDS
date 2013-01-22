@@ -48,10 +48,10 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.sbp.minimum = 100;
 			interventionsPanel.sbp.maximum = 220;
 
-			interventionsPanel.totalCholesterol.minimum = 0.0000001;
+			interventionsPanel.totalCholesterol.minimum = 2;
 			interventionsPanel.totalCholesterol.maximum = 20;
 
-			interventionsPanel.hdlCholesterol.minimum = 0.0000001;
+			interventionsPanel.hdlCholesterol.minimum = 0.2;
 			interventionsPanel.hdlCholesterol.maximum = 12;
 			
 						
@@ -129,8 +129,22 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			userProfile.smoker_int = interventionsPanel.smoker.selected;
 			userProfile.sbp_int = interventionsPanel.sbp.value;
+			
+			
+			
 			userProfile.totalCholesterol_int = interventionsPanel.totalCholesterol.value;
 			userProfile.hdlCholesterol_int = interventionsPanel.hdlCholesterol.value;
+			
+			// ensure total >= hdl
+			if(userProfile.totalCholesterol_int < userProfile.hdlCholesterol_int) {
+				if(event.currentTarget == interventionsPanel.totalCholesterol) {
+					userProfile.totalCholesterol_int = interventionsPanel.totalCholesterol.value = userProfile.hdlCholesterol_int;
+				}
+				else {
+					userProfile.hdlCholesterol_int = interventionsPanel.hdlCholesterol.value = userProfile.totalCholesterol_int;					
+				}
+			}
+			
 			userProfile.hba1c_int = interventionsPanel.hba1c.value;
 			userProfile.active_int = interventionsPanel.active.selected;
 			userProfile.overweight_int = interventionsPanel.overweight.selected;

@@ -16,8 +16,8 @@ Copyright University of Cambridge. All rights reserved
 	
 	<s:states>
 		<s:State name="profile"/>
-		<s:State name="heartAge"/>
 		<s:State name="futures"/>
+		<s:State name="heartAge"/>
 		<s:State name="deanfield"/>
 		<s:State name="outlook"/>
 		<s:State name="outcomes"/>
@@ -46,9 +46,9 @@ Copyright University of Cambridge. All rights reserved
 -->		
 			<view:UKPDSProfile includeIn="profile"  />
 			
-			<view:HeartAge includeIn="heartAge" />
-			
 			<view:Futures includeIn="futures" />
+			
+			<view:HeartAge includeIn="heartAge" />
 			
 			<!-- positively framed chart -->
 			<view:DeanfieldChart id="deanfieldChart" includeIn="deanfield" width="100%" height="100%"/>

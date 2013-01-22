@@ -78,8 +78,9 @@ Copyright University of Cambridge. All rights reserved
 										 daySource="{ddStep}" dayProperty="value" required="true" />
 		<validators:DateOfDiagnosisValidator id="diagnosisDateValidator"
 											 yearSource="{diagnosisYyyyStep}" yearProperty="value"
-											 monthSource="{diagnosisMmStep}" monthProperty="value" 
-											 daySource="{diagnosisDdStep}" dayProperty="value" required="true" />
+											 monthSource="{diagnosisMmStep}" monthProperty="value"
+											 daySource="{diagnosisDdStep}" dayProperty="value"
+											 required="true" />
 		
 		<ns:NumberValidator id="heightValidator" 
 							minValue="15" maxValue="45"
@@ -106,6 +107,8 @@ Copyright University of Cambridge. All rights reserved
 		<ns:NumberValidator id="hba1cValidator" domain="real" minValue="5" maxValue="11" required="true" source="{hba1cStepper}" property="value"/>	
 		<ns:NumberValidator id="sbpValidator" domain="real" minValue="70" maxValue="210" required="true" source="{systolicBloodPressureInputStep}" property="value"/>	
 		
+		<s:NumericStepper id="diagnosisDdStep" width="40" minimum="1" maximum="31" value="15"/>
+
 	</fx:Declarations>
 	
 	<s:Group>
@@ -140,10 +143,12 @@ Copyright University of Cambridge. All rights reserved
 					
 					<s:HGroup width="100%" verticalAlign="bottom" horizontalAlign="right"  toolTip="{tipPlaceHolder}">
 						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.dodiagnosis')" fontWeight="normal" />
+						<!--
 						<s:VGroup horizontalAlign="center" gap="2">
 							<s:Label text="Day" fontSize="10" color="#AAAAAA"/>
 							<s:NumericStepper id="diagnosisDdStep" width="40" minimum="1" maximum="31" value="1"/>
 						</s:VGroup>
+						-->
 						<!--<s:TextInput id="mm" editable="true" text="" width="20" />-->
 						<s:VGroup horizontalAlign="center" gap="2">
 							<s:Label text="Month" fontSize="10" color="#AAAAAA"/>
@@ -180,7 +185,7 @@ Copyright University of Cambridge. All rights reserved
 													  value="1.7" width="55" minimum="1.5" maximum="2.5" stepSize="0.01"
 													  weight="{weight_kgStep.value}"
 													  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"/>
-							<s:Label id="inches" text='{feet(height_mStep.value)}' color="#888888" fontSize="8"/>
+							<s:Label id="inches" text='{feet(height_mStep.value)}' color="#008888" fontSize="12"/>
 						</s:VGroup>
 						
 						<s:Group width="50%"/>
@@ -191,7 +196,7 @@ Copyright University of Cambridge. All rights reserved
 							<components:WeightStepper id="weight_kgStep" value="60" width="70" minimum="30" maximum="150" stepSize="0.1"
 													  height_m="{height_mStep.value}"
 													  valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"/>			
-							<s:Label id="pounds" text='{stones(weight_kgStep.value)}' color="#888888" fontSize="8"/>
+							<s:Label id="pounds" text='{stones(weight_kgStep.value)}' color="#008888" fontSize="12"/>
 						</s:VGroup>
 						<s:Label id="bmiField" text=""/>
 					</s:HGroup>
@@ -222,7 +227,7 @@ Copyright University of Cambridge. All rights reserved
 									<!--<s:TextInput id="totalCholesterolInput" editable="true" text="" width="40" />-->
 									<components:TotalCholStepper id="totalCholesterolStep" width="70"
 																 hdlChol="{hdlCholesterolStep.value}"
-																 value="4" minimum="0.000001" maximum="20" stepSize="0.1"
+																 value="4" minimum="2" maximum="20" stepSize="0.1" 
 																 valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
 																 />
 								</s:HGroup>
@@ -288,12 +293,13 @@ Copyright University of Cambridge. All rights reserved
 			</s:HGroup>
 			<s:Group height="20"/>
 			<s:HGroup id="controlBar" width="40%" horizontalAlign="right">
+				<!--
 				<s:Button id="saveButton" label="@Resource(bundle='UKPDS', key='Save')" />
 				<s:Button id="loadButton" label="@Resource(bundle='UKPDS', key='Load')" />			
+				-->
 				<s:Group width="100%" />
 				<s:Button label="@Resource(bundle='UKPDS', key='Next')" id="nextButton" />
 			</s:HGroup>
-			
 		</s:VGroup>
 	</s:Group>
 	

@@ -40,39 +40,39 @@
 			[Bindable]
 			public function get value():Number
 			{
-				return stepper.value;
+				return Math.min(Math.max(_minimum, stepper.value), _maximum);
 			}
 			public function set value(n:Number):void
 			{
-				stepper.value = n;
+				stepper.value = Math.min(Math.max(n, _minimum), _maximum);
 				invalidateProperties();
 			}
 			
-			private var _minimum:Number = 1;
+			private var _minimum:Number = 0;
 
 			public function get minimum():Number
 			{
-				return stepper.minimum;
+				return _minimum;
 			}
 
 			public function set minimum(value:Number):void
 			{
-				stepper.minimum = value;
-				invalidateProperties();
+				_minimum = value;
+				//invalidateProperties();
 			}
 			
 			
-			private var _maximum:Number = 1;
+			private var _maximum:Number = 100;
 
 			public function get maximum():Number
 			{
-				return stepper.maximum;
+				return _maximum;
 			}
 
 			public function set maximum(value:Number):void
 			{
-				stepper.maximum = value;
-				invalidateProperties();
+				_maximum = value;
+				//invalidateProperties();
 			}
 
 			private function reset():void
@@ -108,13 +108,15 @@
 			override protected function commitProperties():void
 			{
 				super.commitProperties();
-				before.enabled = Math.abs(stepper.value - original) > 1e-8;
-				before.label = original.toFixed(_fixed);
-				stepper.stepSize=_stepSize;
 				stepper.valueFormatFunction = function(val:Number):String 
 				{
 					return val.toFixed(_fixed);
 				}
+				before.enabled = Math.abs(stepper.value - original) > 1e-8;
+				before.label = original.toFixed(_fixed);
+				stepper.stepSize=_stepSize;
+				stepper.maximum = _maximum;
+				stepper.minimum = _minimum;
 			}
 				
 			private var _stepperListener:Function = null;

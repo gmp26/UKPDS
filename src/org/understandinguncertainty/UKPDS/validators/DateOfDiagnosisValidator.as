@@ -23,12 +23,11 @@ package org.understandinguncertainty.UKPDS.validators
 			
 			var yyyy:int = parseInt(value.year);
 			var mm:int = parseInt(value.month) - 1;
-			var dd:int = parseInt(value.day);
+			var dd:int = 15;
 			
 			var now:Date = new Date();
 			if((yyyy > now.fullYear)
-				|| (yyyy == now.fullYear && ( mm > now.month
-					|| mm == now.month && dd > now.date))) {
+				|| (yyyy == now.fullYear && mm > now.month)) {
 				
 				results.push(new ValidationResult(
 					true, "year", "futureDate",

@@ -25,16 +25,16 @@ Copyright University of Cambridge. All rights reserved
 						   width="300" height="180" />
 			</s:VGroup>
 			
-			<s:VGroup id="heartAge" gap="0" horizontalAlign="center" >
-				<s:Label id="heartAgeLabel" text="@Resource(bundle='UKPDS',key='sideBar1.heartAge')"  fontSize="36" />
-				<ns:Button id="heartAgeButton" icon="@Embed('/assets/heartAgeThumbnail3.png')" 
+			<s:VGroup id="futures" gap="0" horizontalAlign="center" >
+				<s:Label id="futuresLabel" text="@Resource(bundle='UKPDS',key='sideBar1.futures')"  fontSize="36" />
+				<ns:Button id="futuresButton" icon="@Embed('/assets/futuresThumbnail.png')" 
 						   cornerRadius="20"
 						   width="300" height="180" />
 			</s:VGroup>
 			
-			<s:VGroup id="futures" gap="0" horizontalAlign="center" >
-				<s:Label id="futuresLabel" text="@Resource(bundle='UKPDS',key='sideBar1.futures')"  fontSize="36" />
-				<ns:Button id="futuresButton" icon="@Embed('/assets/futuresThumbnail.png')" 
+			<s:VGroup id="heartAge" gap="0" horizontalAlign="center" >
+				<s:Label id="heartAgeLabel" text="@Resource(bundle='UKPDS',key='sideBar1.heartAge')"  fontSize="36" />
+				<ns:Button id="heartAgeButton" icon="@Embed('/assets/heartAgeThumbnail3.png')" 
 						   cornerRadius="20"
 						   width="300" height="180" />
 			</s:VGroup>

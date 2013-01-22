@@ -17,6 +17,7 @@
 			[Bindable]
 			public var hdlChol:Number = 1;
 			
+			
 			public function get cholRatio():Number {
 				return (value/hdlChol);
 			};
