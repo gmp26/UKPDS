@@ -72,7 +72,13 @@ package org.understandinguncertainty.UKPDS.view
 		
 		private function screenChanged(s:String):void
 		{
-			main.fullScreen.buttonEnabled = (s != "profile");
+			if(s == "profile") {
+				main.currentState = "profileOnly";	
+			}
+			else {
+				main.fullScreen.buttonEnabled = (s != "profile");
+				main.currentState = "riskScreens";
+			}
 		}
 
 		private function showCredits(event:MouseEvent):void

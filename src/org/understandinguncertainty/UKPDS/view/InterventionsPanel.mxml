@@ -2,13 +2,13 @@
 <!-- Copyright University of Cambridge. All rights reserved -->
 
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
-						xmlns:s="library://ns.adobe.com/flex/spark" 
-						xmlns:view="org.understandinguncertainty.UKPDS.view.*" 
-						xmlns:components="org.understandinguncertainty.UKPDS.components.*" 
-						xmlns:mx="library://ns.adobe.com/flex/mx"
-						gap="0"
->
-
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:view="org.understandinguncertainty.UKPDS.view.*" 
+		  xmlns:components="org.understandinguncertainty.UKPDS.components.*" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  gap="0"
+		   contentBackgroundColor="#FFFFFF">
+	
 	<fx:Metadata> 
 		[Event(name="complete", type="flash.events.Event")] 
 		[Event(name="clicked", type="flash.events.MouseEvent")] 
@@ -16,99 +16,112 @@
 	
 	<fx:Script>
 		<![CDATA[
-					
+			
 			[Bindable]
 			public var conversionFactor:Number = 1;
-						
+			
 		]]>
 	</fx:Script>
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->			
+		<s:SolidColor id="borderfill" color="0xffffff" alpha="1"/>
+		<s:SolidColorStroke id="borderstroke" weight="2" color="0" alpha="0.4"/>
 	</fx:Declarations>
-	
-	<s:HGroup id="labelGroup" gap="0" paddingTop="0" verticalAlign="middle">
+	<s:Group>
+		<s:filters>
+			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
+		</s:filters>
 		
-		<s:Group width="20"/>
-
-		<s:VGroup>
-			<s:Label id= "title1" text="See what happens to your risk" fontSize="16" />
-	
-			<s:Label id="title2" 
-					 text="by trying these interventions" fontSize="16" />
+		<s:Rect radiusX="5" fill="{borderfill}" stroke="{borderstroke}" alpha="1" width="100%" height="100%"/>
+		
+		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="right">
 			
-			<s:HGroup width="100%">
-				<s:Label id="nowTitle" text="What you do now" fontSize="14"/>
-				<s:Label id="changeTitle" text="What you can change" fontSize="14"/>
+			
+			<s:HGroup id="labelGroup" gap="0" paddingTop="0" verticalAlign="middle">
+				
+				<s:Group width="20"/>
+				
+				<s:VGroup>
+					<s:Label id= "title1" text="See what happens to your risk" fontSize="16" />
+					
+					<s:Label id="title2" 
+							 text="by trying these interventions" fontSize="16" />
+					
+					<s:HGroup width="100%">
+						<s:Label id="nowTitle" text="What you do now" fontSize="14"/>
+						<s:Label id="changeTitle" text="What you can change" fontSize="14"/>
+					</s:HGroup>
+					
+				</s:VGroup>
+				
 			</s:HGroup>
 			
+			<s:VGroup id="container" gap="0" paddingLeft="20" paddingRight="20" paddingTop="10" paddingBottom="15" horizontalAlign="right">
+				
+				<components:InterventionCheck
+					id="smoker"
+					label="@Resource(bundle='UKPDS', key='sideBar2.smoker')"
+					width="100%"
+					height="50"
+					/>
+				
+				<components:InterventionCheck
+					id="active"
+					label="@Resource(bundle='UKPDS', key='sideBar2.active')"
+					width="100%"
+					height="50"
+					/>
+				
+				<components:InterventionCheck
+					id="overweight"
+					label="@Resource(bundle='UKPDS', key='sideBar2.overWeight')"
+					width="100%"
+					height="50"
+					/>
+				
+				<components:InterventionStepper
+					id="hba1c" 
+					label="@Resource(bundle='UKPDS', key='sideBar2.hba1c')" 
+					width="100%"
+					height="50"
+					fixed="1"
+					stepSize="0.1"
+					/>
+				
+				<components:InterventionStepper
+					id="sbp" 
+					label="@Resource(bundle='UKPDS', key='sideBar2.SBP')" 
+					width="100%"
+					height="50"
+					/>
+				
+				<components:TotalInterventionStepper 
+					id="totalCholesterol" 
+					label="@Resource(bundle='UKPDS', key='sideBar2.totalCholesterol')"
+					hdlChol="{hdlCholesterol.value}"
+					width="100%"
+					height="50"
+					/>
+				
+				<components:HDLInterventionStepper
+					id="hdlCholesterol"
+					totalChol="{totalCholesterol.value}"
+					label="@Resource(bundle='UKPDS', key='sideBar2.hdlCholesterol')"
+					width="100%"
+					height="50"
+					/>
+				
+				
+				<s:Label id="nonHDLField"/>
+				<s:Label id="bmiField"/>
+				
+				<s:Button id="resetButton" label="Reset"/>
+				
+				
+			</s:VGroup>
+			
 		</s:VGroup>
-		
-	</s:HGroup>
+	</s:Group>
 	
-	<s:VGroup id="container" gap="0" paddingLeft="20" paddingRight="20" paddingTop="10" paddingBottom="15" horizontalAlign="right">
-			
-		<components:InterventionCheck
-			id="smoker"
-			label="@Resource(bundle='UKPDS', key='sideBar2.smoker')"
-			width="100%"
-			height="50"
-			/>
-		
-		<components:InterventionCheck
-			id="active"
-			label="@Resource(bundle='UKPDS', key='sideBar2.active')"
-			width="100%"
-			height="50"
-			/>
-		
-		<components:InterventionCheck
-			id="overweight"
-			label="@Resource(bundle='UKPDS', key='sideBar2.overWeight')"
-			width="100%"
-			height="50"
-			/>
-		
-		<components:InterventionStepper
-			id="hba1c" 
-			label="@Resource(bundle='UKPDS', key='sideBar2.hba1c')" 
-			width="100%"
-			height="50"
-			fixed="1"
-			stepSize="0.1"
-			/>
-		
-		<components:InterventionStepper
-			id="sbp" 
-			label="@Resource(bundle='UKPDS', key='sideBar2.SBP')" 
-			width="100%"
-			height="50"
-			/>
-		
-		<components:TotalInterventionStepper 
-			id="totalCholesterol" 
-			label="@Resource(bundle='UKPDS', key='sideBar2.totalCholesterol')"
-			hdlChol="{hdlCholesterol.value}"
-			width="100%"
-			height="50"
-			/>
-
-		<components:HDLInterventionStepper
-			id="hdlCholesterol"
-			totalChol="{totalCholesterol.value}"
-			label="@Resource(bundle='UKPDS', key='sideBar2.hdlCholesterol')"
-			width="100%"
-			height="50"
-			/>
-
-
-		<s:Label id="nonHDLField"/>
-		<s:Label id="bmiField"/>
-
-		<s:Button id="resetButton" label="Reset"/>
-		
-
-	</s:VGroup>
-			
-		
 </s:VGroup>

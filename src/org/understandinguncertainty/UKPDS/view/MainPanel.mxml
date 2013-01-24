@@ -8,7 +8,7 @@ Copyright University of Cambridge. All rights reserved
 		 xmlns:view="org.understandinguncertainty.UKPDS.view.*" 
 		 xmlns:view1="org.understandinguncertainty.UKPDS.framingham.view.*" 
 		 xmlns:ns="library://ns.adobe.com/flex/mx"
-		 currentState="profile" xmlns:components="org.understandinguncertainty.UKPDS.components.*">
+		 currentState="profile" xmlns:components="org.understandinguncertainty.UKPDS.components.*" contentBackgroundColor.profile="#FFFFFF">
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -51,7 +51,7 @@ Copyright University of Cambridge. All rights reserved
 			<view:HeartAge includeIn="heartAge" />
 			
 			<!-- positively framed chart -->
-			<view:DeanfieldChart id="deanfieldChart" includeIn="deanfield" width="100%" height="100%"/>
+			<view:DeanfieldChart id="deanfieldChart" includeIn="deanfield" />
 		
 			<!-- negatively framed chart -->
 			<view:RiskByAge id="outlookChart" includeIn="outlook" width="100%" height="100%"/>
@@ -68,8 +68,9 @@ Copyright University of Cambridge. All rights reserved
 	
 		</s:Group>
 		
+<!--		
 		<components:SidePanels  includeIn="deanfield, outlook, outcomes, balance, compare, heartAge, futures"/>
-
+-->
 	</s:HGroup>
 	
 </s:Group>

@@ -3,17 +3,17 @@
 Copyright University of Cambridge. All rights reserved
 -->
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
-			  xmlns:s="library://ns.adobe.com/flex/spark" 
-			  xmlns:mx="library://ns.adobe.com/flex/halo"
-			  horizontalAlign="center"
-			  xmlns:ns="library://ns.adobe.com/flex/mx" 
-			  xmlns:view="org.understandinguncertainty.UKPDS.view.*">
-
-
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/halo"
+		  horizontalAlign="center"
+		  xmlns:ns="library://ns.adobe.com/flex/mx" 
+		  xmlns:view="org.understandinguncertainty.UKPDS.view.*">
+	
+	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<s:SolidColor id="goodFill" color="0x44dd44" alpha="1.0"/>
-<!--		<s:SolidColor id="deadFill" color="0x3FBDFF" alpha="1.0"/>-->
+		<!--		<s:SolidColor id="deadFill" color="0x3FBDFF" alpha="1.0"/>-->
 		<s:SolidColor id="deadFill" color="0xFFFFFF" alpha="1.0"/>
 		<s:SolidColor id="badFill" color="0xff6688" alpha="1.0"/>
 		<s:SolidColor id="betterFill" color="0xffCC00" alpha="1.0"/>
@@ -32,7 +32,7 @@ Copyright University of Cambridge. All rights reserved
 		<fx:String id="ttCVRisk">@Resource(bundle='UKPDS',key='chart.tooltip.cvRisk')</fx:String>
 		<fx:String id="ttCVBetter">@Resource(bundle='UKPDS',key='chart.tooltip.cvBetter')</fx:String>
 		<fx:String id="ttAll">@Resource(bundle='UKPDS',key='chart.tooltip.all')</fx:String>
-
+		
 		<s:Group id="gainLabel" visible="false">
 			<s:Rect width="100%" height="100%" radiusX="7" fill="{gainFill}" stroke="{gainStroke}"/>
 			<s:VGroup horizontalCenter="0" horizontalAlign="center"
@@ -58,89 +58,100 @@ Copyright University of Cambridge. All rights reserved
 				</s:Path>
 			</s:Group>
 		</s:VGroup>
-
+		
 		<s:Label id="withoutLegend" text="without intervention" color="{badFill.color}" />
 		<s:Label id="withLegend" text="with intervention" color="{green.color}" />
+		
+		<s:SolidColor id="borderfill" color="0xffffff" alpha="1"/>
+		<s:SolidColorStroke id="borderstroke" weight="2" color="0" alpha="0.4"/>
+		
 	</fx:Declarations>
 	
-	
-	<s:VGroup horizontalAlign="center" paddingTop="10">
-		<s:Label fontSize="18" text="@Resource(bundle='UKPDS',key='chartNeg.title')"/> 
-		<s:Group id="chartGroup" width="520" height="330">
-			<s:VGroup width="100%" height="100%" gap="1">
-					
-				<!--	
-				<s:VGroup width="100%" top="5" right="5" horizontalAlign="center">
-				
-					<s:VGroup>
+	<s:Group>
+		<s:filters>
+			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
+		</s:filters>
+		
+		<s:Rect radiusX="5" fill="{borderfill}" stroke="{borderstroke}" alpha="1" width="100%" height="100%"/>
+		
+		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="right">
+			
+			<s:VGroup horizontalAlign="center" paddingTop="10">
+				<s:Label fontSize="18" text="@Resource(bundle='UKPDS',key='chartNeg.title')"/> 
+				<s:Group id="chartGroup" width="520" height="330">
+					<s:VGroup width="100%" height="100%" gap="1">
+						
+						<!--	
+						<s:VGroup width="100%" top="5" right="5" horizontalAlign="center">
+						
+						<s:VGroup>
 						<s:HGroup width="100%" verticalAlign="middle">
-							<s:Rect width="10" height="15" fill="{green}" stroke="{legendStroke}"/>
-							<s:Label text="@Resource(bundle='UKPDS',key='chartNeg.f_int')"/>
+						<s:Rect width="10" height="15" fill="{green}" stroke="{legendStroke}"/>
+						<s:Label text="@Resource(bundle='UKPDS',key='chartNeg.f_int')"/>
 						</s:HGroup>
 						<s:HGroup width="100%" verticalAlign="middle">
-							<s:Rect width="10" height="15" fill="{badFill}" stroke="{legendStroke}"/>
-							<s:Label text="@Resource(bundle='UKPDS',key='chartNeg.f')"/>
+						<s:Rect width="10" height="15" fill="{badFill}" stroke="{legendStroke}"/>
+						<s:Label text="@Resource(bundle='UKPDS',key='chartNeg.f')"/>
+						</s:HGroup>
+						</s:VGroup>
+						
+						</s:VGroup>
+						-->	
+						<s:Group width="100%" height="100%">
+							
+							<ns:LineChart id="lineChart" height="100%" width="100%"
+										  paddingLeft="10" paddingRight="5" 
+										  showDataTips="true"
+										  dataTipCalloutStroke="{null}"
+										  dataTipMode="single"
+										  seriesFilters="[]"
+										  fontSize="14">
+								
+								<ns:backgroundElements>
+									<ns:GridLines gridDirection="both" verticalShowOrigin="true" horizontalShowOrigin="true" verticalOriginStroke="{stroke}" horizontalOriginStroke="{stroke}"/>
+								</ns:backgroundElements>
+								
+								<ns:annotationElements>
+									<ns:CartesianDataCanvas id="dataCanvas">
+									</ns:CartesianDataCanvas>
+								</ns:annotationElements>
+								
+								<ns:horizontalAxis>
+									<ns:LinearAxis id="ageAxis" 
+												   displayName="@Resource(bundle='UKPDS',key='chartNeg.xaxis')" 
+												   maximum="100"/>
+								</ns:horizontalAxis>
+								
+								<ns:verticalAxis>
+									<ns:LinearAxis id="chanceAxis"
+												   displayName="@Resource(bundle='UKPDS',key='chart.yaxis')" 
+												   title="@Resource(bundle='UKPDS',key='chart.yaxis')"
+												   minimum = "0"
+												   maximum = "100"
+												   maximumLabelPrecision="0">
+									</ns:LinearAxis>
+								</ns:verticalAxis>
+								
+								<ns:series>
+									<ns:LineSeries id="withSeries" yField="fdash_int" xField="age" form="curve" displayName="" lineStroke="{greenStroke}" />
+									<ns:LineSeries yField="fdash" xField="age" form="curve" displayName="" lineStroke="{redStroke}" />
+								</ns:series>
+							</ns:LineChart>
+							
+						</s:Group>
+						
+						<s:HGroup width="100%" horizontalAlign="center">
+							<s:Label text="@Resource(bundle='UKPDS',key='chartNeg.xaxis')" />
 						</s:HGroup>
 					</s:VGroup>
-				
-				</s:VGroup>
-				-->	
-				<s:Group width="100%" height="100%">
-					
-					<ns:LineChart id="lineChart" height="100%" width="100%"
-								  paddingLeft="10" paddingRight="5" 
-								  showDataTips="true"
-								  dataTipCalloutStroke="{null}"
-								  dataTipMode="single"
-								  seriesFilters="[]"
-								  fontSize="14">
-						
-						<ns:backgroundElements>
-							<ns:GridLines gridDirection="both" verticalShowOrigin="true" horizontalShowOrigin="true" verticalOriginStroke="{stroke}" horizontalOriginStroke="{stroke}"/>
-						</ns:backgroundElements>
-						
-						<ns:annotationElements>
-							<ns:CartesianDataCanvas id="dataCanvas">
-							</ns:CartesianDataCanvas>
-						</ns:annotationElements>
-						
-						<ns:horizontalAxis>
-							<ns:LinearAxis id="ageAxis" 
-										   displayName="@Resource(bundle='UKPDS',key='chartNeg.xaxis')" 
-										   maximum="100"/>
-						</ns:horizontalAxis>
-						
-						<ns:verticalAxis>
-							<ns:LinearAxis id="chanceAxis"
-										   displayName="@Resource(bundle='UKPDS',key='chart.yaxis')" 
-										   title="@Resource(bundle='UKPDS',key='chart.yaxis')"
-										   minimum = "0"
-										   maximum = "100"
-										   maximumLabelPrecision="0">
-							</ns:LinearAxis>
-						</ns:verticalAxis>
-						
-						<ns:series>
-							<ns:LineSeries id="withSeries" yField="fdash_int" xField="age" form="curve" displayName="" lineStroke="{greenStroke}" />
-							<ns:LineSeries yField="fdash" xField="age" form="curve" displayName="" lineStroke="{redStroke}" />
-						</ns:series>
-					</ns:LineChart>
 					
 				</s:Group>
-
-				<s:HGroup width="100%" horizontalAlign="center">
-					<s:Label text="@Resource(bundle='UKPDS',key='chartNeg.xaxis')" />
-				</s:HGroup>
+				
+				<view:AgeSettings currentState="excludeTargetAge" width="80%"/>
+				
+				
 			</s:VGroup>
-						
-		</s:Group>
-		
-		<view:AgeSettings currentState="excludeTargetAge" width="80%"/>
-		
-			
-	</s:VGroup>
+		</s:VGroup>
+	</s:Group>
 	
-
-
-
 </s:VGroup>

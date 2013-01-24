@@ -18,29 +18,42 @@ Copyright University of Cambridge. All rights reserved
 	</fx:Script>
 	
 	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->		
-	</fx:Declarations>		
+		<!-- Place non-visual elements (e.g., services, value objects) here -->			
+		<s:SolidColor id="borderfill" color="0xffffff" alpha="1"/>
+		<s:SolidColorStroke id="borderstroke" weight="2" color="0" alpha="0.4"/>
+	</fx:Declarations>
 	
-	<s:VGroup width="520" height="330" gap="10" >
+	<s:Group>
+		<s:filters>
+			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
+		</s:filters>
 		
-		<s:Label id="title" fontSize = "18" paddingTop="15"/>
+		<s:Rect radiusX="5" fill="{borderfill}" stroke="{borderstroke}" alpha="1" width="100%" height="100%"/>
 		
-		<s:HGroup width="100%" verticalAlign="middle" >
-			<s:Label id="leftSubtitle" fontSize="16" width="40%"  textAlign="right"/>
-			<s:HGroup width="20%" height="100%" verticalAlign="middle" horizontalAlign="center">
-				<s:CheckBox id="differenceCheckBox" scaleX="0.5" scaleY="0.5" selected="false" skinClass="org.understandinguncertainty.UKPDS.components.skins.DifferenceCheckboxSkin"/>
+		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="right">
+			
+			<s:VGroup width="520" height="330" gap="10" >
+				
+				<s:Label id="title" fontSize = "18" paddingTop="15"/>
+				
+				<s:HGroup width="100%" verticalAlign="middle" >
+					<s:Label id="leftSubtitle" fontSize="16" width="40%"  textAlign="right"/>
+					<s:HGroup width="20%" height="100%" verticalAlign="middle" horizontalAlign="center">
+						<s:CheckBox id="differenceCheckBox" scaleX="0.5" scaleY="0.5" selected="false" skinClass="org.understandinguncertainty.UKPDS.components.skins.DifferenceCheckboxSkin"/>
+					</s:HGroup>
+					<s:Label id="rightSubtitle" fontSize="16" width="40%"  textAlign="left"/>
+				</s:HGroup>
+				
+				<view:GoodBalance id="goodBalance" width="100%" />
+				<view:BadBalance id="badBalance" width="100%" />
+				<view:DeadBalance id="deadBalance" width="100%" />	
+				
+			</s:VGroup>
+			
+			<s:HGroup verticalAlign="middle" horizontalAlign="center" width="80%" bottom="5">
+				<view:AgeSettings />
 			</s:HGroup>
-			<s:Label id="rightSubtitle" fontSize="16" width="40%"  textAlign="left"/>
-		</s:HGroup>
-		
-		<view:GoodBalance id="goodBalance" width="100%" />
-		<view:BadBalance id="badBalance" width="100%" />
-		<view:DeadBalance id="deadBalance" width="100%" />	
-		
-	</s:VGroup>
-
-	<s:HGroup verticalAlign="middle" horizontalAlign="center" width="80%" bottom="5">
-		<view:AgeSettings />
-	</s:HGroup>
-	
+			
+		</s:VGroup>
+	</s:Group>
 </s:VGroup>

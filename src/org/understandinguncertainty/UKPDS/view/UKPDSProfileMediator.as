@@ -240,6 +240,9 @@ package org.understandinguncertainty.UKPDS.view
 		// populate the form with variable list data
 		//
 		private function showPersonalData(event:Event=null):void {
+			
+			commitProfile();
+
 			var pvars:VariableList = ps.variableList;
 			var dob:Date = pvars.dateOfBirth.value as Date;
 

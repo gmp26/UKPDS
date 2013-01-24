@@ -16,6 +16,10 @@ Copyright University of Cambridge. All rights reserved
 		
 		<s:DropShadowFilter id="drop" blurX="2" blurY="2" distance="2"/>
 		<s:BevelFilter id="bevel" blurX="20" blurY="20"/>
+		
+		<s:SolidColor id="fill" color="0xffffff" alpha="1"/>
+		<s:SolidColorStroke id="borderstroke" weight="2" color="0" alpha="0.4"/>
+		
 	</fx:Declarations>
 	
 	<fx:Script>
@@ -26,51 +30,62 @@ Copyright University of Cambridge. All rights reserved
 			
 		]]>
 	</fx:Script>
-		
-	<s:VGroup paddingLeft="20" horizontalCenter="0" verticalCenter="0" horizontalAlign="left" 
-			  width="520" height="300" >
-		
-		<s:Group height="40"/>
-		<s:HGroup verticalAlign="middle" width="100%" horizontalAlign="center">
-			<s:VGroup horizontalAlign="center" paddingTop="10">
-
-				<s:Group height="10"/>
-				<s:Label id="meanSurvival" fontSize="26" textAlign="center"/>
-				<s:Label id="gainText"  fontSize="20"/>
-			</s:VGroup>		
-		</s:HGroup>
-		
-		<s:Group width="90%" height="60" >
-			<s:Ellipse y="2" width="30" height="30"  fill="{green}" />
-			<s:Rect x="5" y="9" stroke="{glassStroke}" fill="{glassFill}" width="100%" height="15" radiusX="10" radiusY="10" filters="{drop}"/>
-			<mx:BarChart x="10" width="100%" id="thermometer"  type="stacked" height="50" seriesFilters="[]" barWidthRatio="0.3">
-				<mx:verticalAxis>
-					<mx:CategoryAxis id="vAxis" categoryField="summary"/>
-				</mx:verticalAxis>
 	
-				<mx:horizontalAxis>
-					<mx:LinearAxis id="hAxis" interval="5"/> 
-				</mx:horizontalAxis>
-				
-				<mx:horizontalAxisRenderers>
-					<mx:AxisRenderer axis="{hAxis}" showLine="false" styleName="thermometerStyle" />
-				</mx:horizontalAxisRenderers>
-				
-				<mx:verticalAxisRenderers>
-					<mx:AxisRenderer axis="{vAxis}" showLine="false" styleName="myAxisStyles"/>
-				</mx:verticalAxisRenderers>
-				
-				<mx:series>
-					<mx:BarSeries  fill = "{green}" stroke="{stroke}" xField="meanYears" yField="summary" displayName = "expect remaining cv free years" />
-					<mx:BarSeries  fill = "{red}" stroke="{stroke}" xField="yearLoss" yField="summary" displayName = "years lost" />
-					<mx:BarSeries  fill = "{yellow}" stroke="{stroke}" xField="yearGain" yField="summary" displayName = "years gained" />
-				</mx:series>
-			</mx:BarChart>
-			<s:Ellipse x="1" y="3" width="28" height="28" fill="{green}" filters="{drop, bevel}"/>
-				
-			<s:Label x="80" y="60" text="expected life without a heart attack or stroke" fontSize="16"/>
-		</s:Group>
+	<s:Group>
+		<s:filters>
+			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
+		</s:filters>
 		
-	</s:VGroup>
-	
+		<s:Rect radiusX="5" fill="{fill}" stroke="{borderstroke}" alpha="1" width="100%" height="100%"/>
+		
+		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="right">
+			
+			<s:VGroup paddingLeft="20" horizontalCenter="0" verticalCenter="0" horizontalAlign="left" 
+					  width="520" height="300" >
+				
+				<s:Group height="40"/>
+				<s:HGroup verticalAlign="middle" width="100%" horizontalAlign="center">
+					<s:VGroup horizontalAlign="center" paddingTop="10">
+						
+						<s:Group height="10"/>
+						<s:Label id="meanSurvival" fontSize="26" textAlign="center"/>
+						<s:Label id="gainText"  fontSize="20"/>
+					</s:VGroup>		
+				</s:HGroup>
+				
+				<s:Group width="90%" height="60" >
+					<s:Ellipse y="2" width="30" height="30"  fill="{green}" />
+					<s:Rect x="5" y="9" stroke="{glassStroke}" fill="{glassFill}" width="100%" height="15" radiusX="10" radiusY="10" filters="{drop}"/>
+					<mx:BarChart x="10" width="100%" id="thermometer"  type="stacked" height="50" seriesFilters="[]" barWidthRatio="0.3">
+						<mx:verticalAxis>
+							<mx:CategoryAxis id="vAxis" categoryField="summary"/>
+						</mx:verticalAxis>
+						
+						<mx:horizontalAxis>
+							<mx:LinearAxis id="hAxis" interval="5"/> 
+						</mx:horizontalAxis>
+						
+						<mx:horizontalAxisRenderers>
+							<mx:AxisRenderer axis="{hAxis}" showLine="false" styleName="thermometerStyle" />
+						</mx:horizontalAxisRenderers>
+						
+						<mx:verticalAxisRenderers>
+							<mx:AxisRenderer axis="{vAxis}" showLine="false" styleName="myAxisStyles"/>
+						</mx:verticalAxisRenderers>
+						
+						<mx:series>
+							<mx:BarSeries  fill = "{green}" stroke="{stroke}" xField="meanYears" yField="summary" displayName = "expect remaining cv free years" />
+							<mx:BarSeries  fill = "{red}" stroke="{stroke}" xField="yearLoss" yField="summary" displayName = "years lost" />
+							<mx:BarSeries  fill = "{yellow}" stroke="{stroke}" xField="yearGain" yField="summary" displayName = "years gained" />
+						</mx:series>
+					</mx:BarChart>
+					<s:Ellipse x="1" y="3" width="28" height="28" fill="{green}" filters="{drop, bevel}"/>
+					
+					<s:Label x="80" y="60" text="expected life without a heart attack or stroke" fontSize="16"/>
+				</s:Group>
+				
+			</s:VGroup>
+			
+		</s:VGroup>
+	</s:Group>
 </s:Group>
