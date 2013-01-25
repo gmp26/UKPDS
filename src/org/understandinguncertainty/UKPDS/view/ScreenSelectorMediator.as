@@ -54,22 +54,39 @@ package org.understandinguncertainty.UKPDS.view
 			return screenSelector.currentState == 'basic';
 		};
 		
+		private var timer:Timer;
+		
+		private function tween(event:TimerEvent):void {
+			var target:int = currentDot*110;
+			var n:int = Math.round(0.8*screenSelector.scroller.viewport.horizontalScrollPosition + 0.2*target);
+			if(Math.abs(target - n) <= 5 ) {
+				n = target;
+				timer.stop();
+//				buttons[currentDot].dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+				selectScreenByName(screenNames[currentDot+1]);
+			}
+			screenSelector.scroller.viewport.horizontalScrollPosition = n;
+		}
+			
 		override public function onRegister() : void
 		{
 			profileValidSignal.add(enableCheck);
 			screensNamedSignal.add(addThumbnails);
 			nextScreenSignal.add(nextScreen);
 
-			screenSelector.less.addEventListener(MouseEvent.CLICK, dot1);
-			screenSelector.more.addEventListener(MouseEvent.CLICK, dot6);
+			timer = new Timer(20);
+			timer.addEventListener(TimerEvent.TIMER, tween);
+			
+			screenSelector.less.addEventListener(MouseEvent.CLICK, previousDot);
+			screenSelector.more.addEventListener(MouseEvent.CLICK, nextDot);
+			screenSelector.dot0.addEventListener(MouseEvent.CLICK, dot0);
 			screenSelector.dot1.addEventListener(MouseEvent.CLICK, dot1);
 			screenSelector.dot2.addEventListener(MouseEvent.CLICK, dot2);
 			screenSelector.dot3.addEventListener(MouseEvent.CLICK, dot3);
 			screenSelector.dot4.addEventListener(MouseEvent.CLICK, dot4);
 			screenSelector.dot5.addEventListener(MouseEvent.CLICK, dot5);
-			screenSelector.dot6.addEventListener(MouseEvent.CLICK, dot6);
 			
-			dotAlpha(1, false);
+			dotAlpha(0, false);
 
 			screenSelector.profileButton.addEventListener(MouseEvent.CLICK, selectProfile);
 		}
@@ -80,91 +97,72 @@ package org.understandinguncertainty.UKPDS.view
 			screensNamedSignal.remove(addThumbnails);
 			nextScreenSignal.remove(nextScreen);
 			removeThumbnails();
-			screenSelector.less.removeEventListener(MouseEvent.CLICK, dot1);
-			screenSelector.more.removeEventListener(MouseEvent.CLICK, dot6);
+			screenSelector.less.removeEventListener(MouseEvent.CLICK, previousDot);
+			screenSelector.more.removeEventListener(MouseEvent.CLICK, nextDot);
+			screenSelector.dot0.removeEventListener(MouseEvent.CLICK, dot0);
 			screenSelector.dot1.removeEventListener(MouseEvent.CLICK, dot1);
 			screenSelector.dot2.removeEventListener(MouseEvent.CLICK, dot2);
 			screenSelector.dot3.removeEventListener(MouseEvent.CLICK, dot3);
 			screenSelector.dot4.removeEventListener(MouseEvent.CLICK, dot4);
 			screenSelector.dot5.removeEventListener(MouseEvent.CLICK, dot5);
-			screenSelector.dot6.removeEventListener(MouseEvent.CLICK, dot6);
 
 			screenSelector.profileButton.removeEventListener(MouseEvent.CLICK, selectProfile);
+			
+			timer.removeEventListener(TimerEvent.TIMER, tween);
+
 		}
 		
 		private var screenNames:Array;
 		private var buttons:Vector.<Button>;
+		private var currentDot:int = 0;
 		
 		private function dotAlpha(target: int, andGo:Boolean=true):void {
-			for(var i:int = 1; i <= 6; i++) {
+			for(var i:int = 0; i <= 5; i++) {
 				screenSelector["dot" + i].alpha = i==target ? 1.0 : 0.3;
 			}
-			if(andGo)
-				buttons[target-1].dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+			currentDot = target;
 		}
 		
-		private function dot1(e:MouseEvent):void {
+
+		private function previousDot(e:MouseEvent):void {
+			if(timer.running) return;
+			if(currentDot > 0) {
+				dot(--currentDot);
+			}
+		}
+		
+		private function nextDot(e:MouseEvent):void {
+			if(timer.running) return;
+			if(currentDot < 5) {
+				dot(++currentDot);
+			}
+		}
+		
+		private function dot0(e:MouseEvent):void {
 			dot(0);
-			dotAlpha(1);
+		};
+		private function dot1(e:MouseEvent):void {
+			dot(1);
 		};
 		private function dot2(e:MouseEvent):void {
-			dot(1);
-			dotAlpha(2);
+			dot(2);
 		};
 		private function dot3(e:MouseEvent):void {
-			dot(2);
-			dotAlpha(3);
+			dot(3);
 		};
 		private function dot4(e:MouseEvent):void {
-			dot(3);
-			dotAlpha(4);
+			dot(4);
 		};
 		private function dot5(e:MouseEvent):void {
-			dot(4);
-			dotAlpha(5);
-		};
-		private function dot6(e:MouseEvent):void {
 			dot(5);
-			dotAlpha(6);
 		};
 		
-		private function dot(target:int):void {
-			var target = target*110;
-			var timer:Timer = new Timer(10);
-			timer.addEventListener(TimerEvent.TIMER, function(event:TimerEvent):void {
-				var n:int = Math.round(0.8*screenSelector.scroller.viewport.horizontalScrollPosition + 0.2*target);
-				if(Math.abs(target - n) <= 5 ) {
-					n = target;
-					timer.stop();
-				}
-				screenSelector.scroller.viewport.horizontalScrollPosition = n;
-			});
-			timer.start();
-		}
 		
-		private function scrollBack(event:MouseEvent):void {
-			var timer:Timer = new Timer(10);
-			timer.addEventListener(TimerEvent.TIMER, function(event:TimerEvent):void {
-				var n:int = Math.round(0.8*screenSelector.scroller.viewport.horizontalScrollPosition);
-				if(n < 5) {
-					n = 0;
-					timer.stop();
-				}
-				screenSelector.scroller.viewport.horizontalScrollPosition = n;
-			});
-			timer.start();
-		}
 		
-		private function scrollOn(event:MouseEvent):void {
-			var timer:Timer = new Timer(10);
-			timer.addEventListener(TimerEvent.TIMER, function(event:TimerEvent):void {
-				var n:int = Math.round(0.8*screenSelector.scroller.viewport.horizontalScrollPosition + 325*0.2);
-				if(n > 320) {
-					n = 325;
-					timer.stop();
-				}
-				screenSelector.scroller.viewport.horizontalScrollPosition = n;
-			});
+		private function dot(n:int):void {
+			if(timer.running) return;
+			dotAlpha(n);
+			currentDot = n;
 			timer.start();
 		}
 		
@@ -245,9 +243,9 @@ package org.understandinguncertainty.UKPDS.view
 			var bx:int = id.indexOf("Button");
 
 			if(bx < 1) throw new Error("Invalid button name: " + id);
-
-			trace(id.substr(0, bx));
-			selectScreenByName(id.substr(0, bx));
+			trace("foo="+screenNames.indexOf(id.substr(0, bx)));
+			dot(screenNames.indexOf(id.substr(0, bx))-1);
+			//selectScreenByName(id.substr(0, bx));
 
 		}
 		

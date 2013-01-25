@@ -6,7 +6,7 @@
 			   xmlns:UKPDS="org.understandinguncertainty.UKPDS.*" 
 			   xmlns:view="org.understandinguncertainty.UKPDS.view.*"
 
-			width="800" height="600"
+				width="100%" height="100%" xmlns:components="org.understandinguncertainty.UKPDS.components.*"
 			>
 	<fx:Style>
 		
@@ -76,6 +76,9 @@
 		<UKPDS:UKPDSContext id="context" contextView="{this}" />
 	</fx:Declarations>
 	
-	<view:Main  />
+	<!-- ukpds site embeds this animation at 1176px x 690px -->
+	<components:ScaledGroup width="100%" height="100%">
+		<view:Main  width="1176" height="690" />
+	</components:ScaledGroup>
 	
 </s:Application>

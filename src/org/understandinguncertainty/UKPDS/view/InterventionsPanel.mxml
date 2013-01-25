@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright University of Cambridge. All rights reserved -->
 
-<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:view="org.understandinguncertainty.UKPDS.view.*" 
 		  xmlns:components="org.understandinguncertainty.UKPDS.components.*" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
-		  gap="0"
-		   contentBackgroundColor="#FFFFFF">
+		   >
 	
 	<fx:Metadata> 
 		[Event(name="complete", type="flash.events.Event")] 
@@ -25,32 +24,39 @@
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->			
-		<s:SolidColor id="borderfill" color="0xffffff" alpha="1"/>
+		<s:SolidColor id="borderfill1" color="0xfff8ff" alpha="1"/>
+		<s:SolidColor id="borderfill2" color="0xf8ffff" alpha="1"/>
 		<s:SolidColorStroke id="borderstroke" weight="2" color="0" alpha="0.4"/>
 	</fx:Declarations>
-	<s:Group>
-		<s:filters>
-			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
-		</s:filters>
+	
+	<s:Group width="300" height="635">
+		<s:HGroup width="100%" height="100%" gap="0">
+			<s:Rect  fill="{borderfill1}" alpha="1" width="50%" height="100%" bottomLeftRadiusX="5" topLeftRadiusX="5"/>
+			<s:Rect  fill="{borderfill2}" alpha="1" width="50%" height="100%" bottomRightRadiusX="5" topRightRadiusX="5"/>
+		</s:HGroup>
 		
-		<s:Rect radiusX="5" fill="{borderfill}" stroke="{borderstroke}" alpha="1" width="100%" height="100%"/>
-		
-		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="right">
+		<s:VGroup width="100%" height="100%" paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="0" >
 			
 			
-			<s:HGroup id="labelGroup" gap="0" paddingTop="0" verticalAlign="middle">
+			<s:HGroup id="labelGroup" gap="0" paddingTop="0" verticalAlign="middle" width="100%">
 				
 				<s:Group width="20"/>
 				
-				<s:VGroup>
+				<s:VGroup width="100%" horizontalAlign="center">
 					<s:Label id= "title1" text="See what happens to your risk" fontSize="16" />
-					
 					<s:Label id="title2" 
 							 text="by trying these interventions" fontSize="16" />
 					
+					<s:Group height="20"/>
 					<s:HGroup width="100%">
-						<s:Label id="nowTitle" text="What you do now" fontSize="14"/>
-						<s:Label id="changeTitle" text="What you can change" fontSize="14"/>
+						<s:VGroup width="50%" horizontalAlign="center">
+							<s:Label id="nowTitle1" text="What you" color="#880000" fontSize="14"/>
+							<s:Label id="nowTitle2" text="do now" color="#880000" fontSize="14"/>
+						</s:VGroup>
+						<s:VGroup width="50%"  horizontalAlign="center">
+							<s:Label id="changeTitle1" text="What you" color="#008800" fontSize="14"/>
+							<s:Label id="changeTitle2" text="can change" color="#008800" fontSize="14"/>
+						</s:VGroup>
 					</s:HGroup>
 					
 				</s:VGroup>
@@ -61,23 +67,24 @@
 				
 				<components:InterventionCheck
 					id="smoker"
-					label="@Resource(bundle='UKPDS', key='sideBar2.smoker')"
+					label="Do you smoke?"
 					width="100%"
-					height="50"
+					height="60"
 					/>
 				
 				<components:InterventionCheck
 					id="active"
-					label="@Resource(bundle='UKPDS', key='sideBar2.active')"
+					label="Are you physically active"
+					label2="more than 4hrs per week?"
 					width="100%"
-					height="50"
+					height="70"
 					/>
 				
 				<components:InterventionCheck
 					id="overweight"
 					label="@Resource(bundle='UKPDS', key='sideBar2.overWeight')"
 					width="100%"
-					height="50"
+					height="60"
 					/>
 				
 				<components:InterventionStepper
@@ -123,5 +130,14 @@
 			
 		</s:VGroup>
 	</s:Group>
+		
+	<s:Group width="300" height="635">
+		<s:filters>
+			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
+		</s:filters>
+		<s:Rect radiusX="5" stroke="{borderstroke}" alpha="1" width="100%" height="100%"/>
+		
+		
+	</s:Group>
 	
-</s:VGroup>
+</s:Group>

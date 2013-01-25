@@ -37,7 +37,7 @@ Copyright University of Cambridge. All rights reserved
 		]]>
 	</fx:Script>
 	
-	<s:HGroup width="100%" height="100%" paddingBottom="10" horizontalAlign="left">
+	<s:HGroup width="900" height="500" paddingBottom="10" horizontalAlign="left">
 		
 		<s:Group id="panel" width="100%" height="100%">
 

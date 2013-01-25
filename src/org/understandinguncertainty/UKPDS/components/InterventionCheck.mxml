@@ -8,6 +8,8 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<s:SolidColorStroke id="stroke" color="0" weight="1" alpha="1"/>
+		<s:Label id="text2" />
+
 	</fx:Declarations>
 	
 	<fx:Script>
@@ -19,12 +21,24 @@
 			[Bindable]
 			public function get label():String
 			{
-				return text.text;
+				return text1.text;
 			}
 			
 			public function set label(value:String):void
 			{
-				text.text = value;
+				text1.text = value;
+			}
+									
+			[Bindable]
+			public function get label2():String
+			{
+				return text2.text;
+			}
+			
+			public function set label2(value:String):void
+			{
+				container.addElementAt(text2, 1);
+				text2.text = value;
 			}
 									
 			[Bindable]
@@ -94,15 +108,17 @@
 		]]>
 	</fx:Script>
 	
-	<s:VGroup width="100%" gap="2">
-		<s:Label id="text" />
+	<s:VGroup width="100%" gap="2" id="container" horizontalAlign="center">
+		<s:Label id="text1" />
 		<s:HGroup width="100%" verticalAlign="middle">
 
+			<s:Group width="25"/>
 			<s:Button id="before" label="{originalUnticked}" width="60"/>
-			
+			<s:Group width="20"/>
 			<s:Label text="→" fontSize="14"/>
-						
+			<s:Group width="30"/>
 			<s:CheckBox id="checkBox" selected="{original}" />
+			<s:Group width="30"/>
 
 		</s:HGroup>
 	</s:VGroup>

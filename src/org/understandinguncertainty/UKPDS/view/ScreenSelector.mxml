@@ -131,12 +131,12 @@ Copyright University of Cambridge. All rights reserved
 					</s:HGroup>
 					<s:HGroup width="100%" horizontalAlign="center">
 						
+						<components:ScrollDot id="dot0"/>
 						<components:ScrollDot id="dot1"/>
 						<components:ScrollDot id="dot2"/>
 						<components:ScrollDot id="dot3"/>
 						<components:ScrollDot id="dot4"/>
 						<components:ScrollDot id="dot5"/>
-						<components:ScrollDot id="dot6"/>
 						
 					</s:HGroup>
 				</s:VGroup>
