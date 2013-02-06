@@ -54,17 +54,17 @@ Copyright University of Cambridge. All rights reserved
 			<view:DeanfieldChart id="deanfieldChart" includeIn="deanfield" />
 		
 			<!-- negatively framed chart -->
-			<view:RiskByAge id="outlookChart" includeIn="outlook" width="100%" height="100%"/>
+			<view:RiskByAge id="outlookChart" includeIn="outlook" />
 		
 			<view:Outcomes id="outcomes" 
 						   includeIn="outcomes"
-						   width="100%" height="100%"/>
+						   />
 
 			<view:Balance id="balance" 
 						   includeIn="balance"
-						   width="100%" height="100%"/>
+						   />
 
-			<view:Compare id="compare" width="100%" height="100%" includeIn="compare"/>
+			<view:Compare id="compare" includeIn="compare"/>
 	
 		</s:Group>
 		

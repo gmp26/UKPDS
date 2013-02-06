@@ -12,7 +12,6 @@ package org.understandinguncertainty.UKPDS.view
 	
 	import org.robotlegs.mvcs.Mediator;
 	import org.understandinguncertainty.UKPDS.model.AppState;
-	import org.understandinguncertainty.personal.signals.NextScreenSignal;
 	import org.understandinguncertainty.personal.signals.ProfileCommitSignal;
 	import org.understandinguncertainty.personal.signals.ProfileValidSignal;
 	import org.understandinguncertainty.personal.signals.ScreenChangedSignal;
@@ -44,80 +43,92 @@ package org.understandinguncertainty.UKPDS.view
 		public var screenChangedSignal:ScreenChangedSignal;
 		
 		[Inject]
-		public var nextScreenSignal:NextScreenSignal;
-		
-		[Inject]
 		public var appState:AppState;
-		
-		// If basic is true we only show the basic screen selection buttons
-		private function get basic():Boolean {
-			return screenSelector.currentState == 'basic';
-		};
 		
 		private var timer:Timer;
 		
+		private var scrollPos:Number = -1;
+		
 		private function tween(event:TimerEvent):void {
-			var target:int = currentDot*110;
-			var n:int = Math.round(0.8*screenSelector.scroller.viewport.horizontalScrollPosition + 0.2*target);
-			if(Math.abs(target - n) <= 5 ) {
-				n = target;
+			var target:int = currentDot*105.5 - 1;
+			if(scrollPos < 0)
+				scrollPos = screenSelector.scroller.viewport.horizontalScrollPosition;
+			scrollPos = 0.8*scrollPos + 0.2*target;
+			if(Math.abs(target - scrollPos) < 2 ) {
 				timer.stop();
-//				buttons[currentDot].dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+				scrollPos = -1;
+				screenSelector.scroller.viewport.horizontalScrollPosition = target;
 				selectScreenByName(screenNames[currentDot+1]);
 			}
-			screenSelector.scroller.viewport.horizontalScrollPosition = n;
+			else {
+				screenSelector.scroller.viewport.horizontalScrollPosition = Math.round(scrollPos);
+			}
 		}
 			
 		override public function onRegister() : void
 		{
 			profileValidSignal.add(enableCheck);
-			screensNamedSignal.add(addThumbnails);
-			nextScreenSignal.add(nextScreen);
 
-			timer = new Timer(20);
+			timer = new Timer(5);
 			timer.addEventListener(TimerEvent.TIMER, tween);
 			
-			screenSelector.less.addEventListener(MouseEvent.CLICK, previousDot);
-			screenSelector.more.addEventListener(MouseEvent.CLICK, nextDot);
 			screenSelector.dot0.addEventListener(MouseEvent.CLICK, dot0);
 			screenSelector.dot1.addEventListener(MouseEvent.CLICK, dot1);
 			screenSelector.dot2.addEventListener(MouseEvent.CLICK, dot2);
 			screenSelector.dot3.addEventListener(MouseEvent.CLICK, dot3);
 			screenSelector.dot4.addEventListener(MouseEvent.CLICK, dot4);
 			screenSelector.dot5.addEventListener(MouseEvent.CLICK, dot5);
+			screenSelector.dot6.addEventListener(MouseEvent.CLICK, dot6);
 			
-			dotAlpha(0, false);
+			screenSelector.futuresButton.addEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.heartAgeButton.addEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.deanfieldButton.addEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.outlookButton.addEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.outcomesButton.addEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.balanceButton.addEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.compareButton.addEventListener(MouseEvent.CLICK, selectScreen);
+			
+			dotAlpha(currentDot);
 
 			screenSelector.profileButton.addEventListener(MouseEvent.CLICK, selectProfile);
+			
+			//trace("scroll at ", screenSelector.scroller.viewport.horizontalScrollPosition);
+			//trace("dot = ", Math.round((screenSelector.scroller.viewport.horizontalScrollPosition + 1)/105.5));
+			dot(Math.round((screenSelector.scroller.viewport.horizontalScrollPosition + 1)/105.5));
+			
 		}
 		
 		override public function onRemove() : void
 		{
 			profileValidSignal.remove(enableCheck);
-			screensNamedSignal.remove(addThumbnails);
-			nextScreenSignal.remove(nextScreen);
-			removeThumbnails();
-			screenSelector.less.removeEventListener(MouseEvent.CLICK, previousDot);
-			screenSelector.more.removeEventListener(MouseEvent.CLICK, nextDot);
+
 			screenSelector.dot0.removeEventListener(MouseEvent.CLICK, dot0);
 			screenSelector.dot1.removeEventListener(MouseEvent.CLICK, dot1);
 			screenSelector.dot2.removeEventListener(MouseEvent.CLICK, dot2);
 			screenSelector.dot3.removeEventListener(MouseEvent.CLICK, dot3);
 			screenSelector.dot4.removeEventListener(MouseEvent.CLICK, dot4);
 			screenSelector.dot5.removeEventListener(MouseEvent.CLICK, dot5);
+			screenSelector.dot6.removeEventListener(MouseEvent.CLICK, dot6);
 
+			screenSelector.futuresButton.removeEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.heartAgeButton.removeEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.deanfieldButton.removeEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.outlookButton.removeEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.outcomesButton.removeEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.balanceButton.removeEventListener(MouseEvent.CLICK, selectScreen);
+			screenSelector.compareButton.removeEventListener(MouseEvent.CLICK, selectScreen);
+			
 			screenSelector.profileButton.removeEventListener(MouseEvent.CLICK, selectProfile);
 			
 			timer.removeEventListener(TimerEvent.TIMER, tween);
 
 		}
 		
-		private var screenNames:Array;
-		private var buttons:Vector.<Button>;
+		private var screenNames:Array = ['profile', 'futures', 'heartAge', 'deanfield', 'outlook', 'outcomes', 'balance', 'compare'];
 		private var currentDot:int = 0;
 		
-		private function dotAlpha(target: int, andGo:Boolean=true):void {
-			for(var i:int = 0; i <= 5; i++) {
+		private function dotAlpha(target: int):void {
+			for(var i:int = 0; i <= 6; i++) {
 				screenSelector["dot" + i].alpha = i==target ? 1.0 : 0.3;
 			}
 			currentDot = target;
@@ -156,51 +167,21 @@ package org.understandinguncertainty.UKPDS.view
 		private function dot5(e:MouseEvent):void {
 			dot(5);
 		};
+		private function dot6(e:MouseEvent):void {
+			dot(6);
+		};
 		
 		
 		
 		private function dot(n:int):void {
 			if(timer.running) return;
+			
 			dotAlpha(n);
 			currentDot = n;
 			timer.start();
 		}
 		
-		
-		private function addThumbnails(screenNames:Array):void
-		{
-			this.screenNames = screenNames.concat();
-			
-			// populate basic thumbnails. We assume basics come before advanced ones
-			var basicLength:int = screenSelector.basicThumbnails.numElements;
-			populateThumbnailContainer("basicContainer", 0, basicLength);
- 
-			// populate advanced thumbnails
-			// populateThumbnailContainer("advancedContainer", basicLength, this.screenNames.length);
-
-		}
-		
-		private function populateThumbnailContainer(containerId:String, minIndex:int, len:int):void
-		{
-			if(buttons == null)
-				buttons = new Vector.<Button>();
-			
-			for(var i:int = minIndex; i < len-1; i++) {
-				var screenName:String = this.screenNames[i+1] as String;
-				var thumbnail:GroupBase = screenSelector[screenName] as GroupBase;
-				screenSelector[containerId].addElement(thumbnail);
-				buttons[i] = screenSelector[screenName+"Button"] as Button;
-				buttons[i].addEventListener(MouseEvent.CLICK, selectScreen);
-			}			
-		}
-		
-		private function removeThumbnails():void
-		{
-			for(var i:int = 0; i < buttons.length; i++) {
-				buttons[i].removeEventListener(MouseEvent.CLICK, selectScreen);
-			}
-		}
-		
+	
 		private function enableCheck(enabled:Boolean):void {
 			var alpha:Number = enabled ? 1 : 0.3;
 			
@@ -215,13 +196,6 @@ package org.understandinguncertainty.UKPDS.view
 			}
 		}
 				
-		private function nextScreen(currentScreen:String):void
-		{
-			var index:int = screenNames.indexOf(appState.selectedScreenName);
-			index = (index + 1) % screenNames.length;
-			selectScreenByName(screenNames[index]);
-		}
-		
 		//
 		// The screen selector buttons must be named mainPanel.state.name +'Button'
 		//
@@ -241,12 +215,9 @@ package org.understandinguncertainty.UKPDS.view
 			var targetButton:Button = event.target as Button;
 			var id:String = targetButton.id;
 			var bx:int = id.indexOf("Button");
-
+			var screenName:String = id.substr(0, bx);
 			if(bx < 1) throw new Error("Invalid button name: " + id);
-			trace("foo="+screenNames.indexOf(id.substr(0, bx)));
-			dot(screenNames.indexOf(id.substr(0, bx))-1);
-			//selectScreenByName(id.substr(0, bx));
-
+			dot(screenNames.indexOf(screenName)-1);
 		}
 		
 		
@@ -263,14 +234,6 @@ package org.understandinguncertainty.UKPDS.view
 				screenChangedSignal.dispatch(name);
 			}
 			
-		}
-		
-		private function changeMode(event:MouseEvent):void
-		{
-			if(basic)
-				screenSelector.currentState = "advanced";
-			else
-				screenSelector.currentState = "basic";
 		}
 
 	}

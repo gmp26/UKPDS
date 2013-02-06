@@ -45,6 +45,10 @@ package org.understandinguncertainty.UKPDS.model
 			return n.toPrecision(4);
 		}
 		
+		private function fmt(n:Number):String {
+			return n.toFixed(3);
+		}
+		
 		public function recalculate():void {
 			
 			_peakf = 0;
@@ -162,6 +166,7 @@ package org.understandinguncertainty.UKPDS.model
 			
 			var a_now:Number = 0;
 			heartAge = userProfile.age;
+			var absoluteDiff:Number = 1;
 			
 			for(var quarter:int=1; quarter < maxQuarters; quarter++) {
 				
@@ -177,7 +182,6 @@ package org.understandinguncertainty.UKPDS.model
 				var expH1:Number = Math.exp(-H); //Math.exp(-parameters.cvd_hazard(t, 0.25, q1_chd, q2_stroke));
 				a = expH0 - expH1; // section 1.4 of the paper has this the wrong way round
 				expH0 = expH1;
-				//expH0_int = expH0;
 				
 					
 				// and for comparison
@@ -206,14 +210,25 @@ package org.understandinguncertainty.UKPDS.model
 				
 				if(quarter == 1) {
 					a_now = a_int; // used to match with a_gp for heart age calculation
-					//trace("+++ ", t, expH0_int, expH1_int, a_gp, a_int, a, heartAge);
+					//trace("NOW ");
 				}
 				// and for heart age calculation - we only look at cvd risk
 				if(a_gp > a_now) {
 					heartAge = age - 0.125;
-					//trace("... ", t, expH0_int, expH1_int, a_gp, a_int, a, heartAge);
+					//trace(">>> ", t, fmt(a_gp), fmt(a_now), heartAge);
 					a_now = 1;
 				}
+				else if(a_now < 1) {
+					//trace("<<< ", t, fmt(a_gp), fmt(a_now), heartAge);
+
+					var aD:Number = Math.abs(a_gp - a_now);
+					if(aD < absoluteDiff) {
+						absoluteDiff = aD;
+						heartAge = age - 0.125;
+					}
+					//trace("dif ", t, fmt(a_gp), fmt(a_now), heartAge);
+				}
+
 				
 				// and for comparison
 				b_gp = parameters.noncvdHazard(age, userProfile.gender, false);

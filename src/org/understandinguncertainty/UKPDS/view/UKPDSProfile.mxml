@@ -108,7 +108,7 @@ Copyright University of Cambridge. All rights reserved
 		<ns:NumberValidator id="sbpValidator" domain="real" minValue="70" maxValue="210" required="true" source="{systolicBloodPressureInputStep}" property="value"/>	
 		
 		<s:NumericStepper id="diagnosisDdStep" width="40" minimum="1" maximum="31" value="15"/>
-
+		
 	</fx:Declarations>
 	
 	<s:Group >
@@ -117,13 +117,15 @@ Copyright University of Cambridge. All rights reserved
 		</s:filters>
 		<s:Rect radiusX="5" fill="{fill}" stroke="{stroke}" alpha="1" width="100%" height="100%"/>
 		
-		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" height="380">
+		<s:Label x="10" y="10" fontSize="18" text="Your health profile"/>
+		
+		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="center" verticalAlign="middle" width="1156" height="635" >
 			
-			<s:Label text="@Resource(bundle='UKPDS', key='sideBar1.profile')" fontSize="18"/>
+			<!--<s:Label text="@Resource(bundle='UKPDS', key='sideBar1.profile')" fontSize="18"/>-->
 			
-			<s:HGroup gap="20" >
+			<s:HGroup gap="80" scaleX="1.3" scaleY="1.3">
 				
-				<s:VGroup horizontalAlign="left" height="100%">
+				<s:VGroup horizontalAlign="right" height="100%"  gap="15" >
 					
 					<s:HGroup width="100%" verticalAlign="bottom" horizontalAlign="right"  toolTip="{tipPlaceHolder}">
 						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.dob')" fontWeight="normal" />
@@ -137,7 +139,7 @@ Copyright University of Cambridge. All rights reserved
 						</s:VGroup>
 						<s:VGroup horizontalAlign="center" gap="2">
 							<s:Label text="Year" fontSize="10" color="#AAAAAA"/>
-							<s:NumericStepper id="yyyyStep" width="53" minimum="1926" maximum="2050" value="1"/>
+							<s:NumericStepper id="yyyyStep" width="53" minimum="1926" maximum="2050" value="1950"/>
 						</s:VGroup>
 					</s:HGroup>
 					
@@ -145,8 +147,8 @@ Copyright University of Cambridge. All rights reserved
 						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.dodiagnosis')" fontWeight="normal" />
 						<!--
 						<s:VGroup horizontalAlign="center" gap="2">
-							<s:Label text="Day" fontSize="10" color="#AAAAAA"/>
-							<s:NumericStepper id="diagnosisDdStep" width="40" minimum="1" maximum="31" value="1"/>
+						<s:Label text="Day" fontSize="10" color="#AAAAAA"/>
+						<s:NumericStepper id="diagnosisDdStep" width="40" minimum="1" maximum="31" value="1"/>
 						</s:VGroup>
 						-->
 						<!--<s:TextInput id="mm" editable="true" text="" width="20" />-->
@@ -175,31 +177,32 @@ Copyright University of Cambridge. All rights reserved
 						<ns:ComboBox id="ethnicGroup" width="150" selectedIndex="0" rowCount="10"/>
 					</s:HGroup>
 					
-					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
-						<s:Group width="50%"/>
+					<!--<s:VGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
+						<s:Group width="50%"/>-->
 						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.height')" fontWeight="normal" />
 						<!--<s:TextInput id="height_m" editable="true" text="1.7" width="40" />-->
 						
-						<s:VGroup>
+						<s:VGroup horizontalAlign="right">
 							<components:HeightStepper id="height_mStep" 
-													  value="1.7" width="55" minimum="1.5" maximum="2.5" stepSize="0.01"
+													  width="55" minimum="1.5" maximum="2.5" stepSize="0.01"
 													  weight="{weight_kgStep.value}"
 													  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"/>
 							<s:Label id="inches" text='{feet(height_mStep.value)}' color="#008888" fontSize="12"/>
 						</s:VGroup>
 						
-						<s:Group width="50%"/>
+						<!--<s:Group width="50%"/>-->
 						<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.weight')" fontWeight="normal" />
 						<!--<s:TextInput id="weight_kg" editable="true" text="65" width="40" />-->
 						
-						<s:VGroup>
-							<components:WeightStepper id="weight_kgStep" value="60" width="70" minimum="30" maximum="150" stepSize="0.1"
+						<s:VGroup horizontalAlign="right">
+							<components:WeightStepper id="weight_kgStep" 
+													  value="60" width="55" minimum="30" maximum="150" stepSize="0.1"
 													  height_m="{height_mStep.value}"
 													  valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"/>			
 							<s:Label id="pounds" text='{stones(weight_kgStep.value)}' color="#008888" fontSize="12"/>
 						</s:VGroup>
 						<s:Label id="bmiField" text=""/>
-					</s:HGroup>
+					<!--</s:VGroup>-->
 					
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>
@@ -215,7 +218,7 @@ Copyright University of Cambridge. All rights reserved
 					
 				</s:VGroup>
 				
-				<s:VGroup horizontalAlign="right">
+				<s:VGroup horizontalAlign="right" gap="15" height="100%">
 					
 					
 					<s:VGroup width = "100%" horizontalAlign="right">
@@ -227,7 +230,7 @@ Copyright University of Cambridge. All rights reserved
 									<!--<s:TextInput id="totalCholesterolInput" editable="true" text="" width="40" />-->
 									<components:TotalCholStepper id="totalCholesterolStep" width="70"
 																 hdlChol="{hdlCholesterolStep.value}"
-																 value="4" minimum="2" maximum="20" stepSize="0.1" 
+																 value="5" minimum="2" maximum="20" stepSize="0.1" 
 																 valueFormatFunction="{function(val:Number):String {return val.toFixed(1);}}"
 																 />
 								</s:HGroup>
@@ -260,9 +263,9 @@ Copyright University of Cambridge. All rights reserved
 										  minimum="5" maximum="11" value="6" 
 										  width="70" 
 										  />
-										  <!--
-										  stepSize="0.1"
-										  valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"-->
+						<!--
+						stepSize="0.1"
+						valueFormatFunction="{function(val:Number):String {return val.toFixed(2);}}"-->
 						<ns:ComboBox id="hbA1cUnits" width="90" selectedIndex="0" labelField="unit" />						
 					</s:HGroup>
 					
@@ -287,19 +290,15 @@ Copyright University of Cambridge. All rights reserved
 									/>
 					</s:HGroup>
 					
-					<s:Group height="8"/>
+					<s:Group height="100%"/>
+					
+					<s:HGroup id="controlBar" width="100%" horizontalAlign="right">
+						<s:Button label="Choose a way to\nview your risk" id="nextButton" height="100" skinClass="org.understandinguncertainty.UKPDS.components.skins.profileNextSkin" width="106" x="694"/>
+					</s:HGroup>
 					
 				</s:VGroup>
 			</s:HGroup>
-			<s:Group height="20"/>
-			<s:HGroup id="controlBar" width="40%" horizontalAlign="right">
-				<!--
-				<s:Button id="saveButton" label="@Resource(bundle='UKPDS', key='Save')" />
-				<s:Button id="loadButton" label="@Resource(bundle='UKPDS', key='Load')" />			
-				-->
-				<s:Group width="100%" />
-				<s:Button label="@Resource(bundle='UKPDS', key='Next')" id="nextButton" />
-			</s:HGroup>
+
 		</s:VGroup>
 	</s:Group>
 	

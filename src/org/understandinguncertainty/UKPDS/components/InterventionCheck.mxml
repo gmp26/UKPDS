@@ -14,10 +14,13 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import mx.collections.ArrayCollection;
 
-			private const originalTicked:String = 'yes [✓]'; 
-			private const originalUnticked:String = 'no [ ]'; 
+			private const originalTicked:String = 'yes'; 
+			private const originalUnticked:String = 'no'; 
 			
+			
+
 			[Bindable]
 			public function get label():String
 			{
@@ -49,35 +52,42 @@
 			public function set original(b:Boolean):void
 			{
 				before.label = b ? originalTicked : originalUnticked;
-				checkBox.selected = b;
+				combobox.selectedIndex = b ? 1 : 0;
 				invalidateProperties();
 			}
 
 			
 			public function get selected():Boolean
 			{
-				return checkBox.selected;
+				return combobox.selectedIndex == 1;
 			}
 			public function set selected(b:Boolean):void
 			{
-				checkBox.selected = b;
+				combobox.selectedIndex = b ? 1 : 0;
 				invalidateProperties();
 			}
 						
 			public function reset():void
 			{
-				checkBox.selected = original;
+				combobox.selectedIndex = original ? 1 : 0;
 				invalidateProperties();
 			}
 			
 			override protected function commitProperties():void
 			{
+
+					combobox.dataProvider = new ArrayCollection([
+						"No",
+						"Yes"
+					]);
+
+				
 				super.commitProperties();
-				before.enabled = original != checkBox.selected;
+				before.enabled = original != (combobox.selectedIndex == 1);
 			}
 			
 			private var _checkboxListener:Function = null;
-			
+/*
 			override public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
 			{
 				if(type == Event.CHANGE) {
@@ -103,7 +113,33 @@
 				else if(type == MouseEvent.CLICK)
 					before.removeEventListener(type, listener);
 			}
-
+*/
+			override public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
+			{
+				if(type == Event.CHANGE) {
+					super.addEventListener(type, listener, useCapture, priority, useWeakReference);
+					combobox.addEventListener(type, _checkboxListener = function(event:Event):void {
+						before.enabled = (combobox.selectedIndex == 1) != original;
+						dispatchEvent(new Event(Event.CHANGE));
+					}, useCapture, priority, useWeakReference);
+				}
+				else if(type == MouseEvent.CLICK)
+					before.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			}
+			
+			override public function removeEventListener(type:String, listener:Function, useCapture:Boolean=false):void
+			{
+				if(type == Event.CHANGE) {
+					if(_checkboxListener != null) {
+						combobox.removeEventListener(type, _checkboxListener);
+						_checkboxListener = null;
+					}
+					super.removeEventListener(type, listener);
+				}
+				else if(type == MouseEvent.CLICK)
+					before.removeEventListener(type, listener);
+			}
+			
 
 		]]>
 	</fx:Script>
@@ -117,7 +153,8 @@
 			<s:Group width="20"/>
 			<s:Label text="→" fontSize="14"/>
 			<s:Group width="30"/>
-			<s:CheckBox id="checkBox" selected="{original}" />
+			<s:ComboBox id="combobox" selectedIndex="{original ? 1 : 0}" width="60"/>
+			<!-- <s:CheckBox id="checkBox" selected="{original}" /> -->
 			<s:Group width="30"/>
 
 		</s:HGroup>

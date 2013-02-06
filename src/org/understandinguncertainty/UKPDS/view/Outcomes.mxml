@@ -17,14 +17,16 @@
 		<s:SolidColorStroke id="borderstroke" weight="2" color="0" alpha="0.4"/>
 	</fx:Declarations>
 	
-	<s:Group>
+	<s:Group width="100%" height="100%">
 		<s:filters>
 			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
 		</s:filters>
 		
 		<s:Rect radiusX="5" fill="{borderfill}" stroke="{borderstroke}" alpha="1" width="100%" height="100%"/>
 		
-		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="right">
+		<s:Label x="10" y="10" fontSize="18" text="Your risk"/>
+
+		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="center" verticalAlign="middle" height="485" width="840">
 			
 			<s:HGroup id="smileyPanel" gap="0" width="520" height="360" verticalAlign="middle">
 				

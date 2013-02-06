@@ -28,7 +28,6 @@ package org.understandinguncertainty.UKPDS.view
 		override public function onRegister():void
 		{
 			screenChangedSignal.add(changeScreen);
-			screensNamedSignal.dispatch(screens);
 		}
 		
 		override public function onRemove():void
@@ -62,6 +61,7 @@ package org.understandinguncertainty.UKPDS.view
 		public function set selectedScreen(s:String):void
 		{
 			mainPanel.currentState = s;
+			screensNamedSignal.dispatch(screens);
 			
 			if(s == "profile") {
 				releaseScreenSignal.dispatch();

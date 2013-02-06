@@ -21,7 +21,7 @@ Copyright University of Cambridge. All rights reserved
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<s:SolidColor id="fill" color="0xffffff" alpha="1"/>
-		<s:SolidColor id="background" color="0xffff88" alpha="1"/>
+		<s:SolidColor id="background" color="0xffffff" alpha="1"/>
 		
 	</fx:Declarations>
 		
@@ -31,7 +31,7 @@ Copyright University of Cambridge. All rights reserved
 		<s:VGroup width="100%" height="100%">
 			
 			
-			<s:HGroup width="100%" paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5" >
+			<s:HGroup width="100%" paddingLeft="10" paddingTop="5" paddingRight="10" paddingBottom="5" >
 				<ns:Image id="uuicon" verticalAlign="middle" source="@Embed('assets/uuIcon.png')" />
 				<components:Header/>
 				<s:Group width="100%"/>
@@ -44,13 +44,13 @@ Copyright University of Cambridge. All rights reserved
 			<s:HGroup width="100%" height="100%" paddingLeft="10" paddingRight="10" gap="10">
 				<s:Group>
 					
-					<view:ScreenSelector id="screenSelector" y="505"/>
+					<view:ScreenSelector id="screenSelector" y="505" includeIn="riskScreens"/>
 					
 					<s:VGroup
 						verticalAlign="top"
 						gap="0" >
-						
-						<view:MainPanel id="mainPanel" height="485" width="800"/>
+
+						<view:MainPanel id="mainPanel" height.profileOnly="100%" height.riskScreens="600" width.profileOnly="100%" width.riskScreens="840"/>
 						
 					</s:VGroup>
 					

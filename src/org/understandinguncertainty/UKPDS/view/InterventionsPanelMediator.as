@@ -42,17 +42,19 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			
 			// Set stepper limits
-			interventionsPanel.hba1c.minimum = 5;
-			interventionsPanel.hba1c.maximum = 11;
+			interventionsPanel.hba1c.minimum = Math.min(5, userProfile.hba1c);
+			interventionsPanel.hba1c.maximum = Math.max(11, userProfile.hba1c);
 			
-			interventionsPanel.sbp.minimum = 100;
-			interventionsPanel.sbp.maximum = 220;
+			interventionsPanel.sbp.minimum = Math.min(100, userProfile.sbp);
+			interventionsPanel.sbp.maximum = Math.max(220, userProfile.sbp);
+			
+			trace(userProfile.sbp, userProfile.sbp_int);
 
-			interventionsPanel.totalCholesterol.minimum = 2;
-			interventionsPanel.totalCholesterol.maximum = 20;
+			interventionsPanel.totalCholesterol.minimum = Math.min(2, userProfile.totalCholesterol);
+			interventionsPanel.totalCholesterol.maximum = Math.max(20, userProfile.totalCholesterol);
 
-			interventionsPanel.hdlCholesterol.minimum = 0.2;
-			interventionsPanel.hdlCholesterol.maximum = 12;
+			interventionsPanel.hdlCholesterol.minimum = Math.min(0.2, userProfile.hdlCholesterol);
+			interventionsPanel.hdlCholesterol.maximum = Math.max(12, userProfile.hdlCholesterol);
 			
 						
 			interventionsPanel.smoker.addEventListener(Event.CHANGE, stepperChanged);
@@ -70,7 +72,7 @@ package org.understandinguncertainty.UKPDS.view
 			interventionsPanel.hdlCholesterol.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.hdlCholesterol.addEventListener(MouseEvent.CLICK, resetHDLCholesterol);
 			
-			interventionsPanel.overweight.label = "Weight over " + userProfile.weightLimit.toFixed(1) + " kg ?";
+			interventionsPanel.overweight.label = "Is your weight over " + userProfile.weightLimit.toFixed(1) + " kg ?";
 			interventionsPanel.overweight.addEventListener(Event.CHANGE, stepperChanged);
 			interventionsPanel.overweight.addEventListener(MouseEvent.CLICK, resetWeight);
 			

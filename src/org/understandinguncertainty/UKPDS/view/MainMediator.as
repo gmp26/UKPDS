@@ -43,14 +43,14 @@ package org.understandinguncertainty.UKPDS.view
 		
 		[Inject]
 		public var profileDefaultsLoaded:ProfileDefaultsLoadedSignal;
-		
+				
 		private static const defaultsURL:String = "personaldata.php";
 		private static const defaultsURL2:String = "personaldata.xml";
 		
 		override public function onRegister():void
 		{
 			releaseScreenSignal.add(releaseScreen);
-			screenChangedSignal.add(screenChanged);	
+			screenChangedSignal.add(screenChanged);
 			main.credits.addEventListener(MouseEvent.CLICK, showCredits);
 
 			// Load defaults from server
@@ -73,6 +73,7 @@ package org.understandinguncertainty.UKPDS.view
 		private function screenChanged(s:String):void
 		{
 			if(s == "profile") {
+				main.fullScreen.buttonEnabled = (s != "profile");
 				main.currentState = "profileOnly";	
 			}
 			else {
@@ -81,6 +82,7 @@ package org.understandinguncertainty.UKPDS.view
 			}
 		}
 
+		
 		private function showCredits(event:MouseEvent):void
 		{
 			var credits:Credits = PopUpManager.createPopUp(main, Credits, true) as Credits;

@@ -6,141 +6,139 @@ Copyright University of Cambridge. All rights reserved
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/halo"
 		 xmlns:ns="library://ns.adobe.com/flex/mx"
-		 currentState="basic" xmlns:components="org.understandinguncertainty.UKPDS.components.*"
+		 xmlns:components="org.understandinguncertainty.UKPDS.components.*"
 		 >
-	<s:states>
-		<s:State name="basic"/>
-		<s:State name="advanced"/>
-	</s:states>
+	
 	
 	<fx:Declarations>
+		<s:SolidColor id="borderfill" color="0xffffff" alpha="1"/>
+		<s:SolidColorStroke id="borderstroke" weight="2" color="0" alpha="0.4"/>
+		<s:SolidColor id="selectfill" color="0xEEEEEE" alpha="1"/>
+		<s:SolidColorStroke id="selectstroke" weight="1" color="#CCCCCC" alpha="1"/>
+	</fx:Declarations>
+	
+	<s:HGroup height="150" paddingBottom="10" gap="20">
 		
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-		<s:Scroller  width="100" height="200">
-			<s:Group horizontalScrollPosition="50" verticalScrollPosition="50" >
-				
-				<s:HGroup id = "basicThumbnails" width="1200" height="200">
+		<s:Group height="100%">
+			<s:filters>
+				<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
+			</s:filters>
+			
+			<s:Rect radiusX="5" fill="{borderfill}" stroke="{borderstroke}" alpha="1" width="100%" height="100%"/>
+			
+			<s:Label x="10" y="10" fontSize="18" text="Your Profile"/>
+			
+			<s:VGroup paddingTop="15" paddingRight="15" paddingBottom="10" paddingLeft="15" verticalCenter="0" >
+				<s:HGroup gap="5" paddingLeft="20" paddingRight="20" >
 					
-					<s:VGroup id="futures" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
-						<s:Label id="futuresLabel" text="@Resource(bundle='UKPDS',key='sideBar1.futures')"  fontSize="36" />
-						<ns:Button id="futuresButton" icon="@Embed('/assets/futuresThumbnail.png')" 
+					<s:VGroup id="profile" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33" height="100%" paddingTop="30"  >
+						<s:Label id="profileLabel" text="@Resource(bundle='UKPDS',key='sideBar1.profile')" fontSize="36"/>
+						<ns:Button id="profileButton" icon="@Embed('/assets/profileThumbnail.png')" 
 								   cornerRadius="20"
-								   width="300" height="180" />
-					</s:VGroup>
-					
-					<s:VGroup id="heartAge" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
-						<s:Label id="heartAgeLabel" text="@Resource(bundle='UKPDS',key='sideBar1.heartAge')"  fontSize="36" />
-						<ns:Button id="heartAgeButton" icon="@Embed('/assets/heartAgeThumbnail3.png')" 
-								   cornerRadius="20"
-								   width="300" height="180" />
-					</s:VGroup>
-					
-					<s:VGroup id="deanfield" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
-						<s:Label id="deanfieldLabel" text="@Resource(bundle='UKPDS',key='sideBar1.deanfield')"  fontSize="36" />
-						<ns:Button id="deanfieldButton"
-								   icon="@Embed('/assets/deanfieldThumbnail.png')" 
-								   cornerRadius="20"
-								   width="300" height="180" />
-					</s:VGroup>
-					
-					<s:VGroup id="outlook" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33" >
-						<s:Label id="outlookLabel" text="@Resource(bundle='UKPDS',key='sideBar1.outlook')"  fontSize="36" />
-						<ns:Button id="outlookButton"
-								   icon="@Embed('/assets/outlookThumbnail2.png')" 
-								   cornerRadius="18"
-								   width="300" height="180" />
-					</s:VGroup>
-					
-					<s:VGroup id="outcomes" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
-						<s:Label id="outcomesLabel" text="@Resource(bundle='UKPDS',key='sideBar1.outcomes')"  fontSize="36" />
-						<ns:Button id="outcomesButton"
-								   icon="@Embed('/assets/outcomesThumbnail.png')" 
-								   cornerRadius="18"
-								   width="300" height="180" />
-					</s:VGroup>
-					
-					<s:VGroup id="balance" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
-						<s:Label id="balanceLabel" text="@Resource(bundle='UKPDS',key='sideBar1.balance')"  fontSize="36" />
-						<ns:Button id="balanceButton"
-								   icon="@Embed('/assets/balanceThumbnail2.png')" 
-								   cornerRadius="18"
-								   width="300" height="180" />
-					</s:VGroup>
-					
-					<s:VGroup id="compare" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
-						<s:Label id="compareLabel" text="@Resource(bundle='UKPDS',key='sideBar1.compare')"  fontSize="36" />
-						<ns:Button id="compareButton"
-								   icon="@Embed('/assets/compareThumbnail.png')"
-								   cornerRadius="18"
 								   width="300" height="180" />
 					</s:VGroup>
 				</s:HGroup>
-			</s:Group>
-		</s:Scroller>
-		
-		<s:Group id="advancedThumbnails">
-			
+			</s:VGroup>
 		</s:Group>
 		
-		<s:SolidColor id="borderfill" color="0xffffff" alpha="1"/>
-		<s:SolidColorStroke id="borderstroke" weight="2" color="0" alpha="0.4"/>
-	</fx:Declarations>
-	<s:Group>
-		<s:filters>
-			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
-		</s:filters>
 		
-		<s:Rect radiusX="5" fill="{borderfill}" stroke="{borderstroke}" alpha="1" width="100%" height="100%"/>
-		
-		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" >
-			<s:HGroup gap="5" paddingLeft="20" paddingRight="20" verticalAlign="top">
+		<s:Group height="100%">
+			<s:filters>
+				<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
+			</s:filters>
+			
+			<s:Rect radiusX="5" fill="{borderfill}" stroke="{borderstroke}" alpha="1" width="100%" height="100%"/>
+			
+			<s:Label x="10" y="10" fontSize="18" text="Different ways to view your risk"/>
+			
+			<s:VGroup x="290" paddingTop="10" paddingRight="20" paddingBottom="10" paddingLeft="20" verticalCenter="0.4">
 				
-				<s:VGroup id="profile" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33" >
-					<s:Label id="profileLabel" text="@Resource(bundle='UKPDS',key='sideBar1.profile')" fontSize="36"/>
-					<ns:Button id="profileButton" icon="@Embed('/assets/profileThumbnail.png')" 
-							   cornerRadius="20"
-							   width="300" height="180" />
-				</s:VGroup>
-				
-				<s:Group width="20"/>
-				
-				
-				<s:VGroup>
-					<s:HGroup verticalAlign="middle">
-						<s:VGroup>
-							<s:Group/>					
-							<ns:Button id="less"  width="35" height="35" icon="@Embed('/assets/scrollLeft.png')" />
-						</s:VGroup>
-						
+				<s:Group width="100%" height="100%">
+					<s:VGroup horizontalAlign="center" width="100%" height="100%">
+						<s:Group width="50%" height="100%">
+							<s:Rect radiusX="20" fill = "{selectfill}" stroke="{selectstroke}" alpha="1" width="100%" height="100%"/>						
+						</s:Group>
+					</s:VGroup>
+					<s:VGroup paddingTop="10" paddingBottom="10">
 						<s:Group id="viewport">
 							
-							<s:Scroller id="scroller" width="325" horizontalScrollPolicy="off">
+							<s:Scroller id="scroller" width="320" horizontalScrollPolicy="off">
 								<s:HGroup gap="10">
 									<s:Group width="100"/>							
-									<s:HGroup gap="10" id="basicContainer" paddingRight="5" />
+									<s:HGroup gap="6" id="basicContainer" paddingRight="5">
+										<s:VGroup id="futures" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
+											<s:Label id="futuresLabel" text="@Resource(bundle='UKPDS',key='sideBar1.futures')"  fontSize="36" />
+											<ns:Button id="futuresButton" icon="@Embed('/assets/futuresThumbnail.png')" 
+													   cornerRadius="20"
+													   width="300" height="180" />
+										</s:VGroup>
+										
+										<s:VGroup id="heartAge" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
+											<s:Label id="heartAgeLabel" text="@Resource(bundle='UKPDS',key='sideBar1.heartAge')"  fontSize="36" />
+											<ns:Button id="heartAgeButton" icon="@Embed('/assets/heartAgeThumbnail3.png')" 
+													   cornerRadius="20"
+													   width="300" height="180" />
+										</s:VGroup>
+										
+										<s:VGroup id="deanfield" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
+											<s:Label id="deanfieldLabel" text="@Resource(bundle='UKPDS',key='sideBar1.deanfield')"  fontSize="36" />
+											<ns:Button id="deanfieldButton"
+													   icon="@Embed('/assets/deanfieldThumbnail.png')" 
+													   cornerRadius="20"
+													   width="300" height="180" />
+										</s:VGroup>
+										
+										<s:VGroup id="outlook" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33" >
+											<s:Label id="outlookLabel" text="@Resource(bundle='UKPDS',key='sideBar1.outlook')"  fontSize="36" />
+											<ns:Button id="outlookButton"
+													   icon="@Embed('/assets/outlookThumbnail2.png')" 
+													   cornerRadius="18"
+													   width="300" height="180" />
+										</s:VGroup>
+										
+										<s:VGroup id="outcomes" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
+											<s:Label id="outcomesLabel" text="@Resource(bundle='UKPDS',key='sideBar1.outcomes')"  fontSize="36" />
+											<ns:Button id="outcomesButton"
+													   icon="@Embed('/assets/outcomesThumbnail.png')" 
+													   cornerRadius="18"
+													   width="300" height="180" />
+										</s:VGroup>
+										
+										<s:VGroup id="balance" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
+											<s:Label id="balanceLabel" text="@Resource(bundle='UKPDS',key='sideBar1.balance')"  fontSize="36" />
+											<ns:Button id="balanceButton"
+													   icon="@Embed('/assets/balanceThumbnail2.png')" 
+													   cornerRadius="18"
+													   width="300" height="180" />
+										</s:VGroup>
+										
+										<s:VGroup id="compare" gap="0" horizontalAlign="center" scaleX="0.33" scaleY="0.33"  >
+											<s:Label id="compareLabel" text="@Resource(bundle='UKPDS',key='sideBar1.compare')"  fontSize="36" />
+											<ns:Button id="compareButton"
+													   icon="@Embed('/assets/compareThumbnail.png')"
+													   cornerRadius="18"
+													   width="300" height="180" />
+										</s:VGroup>
+									</s:HGroup>
 									<s:Group width="100"/>							
 								</s:HGroup>
 								
 							</s:Scroller>
 						</s:Group>
-						
-						<s:VGroup>
-							<s:Group/>
-							<ns:Button id="more" width="35" height="35" icon="@Embed('/assets/scrollRight.png')" />
-						</s:VGroup>
-					</s:HGroup>
-					<s:HGroup width="100%" horizontalAlign="center">
-						
-						<components:ScrollDot id="dot0"/>
-						<components:ScrollDot id="dot1"/>
-						<components:ScrollDot id="dot2"/>
-						<components:ScrollDot id="dot3"/>
-						<components:ScrollDot id="dot4"/>
-						<components:ScrollDot id="dot5"/>
-						
-					</s:HGroup>
-				</s:VGroup>
-			</s:HGroup>
-		</s:VGroup>
-	</s:Group>
+						<s:HGroup width="100%" horizontalAlign="center">
+							<components:ScrollDot id="dot0"/>
+							<components:ScrollDot id="dot1"/>
+							<components:ScrollDot id="dot2"/>
+							<components:ScrollDot id="dot3"/>
+							<components:ScrollDot id="dot4"/>
+							<components:ScrollDot id="dot5"/>
+							<components:ScrollDot id="dot6"/>
+						</s:HGroup>
+					</s:VGroup>
+				</s:Group>
+				<!--</s:HGroup>-->
+			</s:VGroup>
+		</s:Group>
+	</s:HGroup>
+	
 </s:Group>

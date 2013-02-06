@@ -31,23 +31,22 @@ Copyright University of Cambridge. All rights reserved
 		]]>
 	</fx:Script>
 	
-	<s:Group>
+	<s:Group width="100%" height="100%">
 		<s:filters>
 			<s:DropShadowFilter distance="2" blurX="2" blurY="2" color="0" alpha="0.4"/>
 		</s:filters>
 		
 		<s:Rect radiusX="5" fill="{fill}" stroke="{borderstroke}" alpha="1" width="100%" height="100%"/>
 		
-		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="right">
+		<s:Label x="10" y="10" fontSize="18" text="Your risk"/>
+
+		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="center" verticalAlign="middle" height="485" width="840">
 			
-			<s:VGroup paddingLeft="20" horizontalCenter="0" verticalCenter="0" horizontalAlign="left" 
-					  width="520" height="300" >
+			<s:VGroup horizontalAlign="center" verticalAlign="middle" width="80%" height="100%" >
 				
-				<s:Group height="40"/>
-				<s:HGroup verticalAlign="middle" width="100%" horizontalAlign="center">
-					<s:VGroup horizontalAlign="center" paddingTop="10">
+				<s:HGroup verticalAlign="middle" width="100%" >
+					<s:VGroup horizontalAlign="center" width="100%">
 						
-						<s:Group height="10"/>
 						<s:Label id="meanSurvival" fontSize="26" textAlign="center"/>
 						<s:Label id="gainText"  fontSize="20"/>
 					</s:VGroup>		
@@ -81,7 +80,7 @@ Copyright University of Cambridge. All rights reserved
 					</mx:BarChart>
 					<s:Ellipse x="1" y="3" width="28" height="28" fill="{green}" filters="{drop, bevel}"/>
 					
-					<s:Label x="80" y="60" text="expected life without a heart attack or stroke" fontSize="16"/>
+					<!--<s:Label x="120" y="60" text="expected life without a heart attack or stroke" fontSize="16"/>-->
 				</s:Group>
 				
 			</s:VGroup>

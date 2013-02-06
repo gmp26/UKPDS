@@ -36,7 +36,6 @@ Copyright University of Cambridge. All rights reserved
 					<s:p>
 						DEPENDENCIES<s:br />
 						We'd like to thank the creators of the following third party libraries:<s:br />
-						<s:a href="http://qrisk.org/lifetime/QRISK-lifetime-2011-opensource.v1.0.tgz">QRISK®-lifetime-2011 released by ClinRisk Ltd.</s:a>. <s:br />
 						<s:a href="http://github.com/robertpenner/as3-signals">AS3-Signals by Robert Penner</s:a>. <s:br />
 						<s:a href="http://github.com/robotlegs/robotlegs-framework">The Robotlegs framework</s:a>. <s:br />
 						<s:a href="http://github.com/joelhooks/signals-extensions-CommandSignal">Signals-extensions-CommandSignal by Joel Hooks</s:a><s:br/>

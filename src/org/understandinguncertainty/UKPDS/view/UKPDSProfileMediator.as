@@ -36,6 +36,7 @@ package org.understandinguncertainty.UKPDS.view
 	import org.understandinguncertainty.personal.signals.ProfileLoadSignal;
 	import org.understandinguncertainty.personal.signals.ProfileSaveSignal;
 	import org.understandinguncertainty.personal.signals.ProfileValidSignal;
+	import org.understandinguncertainty.personal.signals.ScreenChangedSignal;
 	
 	import spark.components.NumericStepper;
 	
@@ -58,7 +59,7 @@ package org.understandinguncertainty.UKPDS.view
 		public var profileCommitSignal:ProfileCommitSignal;
 		
 		[Inject]
-		public var nextScreenSignal:NextScreenSignal;
+		public var screenChangedSignal:ScreenChangedSignal;
 		
 		[Inject]
 		public var userProfile:UserModel;
@@ -142,15 +143,10 @@ package org.understandinguncertainty.UKPDS.view
 			profileLoadSignal.add(loadPersonalDetails);
 			profileSaveSignal.add(savePersonalDetails);
 			
-			//profile.cvdAlready.addEventListener(Event.CHANGE, validate);
-			//profile.termsCheckbox.addEventListener(Event.CHANGE, validate);
-			//.termsButton.addEventListener(MouseEvent.CLICK, visitTerms);
-			
 			profile.ddStep.addEventListener(Event.CHANGE, validate);
 			profile.mmStep.addEventListener(Event.CHANGE, validate);
 			profile.yyyyStep.addEventListener(Event.CHANGE, validate);
 			
-			//profile.diagnosisDdStep.addEventListener(Event.CHANGE, validate);
 			profile.diagnosisMmStep.addEventListener(Event.CHANGE, validate);
 			profile.diagnosisYyyyStep.addEventListener(Event.CHANGE, validate);
 			
@@ -165,8 +161,6 @@ package org.understandinguncertainty.UKPDS.view
 			profile.cholUnits.addEventListener(Event.CHANGE, changedUnits);
 			profile.hbA1cUnits.addEventListener(Event.CHANGE, change_hba1c_units);
 			
-			//profile.saveButton.addEventListener(MouseEvent.CLICK, save);
-			//profile.loadButton.addEventListener(MouseEvent.CLICK, load);
 			profile.nextButton.addEventListener(MouseEvent.CLICK, nextScreen);	
 			
 		}
@@ -176,15 +170,10 @@ package org.understandinguncertainty.UKPDS.view
 			profileLoadSignal.remove(loadPersonalDetails);
 			profileSaveSignal.remove(savePersonalDetails);
 
-			//profile.cvdAlready.removeEventListener(Event.CHANGE, validate);
-			//profile.termsCheckbox.removeEventListener(Event.CHANGE, validate);
-			//profile.termsButton.removeEventListener(MouseEvent.CLICK, visitTerms);
-
 			profile.ddStep.removeEventListener(Event.CHANGE, validate);
 			profile.mmStep.removeEventListener(Event.CHANGE, validate);
 			profile.yyyyStep.removeEventListener(Event.CHANGE, validate);
 			
-			//profile.diagnosisDdStep.removeEventListener(Event.CHANGE, validate);
 			profile.diagnosisMmStep.removeEventListener(Event.CHANGE, validate);
 			profile.diagnosisYyyyStep.removeEventListener(Event.CHANGE, validate);
 			
@@ -199,8 +188,6 @@ package org.understandinguncertainty.UKPDS.view
 			profile.cholUnits.removeEventListener(Event.CHANGE, changedUnits);
 			profile.hbA1cUnits.removeEventListener(Event.CHANGE, change_hba1c_units);
 			
-			//profile.saveButton.removeEventListener(MouseEvent.CLICK, save);
-			//profile.loadButton.removeEventListener(MouseEvent.CLICK, load);
 			profile.nextButton.removeEventListener(MouseEvent.CLICK, nextScreen);	
 		}
 		
@@ -222,9 +209,10 @@ package org.understandinguncertainty.UKPDS.view
 		private function nextScreen(event:MouseEvent):void
 		{
 			commitProfile();
-			nextScreenSignal.dispatch("profile");
+			var name:String = 'futures';
+			appState.selectedScreenName = name;
+			screenChangedSignal.dispatch(name);
 		}
-		
 		
 		private function loadPersonalDetails(event:Event = null):void {
 			ps.addEventListener(PersonalisationFileStore.DATAREADY, showPersonalData, false, 0, true);
@@ -241,12 +229,9 @@ package org.understandinguncertainty.UKPDS.view
 		//
 		private function showPersonalData(event:Event=null):void {
 			
-			commitProfile();
-
 			var pvars:VariableList = ps.variableList;
 			var dob:Date = pvars.dateOfBirth.value as Date;
 
-			//trace("profile:showing dob=",dob);
 			profile.yyyyStep.value = dob.fullYear; //.toString();
 			profile.mmStep.value = (dob.month + 1);
 			profile.ddStep.value = dob.date;
@@ -254,10 +239,8 @@ package org.understandinguncertainty.UKPDS.view
 
 			var dodiagnosis:Date = pvars.dateOfDiagnosis.value as Date;
 
-			//trace("profile:showing dob=",dob);
 			profile.diagnosisYyyyStep.value = dodiagnosis.fullYear; //.toString();
 			profile.diagnosisMmStep.value = (dodiagnosis.month + 1);
-			//profile.diagnosisDdStep.value = 15; //dodiagnosis.date;
 			
 			// extra Q parameters
 			profile.ethnicGroup.selectedIndex = Number(pvars.ethnicGroup);
@@ -267,9 +250,7 @@ package org.understandinguncertainty.UKPDS.view
 			profile.af.selected = pvars.atrialFibrillation.value;
 			
 			profile.smokerGroup.selectedIndex = Number(pvars.smokerAtDiagnosis.value);
-			
-			//profile.diabetic.selected = pvars.diabetic.value;
-			
+						
 			hba1c_as_percent = Number(pvars.hba1c.value);
 			hdlCholesterol_mmol_L = Number(pvars.hdlCholesterol_mmol_L.value);
 			totalCholesterol_mmol_L = Number(pvars.totalCholesterol_mmol_L.value);
@@ -280,8 +261,9 @@ package org.understandinguncertainty.UKPDS.view
 			profile.lipidRatioField.text = "Lipid Ratio: " + userProfile.lipidRatio.toPrecision(3);
 			
 			profile.systolicBloodPressure = Number(pvars.systolicBloodPressure);
-			//profile.SBPTreated.selected = pvars.SBPTreated.value;
-						
+			
+			commitProfile();
+			
 			validate();
 			
 		}
@@ -308,12 +290,10 @@ package org.understandinguncertainty.UKPDS.view
 			pvars.atrialFibrillation.value = profile.af.selected;
 			pvars.smokerAtDiagnosis.value = profile.smokerGroup.selectedIndex;
 			
-			//pvars.diabetic.value = profile.diabetic.selected
 			pvars.hba1c.value = hba1c_as_percent;
 			pvars.hdlCholesterol_mmol_L.value = hdlCholesterol_mmol_L;
 			pvars.totalCholesterol_mmol_L.value = totalCholesterol_mmol_L;
 			pvars.systolicBloodPressure.value = profile.systolicBloodPressure;
-			//pvars.SBPTreated.value = profile.SBPTreated.selected;
 			
 			userProfile.isValid = false;
 		}
