@@ -16,8 +16,8 @@
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 
-			private const originalTicked:String = 'yes'; 
-			private const originalUnticked:String = 'no'; 
+			private const originalTicked:String = 'Yes'; 
+			private const originalUnticked:String = 'No'; 
 			
 			
 

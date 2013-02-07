@@ -43,7 +43,7 @@
     
     <!-- layer 1: shadow -->
     <!--- @private -->
-    <s:Rect id="shadow" left="-1" right="-1" top="-1" bottom="-1" radiusX="2">
+    <s:Rect id="shadow" left="-1" right="-1" top="-1" bottom="-1" radiusX="20">
         <s:fill>
             <s:LinearGradient rotation="90">
                 <s:GradientEntry color="0x000000" 
@@ -60,24 +60,24 @@
     
     <!-- layer 2: fill -->
     <!--- @private -->
-    <s:Rect id="fill" left="1" right="1" top="1" bottom="1" radiusX="2">
+    <s:Rect id="fill" left="1" right="1" top="1" bottom="1" radiusX="20">
         <s:fill>
             <s:LinearGradient rotation="90">
                 <s:GradientEntry color="0xFFFFFF" 
-                                 color.over="0xBBBDBD" 
-                                 color.down="0xAAAAAA" 
-                                 alpha="0.85" />
-                <s:GradientEntry color="0xD8D8D8" 
-                                 color.over="0x9FA0A1" 
-                                 color.down="0x929496" 
-                                 alpha="0.85" />
+                                 color.over="0xDDEDED" 
+                                 color.down="0xCCE0E0" 
+                                 alpha="0.55" />
+                <s:GradientEntry color="0xE8E8E8" 
+                                 color.over="0x9FBBBB" 
+                                 color.down="0x78A8A8" 
+                                 alpha="0.55" />
             </s:LinearGradient>
         </s:fill>
     </s:Rect>
 
     <!-- layer 3: fill lowlight -->
     <!--- @private -->
-    <s:Rect id="lowlight" left="1" right="1" top="1" bottom="1" radiusX="2">
+    <s:Rect id="lowlight" left="1" right="1" top="1" bottom="1" radiusX="20">
         <s:fill>
             <s:LinearGradient rotation="270">
                 <s:GradientEntry color="0x000000" ratio="0.0" alpha="0.0627" />
@@ -89,7 +89,7 @@
     
     <!-- layer 4: fill highlight -->
     <!--- @private -->
-    <s:Rect id="highlight" left="1" right="1" top="1" bottom="1" radiusX="2">
+    <s:Rect id="highlight" left="1" right="1" top="1" bottom="1" radiusX="20">
         <s:fill>
             <s:LinearGradient rotation="90">
                 <s:GradientEntry color="0xFFFFFF"
@@ -111,7 +111,7 @@
     
     <!-- layer 5: highlight stroke (all states except down) -->
     <!--- @private -->
-    <s:Rect id="highlightStroke" left="1" right="1" top="1" bottom="1" radiusX="2" excludeFrom="down">
+    <s:Rect id="highlightStroke" left="1" right="1" top="1" bottom="1" radiusX="20" excludeFrom="down">
         <s:stroke>
             <s:LinearGradientStroke rotation="90" weight="1">
                 <s:GradientEntry color="0xFFFFFF" alpha.over="0.22" />
@@ -122,7 +122,7 @@
     
     <!-- layer 6: highlight stroke (down state only) -->
     <!--- @private -->
-    <s:Rect id="hldownstroke1" left="1" right="1" top="1" bottom="1" radiusX="2" includeIn="down">
+    <s:Rect id="hldownstroke1" left="1" right="1" top="1" bottom="1" radiusX="20" includeIn="down">
         <s:stroke>
             <s:LinearGradientStroke rotation="90" weight="1">
                 <s:GradientEntry color="0x000000" alpha="0.25" ratio="0.0" />
@@ -134,7 +134,7 @@
         </s:stroke>
     </s:Rect>
     <!--- @private -->
-    <s:Rect id="hldownstroke2" left="2" right="2" top="2" bottom="2" radiusX="2" includeIn="down">
+    <s:Rect id="hldownstroke2" left="2" right="2" top="2" bottom="2" radiusX="20" includeIn="down">
         <s:stroke>
             <s:LinearGradientStroke rotation="90" weight="1">
                 <s:GradientEntry color="0x000000" alpha="0.09" ratio="0.0" />
@@ -145,7 +145,7 @@
     
     <!-- layer 7: border - put on top of the fill so it doesn't disappear when scale is less than 1 -->
     <!--- @private -->
-    <s:Rect id="border" left="0" right="0" top="0" bottom="0" width="69" height="20" radiusX="2">
+    <s:Rect id="border" left="0" right="0" top="0" bottom="0" width="69" height="20" radiusX="20">
         <s:stroke>
             <s:LinearGradientStroke rotation="90" weight="1">
                 <s:GradientEntry color="0x000000" 

@@ -213,17 +213,17 @@ Copyright University of Cambridge. All rights reserved
 					<s:HGroup width="100%" verticalAlign="middle"  toolTip="{tipPlaceHolder}">
 						<s:Group width="100%"/>
 						<s:Label text="@Resource(bundle='UKPDS', key='profile.check.active')" fontWeight="normal"/>
-						<s:CheckBox id="active" selected="false"/>						
+						<ns:ComboBox id="active" width="60" selectedIndex="0" rowCount="2"/>
 					</s:HGroup>
 					
 				</s:VGroup>
 				
-				<s:VGroup horizontalAlign="right" gap="15" height="100%">
+				<s:VGroup horizontalAlign="right" gap="20" height="100%">
 					
 					
-					<s:VGroup width = "100%" horizontalAlign="right">
+					<s:VGroup width = "100%" horizontalAlign="right" gap="10">
 						<s:HGroup width="100%" verticalAlign="middle">
-							<s:VGroup width = "100%" horizontalAlign="right">
+							<s:VGroup width = "100%" horizontalAlign="right" >
 								<s:HGroup width="100%" verticalAlign="bottom"  toolTip="{tipPlaceHolder}">
 									<s:Group width="100%"/>   
 									<s:Label text="@Resource(bundle='UKPDS', key='profile.entry.totalChol')" fontWeight="normal"/>
@@ -253,6 +253,7 @@ Copyright University of Cambridge. All rights reserved
 							<s:Label id="LDLField" paddingLeft="30"/>
 							<s:Label id="lipidRatioField" paddingLeft="30"/>
 						</s:VGroup>
+						<s:Group height="20"/>
 					</s:VGroup>
 					
 					
@@ -286,14 +287,13 @@ Copyright University of Cambridge. All rights reserved
 						<s:Label 
 							text="@Resource(bundle='UKPDS', key='profile.qrsk.atrialFibrillation')" fontWeight="normal"/>
 						<s:Group width="100%"/>
-						<s:CheckBox id="af"
-									/>
+						<ns:ComboBox id="af" width="60" selectedIndex="0" rowCount="2"/>
 					</s:HGroup>
 					
 					<s:Group height="100%"/>
 					
 					<s:HGroup id="controlBar" width="100%" horizontalAlign="right">
-						<s:Button label="Choose a way to\nview your risk" id="nextButton" height="100" skinClass="org.understandinguncertainty.UKPDS.components.skins.profileNextSkin" width="106" x="694"/>
+						<s:Button label="Choose a way to\nview your risk" id="nextButton" height="100" skinClass="org.understandinguncertainty.UKPDS.components.skins.profileNextSkin" width="200" x="694"/>
 					</s:HGroup>
 					
 				</s:VGroup>

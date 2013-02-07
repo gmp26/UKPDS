@@ -39,10 +39,11 @@ Copyright University of Cambridge. All rights reserved
 		
 		<s:Label x="10" y="10" fontSize="18" text="Your risk"/>
 
-		<s:VGroup paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="center" verticalAlign="middle" height="485" width="840">
+		<s:VGroup 
+			paddingTop="20" paddingRight="20" paddingBottom="20" paddingLeft="20" horizontalAlign="center" verticalAlign="middle" height="485" width="840">
 			
 			<s:VGroup paddingLeft="20" horizontalCenter="0" verticalCenter="0" horizontalAlign="left" 
-					  width="520" height="300" >
+					  width="520" height="300" scaleX="1.3" scaleY="1.3">
 				<s:Group height="80"/>
 				<s:HGroup verticalAlign="middle" horizontalAlign="center">
 					<mx:Image left="30" top="30" scaleX="0.5" scaleY="0.5" source="@Embed('assets/heartAge2.png')" id="heartImage"/>

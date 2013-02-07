@@ -94,10 +94,20 @@ package org.understandinguncertainty.UKPDS.view
 				]);
 			
 			
-			profile.smokerGroup.dataProvider = new ArrayCollection([
+			profile.active.dataProvider = new ArrayCollection ([
 				"No",
 				"Yes"
 				]);
+			
+			profile.smokerGroup.dataProvider = new ArrayCollection([
+				"No",
+				"Yes"
+			]);
+			
+			profile.af.dataProvider = new ArrayCollection([
+				"No",
+				"Yes"
+			]);
 			
 			profile.cholUnits.dataProvider = cholUnitFactors;
 			profile.hbA1cUnits.dataProvider = hba1cUnits;
@@ -246,8 +256,8 @@ package org.understandinguncertainty.UKPDS.view
 			profile.ethnicGroup.selectedIndex = Number(pvars.ethnicGroup);
 			profile.height_mStep.value = pvars.height_m.value;
 			profile.weight_kgStep.value = pvars.weight_kg.value;
-			profile.active.selected = pvars.active.value;
-			profile.af.selected = pvars.atrialFibrillation.value;
+			profile.active.selectedIndex = pvars.active.value ? 1 : 0;
+			profile.af.selectedIndex = pvars.atrialFibrillation.value ? 1 : 0;
 			
 			profile.smokerGroup.selectedIndex = Number(pvars.smokerAtDiagnosis.value);
 						
@@ -286,8 +296,8 @@ package org.understandinguncertainty.UKPDS.view
 			pvars.ethnicGroup.value = profile.ethnicGroup.selectedIndex;
 			pvars.height_m.value = profile.height_mStep.value;
 			pvars.weight_kg.value = profile.weight_kgStep.value;
-			pvars.active.value = profile.active.selected;
-			pvars.atrialFibrillation.value = profile.af.selected;
+			pvars.active.value = profile.active.selectedIndex == 1;
+			pvars.atrialFibrillation.value = profile.af.selectedIndex == 1;
 			pvars.smokerAtDiagnosis.value = profile.smokerGroup.selectedIndex;
 			
 			pvars.hba1c.value = hba1c_as_percent;
