@@ -151,18 +151,18 @@
 	
 
 	<s:VGroup width="100%" gap="2" horizontalAlign="center">
-		<s:Label id="text" />
+		<s:Label id="text" fontSize="16"/>
 		<s:HGroup width="100%" verticalAlign="middle">
 
 			<s:Group width="25"/>
-			<s:Button id="before" width="60" />
+			<s:Button id="before" width="60" fontSize="16" height="25"/>
 			<s:Group width="20"/>
 			
-			<s:Label text="→" fontSize="14"/>
+			<s:Label text="→" fontSize="16"/>
 			<s:Group width="30"/>
 			
 			<!-- Note that the Spark NumericStepper is buggy in FB4. Setting the stepSize can cause the value to change. -->
-			<s:NumericStepper id="stepper" width="60" />
+			<s:NumericStepper id="stepper" width="60" fontSize="16" height="25"/>
 			
 		</s:HGroup>
 	</s:VGroup>

@@ -10,6 +10,7 @@ package org.understandinguncertainty.UKPDS.view
 	import org.understandinguncertainty.UKPDS.model.ICardioModel;
 	import org.understandinguncertainty.UKPDS.model.UserModel;
 	import org.understandinguncertainty.personal.signals.ModelUpdatedSignal;
+	import org.understandinguncertainty.personal.signals.ProfileDefaultsLoadedSignal;
 	
 	public class FuturesMediator extends Mediator
 	{
@@ -28,12 +29,15 @@ package org.understandinguncertainty.UKPDS.view
 		[Inject]
 		public var modelUpdatedSignal:ModelUpdatedSignal;
 		
+		[Inject]
+		public var profileDefaultsLoaded:ProfileDefaultsLoadedSignal;
 		public var meanAge:Number;
 						
 		override public function onRegister() : void
 		{
 			//trace("heartAge register");		
 			modelUpdatedSignal.add(updateView);
+			profileDefaultsLoaded.add(recalcModel);
 			model.recalculate();
 		}
 		
@@ -41,6 +45,13 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			//trace("heartAge remove");
 			modelUpdatedSignal.remove(updateView);
+			profileDefaultsLoaded.remove(recalcModel);
+		}
+		
+		private function recalcModel():void 
+		{
+			model.recalculate();
+			updateView();
 		}
 		
 		private function updateView():void
@@ -81,5 +92,6 @@ package org.understandinguncertainty.UKPDS.view
 			futures.hAxis.maximum = 102; //5*Math.ceil((model.meanAge + 5)/5);
 			//futures.futuresText.text = model.heartAgeText;
 		}
+		
 	}
 }

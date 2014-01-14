@@ -7,7 +7,7 @@ Copyright University of Cambridge. All rights reserved
 		  xmlns:mx="library://ns.adobe.com/flex/halo" 
 		  xmlns:view="org.understandinguncertainty.UKPDS.view.*" 
 		  xmlns:ns="library://ns.adobe.com/flex/mx" 
-		  xmlns:components="org.understandinguncertainty.UKPDS.components.*" currentState="profileOnly" contentBackgroundColor.profileOnly="#FFFFFF">
+		  xmlns:components="org.understandinguncertainty.UKPDS.components.*" currentState="riskScreens" contentBackgroundColor.profileOnly="#FFFFFF">
 	<fx:Script>
 		<![CDATA[
 			import org.understandinguncertainty.personal.service.Web;

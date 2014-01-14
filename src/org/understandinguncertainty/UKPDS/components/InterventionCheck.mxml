@@ -8,7 +8,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<s:SolidColorStroke id="stroke" color="0" weight="1" alpha="1"/>
-		<s:Label id="text2" />
+		<s:Label id="text2" fontSize="16"/>
 
 	</fx:Declarations>
 	
@@ -145,15 +145,15 @@
 	</fx:Script>
 	
 	<s:VGroup width="100%" gap="2" id="container" horizontalAlign="center">
-		<s:Label id="text1" />
+		<s:Label id="text1" fontSize="16"/>
 		<s:HGroup width="100%" verticalAlign="middle">
 
 			<s:Group width="25"/>
-			<s:Button id="before" label="{originalUnticked}" width="60"/>
+			<s:Button id="before" label="{originalUnticked}" width="60" height="25" fontSize="16"/>
 			<s:Group width="20"/>
-			<s:Label text="→" fontSize="14"/>
+			<s:Label text="→" fontSize="16"/>
 			<s:Group width="30"/>
-			<s:ComboBox id="combobox" selectedIndex="{original ? 1 : 0}" width="60"/>
+			<ns:ComboBox id="combobox" selectedIndex="{original ? 1 : 0}" width="60" height="25" fontSize="16"/>
 			<!-- <s:CheckBox id="checkBox" selected="{original}" /> -->
 			<s:Group width="30"/>
 

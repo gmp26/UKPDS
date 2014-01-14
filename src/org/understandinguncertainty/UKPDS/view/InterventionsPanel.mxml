@@ -41,19 +41,19 @@
 			<s:HGroup id="labelGroup" gap="0" paddingTop="0" verticalAlign="middle" width="100%">
 								
 				<s:VGroup width="100%" horizontalAlign="center">
-					<s:Label id= "title1" text="See what happens to your risk" fontSize="16" />
+					<s:Label id= "title1" text="See what happens to your risk" fontSize="18" />
 					<s:Label id="title2" 
-							 text="by trying these interventions" fontSize="16" />
+							 text="by trying these interventions" fontSize="18" />
 					
-					<s:Group height="20"/>
+					<s:Group height="15"/>
 					<s:HGroup width="100%" gap="0">
 						<s:VGroup width="50%" horizontalAlign="center">
-							<s:Label id="nowTitle1" text="What you" color="#880000" fontSize="14"/>
-							<s:Label id="nowTitle2" text="do now" color="#880000" fontSize="14"/>
+							<s:Label id="nowTitle1" text="What you" color="#880000" fontSize="16"/>
+							<s:Label id="nowTitle2" text="do now" color="#880000" fontSize="16"/>
 						</s:VGroup>
 						<s:VGroup width="40%"  horizontalAlign="center">
-							<s:Label id="changeTitle1" text="What you" color="#008800" fontSize="14"/>
-							<s:Label id="changeTitle2" text="can change" color="#008800" fontSize="14"/>
+							<s:Label id="changeTitle1" text="What you" color="#008800" fontSize="16"/>
+							<s:Label id="changeTitle2" text="can change" color="#008800" fontSize="16"/>
 						</s:VGroup>
 					</s:HGroup>
 					
@@ -118,10 +118,10 @@
 					/>
 				
 				
-				<s:Label id="nonHDLField"/>
-				<s:Label id="bmiField"/>
+				<s:Label id="nonHDLField" fontSize="16"/>
+				<s:Label id="bmiField" fontSize="16"/>
 				
-				<s:Button id="resetButton" label="Revert all"/>
+				<s:Button id="resetButton" label="Revert all" fontSize="16" height="25"/>
 				
 				
 			</s:VGroup>
