@@ -58,7 +58,6 @@ package org.understandinguncertainty.UKPDS.model
 			return _sum_e;
 		}
 		public function set sum_e(s:Number):void {
-			trace("setting sum_e to "+ s);
 			_sum_e = s;
 		}
 
@@ -67,7 +66,6 @@ package org.understandinguncertainty.UKPDS.model
 			return _sum_e_int;
 		}
 		public function set sum_e_int(s:Number):void {
-			trace("setting sum_e_int to "+ s);
 			_sum_e_int = s;
 		}
 

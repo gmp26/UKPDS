@@ -315,6 +315,10 @@ package org.understandinguncertainty.UKPDS.model
 				trace("age = "+r.age+" green = "+r.green + " f = " + r.fdash + " m = " + r.mdash);
 			}
 */			
+			
+			trace('sum_e = '+sum_e);
+			trace('sum_e_int = '+sum_e_int);
+			
 			modelUpdatedSignal.dispatch();
 		}		
 		

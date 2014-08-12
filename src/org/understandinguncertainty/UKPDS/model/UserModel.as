@@ -30,9 +30,6 @@ package org.understandinguncertainty.UKPDS.model
 			super();
 		}
 		
-		[Inject]
-		public var userProfile:UserModel;
-		
 		public var hba1c_int:Number;
 		public var sbp_int:Number;
 		public var totalCholesterol_int:Number;
@@ -50,8 +47,8 @@ package org.understandinguncertainty.UKPDS.model
 			hba1c_int = Number(variableList.hba1c.value);
 			
 			sbp_int = Number(variableList.systolicBloodPressure.value);
-			trace("UserModel: userProfile.sbp " + userProfile.sbp + " variable.value " + Number(variableList.systolicBloodPressure.value));
-			trace("UserModel: userProfile.int " + userProfile.sbp_int + " variable.value " + Number(variableList.systolicBloodPressure.value));
+//			trace("UserModel: userProfile.sbp " + userProfile.sbp + " variable.value " + Number(variableList.systolicBloodPressure.value));
+//			trace("UserModel: userProfile.int " + userProfile.sbp_int + " variable.value " + Number(variableList.systolicBloodPressure.value));
 			
 			totalCholesterol_int = Number(variableList.totalCholesterol_mmol_L.value);
 			hdlCholesterol_int = Number(variableList.hdlCholesterol_mmol_L.value);
