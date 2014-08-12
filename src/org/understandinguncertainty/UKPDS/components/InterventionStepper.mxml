@@ -45,6 +45,7 @@
 			public function set value(n:Number):void
 			{
 				stepper.value = Math.min(Math.max(n, _minimum), _maximum);
+				
 				invalidateProperties();
 			}
 			
@@ -78,6 +79,10 @@
 			private function reset():void
 			{
 				stepper.value = original;
+
+				trace("stepper to " + stepper.value);
+			
+				
 				before.enabled = false;
 				invalidateProperties();
 			}

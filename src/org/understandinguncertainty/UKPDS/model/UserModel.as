@@ -19,7 +19,7 @@ package org.understandinguncertainty.UKPDS.model
 		
 		public var variableList:VariableList;
 		
-		[Bindable]
+		[Bindable]	
 		public var isValid:Boolean = true;
 
 		public function UserModel()
@@ -29,6 +29,9 @@ package org.understandinguncertainty.UKPDS.model
 
 			super();
 		}
+		
+		[Inject]
+		public var userProfile:UserModel;
 		
 		public var hba1c_int:Number;
 		public var sbp_int:Number;
@@ -40,8 +43,16 @@ package org.understandinguncertainty.UKPDS.model
 		
 		// reset interventions to zero - i.e. no change from Profile values
 		public function resetInterventions():void {
+			
+			//
+			// dodgy ? -- see where this is different in InterventionsPanelMediator 
+			//
 			hba1c_int = Number(variableList.hba1c.value);
+			
 			sbp_int = Number(variableList.systolicBloodPressure.value);
+			trace("UserModel: userProfile.sbp " + userProfile.sbp + " variable.value " + Number(variableList.systolicBloodPressure.value));
+			trace("UserModel: userProfile.int " + userProfile.sbp_int + " variable.value " + Number(variableList.systolicBloodPressure.value));
+			
 			totalCholesterol_int = Number(variableList.totalCholesterol_mmol_L.value);
 			hdlCholesterol_int = Number(variableList.hdlCholesterol_mmol_L.value);
 			smoker_int = Boolean(variableList.smokerAtDiagnosis.value);

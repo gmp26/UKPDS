@@ -57,6 +57,8 @@ package org.understandinguncertainty.UKPDS.model
 				return;
 			appState.minimumAge = userProfile.age;
 
+			trace("recalculate sbp = " + userProfile.sbp + " sbp_int = " + userProfile.sbp_int); 
+			
 			var series_deanfield:Array = [];
 
 			var a:Number;

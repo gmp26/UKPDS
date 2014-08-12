@@ -62,6 +62,8 @@ package org.understandinguncertainty.UKPDS.view
 				return;
 			}
 
+			trace("futures updateView, sbp=" + userProfile.sbp);
+			
 			var yg:String;
 			if(model.yearGain >= 0.1) {
 				yg = model.yearGain.toPrecision(2);

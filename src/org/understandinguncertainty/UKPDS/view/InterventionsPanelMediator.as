@@ -111,6 +111,8 @@ package org.understandinguncertainty.UKPDS.view
 		
 		private function setInterventions():void
 		{	
+			trace("setInterventions");
+			
 			interventionsPanel.smoker.original = interventionsPanel.smoker.selected = userProfile.smoker_int;
 			interventionsPanel.sbp.original = interventionsPanel.sbp.value = userProfile.sbp_int;
 			interventionsPanel.totalCholesterol.original = interventionsPanel.totalCholesterol.value = userProfile.totalCholesterol_int;
@@ -131,9 +133,6 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			userProfile.smoker_int = interventionsPanel.smoker.selected;
 			userProfile.sbp_int = interventionsPanel.sbp.value;
-			
-			
-			
 			userProfile.totalCholesterol_int = interventionsPanel.totalCholesterol.value;
 			userProfile.hdlCholesterol_int = interventionsPanel.hdlCholesterol.value;
 			

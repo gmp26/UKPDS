@@ -219,6 +219,8 @@ package org.understandinguncertainty.UKPDS.view
 		private function nextScreen(event:MouseEvent):void
 		{
 			commitProfile();
+			
+			
 			var name:String = 'futures';
 			appState.selectedScreenName = name;
 			screenChangedSignal.dispatch(name);
@@ -312,7 +314,7 @@ package org.understandinguncertainty.UKPDS.view
 		//---- View click events ----
 		// 		
 		private function commitProfile():void {
-			//trace("commitProfile");
+			trace("commitProfile");
 
 			// Set the user profile variableList BEFORE cloning it into the interventions profile
 			setPersonalDetails();

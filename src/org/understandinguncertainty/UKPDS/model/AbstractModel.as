@@ -53,9 +53,24 @@ package org.understandinguncertainty.UKPDS.model
 			_heartAgeText = value;
 		}
 
-		
-		protected var sum_e:Number = 0;
-		protected var sum_e_int:Number = 0;
+		private var _sum_e:Number = 0;
+		public function get sum_e():Number {
+			return _sum_e;
+		}
+		public function set sum_e(s:Number):void {
+			trace("setting sum_e to "+ s);
+			_sum_e = s;
+		}
+
+		private var _sum_e_int:Number = 0;
+		public function get sum_e_int():Number {
+			return _sum_e_int;
+		}
+		public function set sum_e_int(s:Number):void {
+			trace("setting sum_e_int to "+ s);
+			_sum_e_int = s;
+		}
+
 		
 		public function get yearGain():Number {
 			return (sum_e_int - sum_e)/100;

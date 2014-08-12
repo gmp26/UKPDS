@@ -38,6 +38,7 @@ package org.understandinguncertainty.UKPDS.view
 		{
 			//trace("DeanfieldChart register");
 			modelUpdatedSignal.add(updateView);
+
 			model.recalculate();
 			outlookChart.areaChart.dataProvider=model.getResultSet();
 		}
@@ -56,7 +57,7 @@ package org.understandinguncertainty.UKPDS.view
 			if(appState.selectedScreenName != "deanfield") {				
 				return;
 			}
-			
+
 			outlookChart.areaChart.dataProvider = model.getResultSet();
 			outlookChart.ageAxis.minimum = appState.minimumAge;
 
